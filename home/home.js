@@ -210,23 +210,23 @@ export default class Home extends Component {
 
     //报表
     op() {
-        this.props.navigation.navigate('Report')
+        this.props.navigation.navigate('Report',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //设置
     set() {
-        this.props.navigation.navigate('Set')
+        this.props.navigation.navigate('Set',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //商机
     business() {
         //this.props.navigation.navigate('Business'),
-        this.props.navigation.navigate('BusinessTest')
+        this.props.navigation.navigate('BusinessTest',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //理单
     sheet() {
-        this.props.navigation.navigate('Sheet')
+        this.props.navigation.navigate('Sheet',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //合同
@@ -241,7 +241,7 @@ export default class Home extends Component {
 
     //目标
     aim() {
-        this.props.navigation.navigate('Aim')
+        this.props.navigation.navigate('Aim',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //审批
@@ -251,32 +251,32 @@ export default class Home extends Component {
 
     //日志
     log() {
-        this.props.navigation.navigate('Log')
+        this.props.navigation.navigate('Log',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //必达
     mustreach() {
-        this.props.navigation.navigate('Mustreach')
+        this.props.navigation.navigate('Mustreach',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //公告
     notice() {
-        this.props.navigation.navigate('Notice')
+        this.props.navigation.navigate('Notice',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //考勤
     attendance() {
-        this.props.navigation.navigate('Attendance')
+        this.props.navigation.navigate('Attendance',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //线路拜访
     lineVisit() {
-        this.props.navigation.navigate('LineVisit')
+        this.props.navigation.navigate('LineVisit',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //项目
     project() {
-        this.props.navigation.navigate('Project')
+        this.props.navigation.navigate('Project',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //产品
@@ -286,7 +286,7 @@ export default class Home extends Component {
 
     //价格表
     priceList() {
-        this.props.navigation.navigate('PriceList')
+        this.props.navigation.navigate('PriceList',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
    //最新业绩展开
@@ -845,8 +845,8 @@ const styles = StyleSheet.create({
 
     },
     rowConCommonSize: {
-        paddingLeft:5,
-        paddingRight:5
+        paddingLeft:8,
+        paddingRight:8
     },
     rowConCommonColor: {
         color: '#000'

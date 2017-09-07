@@ -158,8 +158,8 @@ export default class ChooseExecutor extends Component {
                                             unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
                                             />
                                         {(executor[i].avatar==""||executor[i].avatar==null)?(
-                                            <Image style={[com.tcp,com.wh32,com.mgr5,com.br200]} source={require('../../imgs/tx.png')}/>
-                                        ):(<Image style={[com.wh32,com.br200,com.mgr5]} source={{uri:executor[i].avatar}}/>)}
+                                            <Image style={[com.tcp,com.wh32,com.mgr5,com.br20]} source={require('../../imgs/tx.png')}/>
+                                        ):(<Image style={[com.wh32,com.br20,com.mgr5]} source={{uri:executor[i].avatar}}/>)}
                                         <Text>{executor[i].name}</Text>
                                     </View>
                                     <View style={styles.listRowSide}>

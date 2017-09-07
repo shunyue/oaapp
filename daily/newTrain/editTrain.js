@@ -264,17 +264,19 @@ export default class EditTrain extends Component {
         for(let i=1;i<32;i++){
             days.push(i);
         }
+        for(let i=1;i<25;i++){
+            hours.push(i);
+        }
         for(let i=1;i<61;i++){
             minutes.push(i);
         }
-        let pickerData = [years, months, days, ['am', 'pm'], hours, minutes];
+        let pickerData = [years, months, days, hours, minutes];
         let date = new Date();
         let selectedValue = [
             date.getFullYear(),
             date.getMonth()+1,
             date.getDate(),
-            date.getHours() > 11 ? 'pm' : 'am',
-            date.getHours() === 12 ? 12 : date.getHours()%12,
+            date.getHours(),
             date.getMinutes()
         ];
         Picker.init({
@@ -285,18 +287,15 @@ export default class EditTrain extends Component {
             pickerTitleText: '选择日期和时间',
             pickerToolBarFontSize: 16,
             pickerFontSize: 16,
-            wheelFlex: [2, 1, 1, 2, 1, 1],
+            wheelFlex:  [2, 1, 2, 2, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
                 for(i=0;i<pickedValue.length;i++){
                     if(pickedValue[i]<10){
                         pickedValue[i]='0' + pickedValue[i];
                     }
                 }
-                if(pickedValue[3]=='pm'){
-                    pickedValue[4]=pickedValue[4]-(-12);
-                }
                 var date = pickedValue[0]+'-'+pickedValue[1]+'-'+pickedValue[2]
-                    +'  '+pickedValue[4]+':'+pickedValue[5];
+                    +'  '+pickedValue[3]+':'+pickedValue[4];
                 var timestamp=this.get_unix_time(date);
                 if(title==1){
                     this.setState({

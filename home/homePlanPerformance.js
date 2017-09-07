@@ -97,8 +97,6 @@ export default class HomePlanPerformance extends Component {
         for(var i=2017;i<2051;i++){
             year2.push({[i]:[""]});
         }
-        // return alert(JSON.stringify(year))
-
         var jidu2;
         var season;
         if(moment().format("M")>=1&&moment().format("M")<=3 ){

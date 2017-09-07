@@ -427,8 +427,8 @@ export default class DailyReport extends Component {
                     underlayColor="#ffffff">
                      <View style={[com.mglr5,com.mgb5,com.aic,com.jcc]}>
                          {(executor[i].avatar==""||executor[i].avatar==null)?(
-                            <Image style={[com.tcp,com.wh32,com.br200]} source={require('../../imgs/tx.png')}/>
-                          ):(<Image style={[com.wh32,com.br200]} source={{uri:executor[i].avatar}}/>)}
+                            <Image style={[com.tcp,com.wh32,com.br20]} source={require('../../imgs/tx.png')}/>
+                          ):(<Image style={[com.wh32,com.br20]} source={{uri:executor[i].avatar}}/>)}
                          <Text style={[com.mgt5,com.fs10]}>{executor[i].name}</Text>
                      </View>
 

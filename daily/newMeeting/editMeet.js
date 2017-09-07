@@ -242,35 +242,102 @@ export default class EditMeeting extends Component {
         }
         this.props.navigation.navigate('AddAlert',{timeData:data});
     }
-    //选择开始时间
-    _showStartDateTimePicker(){
-        this.setState({isStartPickerVisible: true});
-    }
-    _showStopDateTimePicker(){
-        this.setState({isStopPickerVisible: true});
-    }
-    //选择结束日期
-    _hideDateTimePicker(){
-        this.setState({
-            isStartPickerVisible: false,
-            isStopPickerVisible: false
+    _showTimePicker(title) {
+        let years = [],
+            months = [],
+            days = [],
+            hours = [],
+            minutes = [];
+
+        for(let i=1;i<51;i++){
+            years.push(i+1980);
+        }
+        for(let i=1;i<13;i++){
+            months.push(i);
+            hours.push(i);
+        }
+        for(let i=1;i<32;i++){
+            days.push(i);
+        }
+        for(let i=1;i<25;i++){
+            hours.push(i);
+        }
+        for(let i=1;i<61;i++){
+            minutes.push(i);
+        }
+        let pickerData = [years, months, days, hours, minutes];
+        let date = new Date();
+        let selectedValue = [
+            date.getFullYear(),
+            date.getMonth()+1,
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes()
+        ];
+        Picker.init({
+            pickerData,
+            selectedValue:selectedValue,
+            pickerConfirmBtnText: '确认',
+            pickerCancelBtnText: '取消',
+            pickerTitleText: '选择日期和时间',
+            pickerToolBarFontSize: 16,
+            pickerFontSize: 16,
+            wheelFlex:  [2, 1, 2, 2, 1],
+            onPickerConfirm: (pickedValue, pickedIndex) => {
+                for(i=0;i<pickedValue.length;i++){
+                    if(pickedValue[i]<10){
+                        pickedValue[i]='0' + pickedValue[i];
+                    }
+                }
+                var date = pickedValue[0]+'-'+pickedValue[1]+'-'+pickedValue[2]
+                    +'  '+pickedValue[3]+':'+pickedValue[4];
+                var timestamp=this.get_unix_time(date);
+                if(title==1){
+                    this.setState({
+                        starttime: date,
+                        startstamp:timestamp
+                    });
+                }else if(title==2){
+                    this.setState({
+                        stoptime: date
+                    });
+                }
+            },
+            onPickerCancel: pickedValue => {
+                Picker.hide();
+            },
+            onPickerSelect: pickedValue => {
+                let targetValue = [...pickedValue];
+                if(parseInt(targetValue[1]) === 2){
+                    if(targetValue[0]%4 === 0 && targetValue[2] > 29){
+                        targetValue[2] = 29;
+                    }
+                    else if(targetValue[0]%4 !== 0 && targetValue[2] > 28){
+                        targetValue[2] = 28;
+                    }
+                }
+                else if(targetValue[1] in {4:1, 6:1, 9:1, 11:1} && targetValue[2] > 30){
+                    targetValue[2] = 30;
+                }
+                // forbidden some value such as some 2.29, 4.31, 6.31...
+                if(JSON.stringify(targetValue) !== JSON.stringify(pickedValue)){
+                    targetValue.map((v, k) => {
+                        if(k !== 3){
+                            targetValue[k] = parseInt(v);
+                        }
+                    });
+                    Picker.select(targetValue);
+                    pickedValue = targetValue;
+                }
+            }
         });
+        Picker.show();
     }
-    //选择开始时间后执行的方法
-    _handleStartPicked(e){//开始时间
-        this.setState({
-            starttime: moment(e).format('YYYY-MM-DD  HH:mm'),
-            startstamp:moment(e)
-        });
-        this._hideDateTimePicker();
-    }
-    //选择结束时间后的方法
-    _handleStopPicked(e){//结束时间
-        this.setState({
-            stoptime: moment(e).format('YYYY-MM-DD  HH:mm'),
-            stopstamp:moment(e)
-        });
-        this._hideDateTimePicker();
+    get_unix_time(str) {
+        str = str.replace(/-/g,'/');
+        var date = new Date(str);
+        var time = parseInt(date.getTime())/1000;
+        return time;
     }
 
     render() {
@@ -392,34 +459,20 @@ export default class EditMeeting extends Component {
 
                             </View>
                             <View style={{width:screenW*0.72,}}>
-                                <TouchableHighlight underlayColor={'#fff'} onPress={this._showStartDateTimePicker.bind(this)}>
+                                <TouchableHighlight underlayColor={'#fff'} onPress={this._showTimePicker.bind(this,1)}>
                                     <View style={[styles.flex_position3,styles.padding_value,styles.borderStyle_bottom,styles.rowheight]}>
                                         <Text>{this.state.starttime}</Text>
                                         <Image style={styles.textINput_arrow}
                                                source={require('../../imgs/customer/arrow_r.png')}/>
                                     </View>
                                 </TouchableHighlight>
-                                <TouchableHighlight underlayColor={'#fff'} onPress={this._showStopDateTimePicker.bind(this)}>
+                                <TouchableHighlight underlayColor={'#fff'} onPress={this._showTimePicker.bind(this,2)}>
                                     <View  style={[styles.flex_position3,styles.padding_value,styles.rowheight]}>
                                         <Text>{this.state.stoptime}</Text>
                                         <Image style={styles.textINput_arrow}
                                                source={require('../../imgs/customer/arrow_r.png')}/>
                                     </View>
                                 </TouchableHighlight>
-                                <DateTimePicker
-                                    isVisible={this.state.isStartPickerVisible}
-                                    onConfirm={(e)=>{this._handleStartPicked(e)}}
-                                    onCancel={()=>this._hideDateTimePicker()}
-                                    mode='datetime'
-                                    is24Hour={true}
-                                    />
-                                <DateTimePicker
-                                    isVisible={this.state.isStopPickerVisible}
-                                    onConfirm={(e)=>{this._handleStopPicked(e)}}
-                                    onCancel={()=>this._hideDateTimePicker()}
-                                    mode='datetime'
-                                    is24Hour={true}
-                                    />
                             </View>
                         </View>
                     </View>

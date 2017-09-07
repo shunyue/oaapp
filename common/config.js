@@ -214,9 +214,6 @@ module.exports = {
         newer_performance_unwind:'oa/index.php?c=ContractInterface&a=newer_performance_unwind',
         //首页业绩对比展开
         performance_contrast_unwind:'oa/index.php?c=ContractInterface&a=performance_contrast_unwind',
-
-
-
         //合同详情
         contract_detail: 'oa/index.php?c=ContractInterface&a=contract_detail',
         //合同对应流程 和流程路线
@@ -225,6 +222,7 @@ module.exports = {
         return_money_record:'oa/index.php?c=ContractInterface&a=return_money_record',
         //新增合同对应的回款记录
         add_return_money_record:'oa/index.php?c=ContractInterface&a=add_return_money_record',
-
+        //表单多选 选项展示
+        checkbox_option:'oa/index.php?c=FormInterface&a=checkbox_option',
     },
 };
