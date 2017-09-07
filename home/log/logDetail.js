@@ -329,8 +329,8 @@ export default class Log extends Component {
                 list.push(
                     <View style={[com.row,com.mgt5,com.pdt5l15]}  key={i}>
                         {(this.state.log.avatar==""||this.state.log.avatar==null)?(
-                            <Image style={[com.tcp,com.wh32,com.br200]} source={require('../../imgs/tx.png')}/>
-                        ):(<Image style={[com.wh32,com.br200]} source={{uri:review[i].reviewavatar}}/>)}
+                            <Image style={[com.tcp,com.wh32,com.br20]} source={require('../../imgs/tx.png')}/>
+                        ):(<Image style={[com.wh32,com.br20]} source={{uri:review[i].reviewavatar}}/>)}
                         <View style={[com.mgl15,com.flex,com.bbwc,com.mgb5]}>
                             <View style={[com.row,com.jcsb,com.mgb5]}>
                                 <Text style={[com.cbe]}>{review[i].reviewName}</Text>
@@ -394,8 +394,8 @@ export default class Log extends Component {
                     <View style={[com.mixf,com.mgtb5]}>
                         <View >
                             {(this.state.log.avatar==""||this.state.log.avatar==null)?(
-                                <Image style={[com.tcp,com.wh32,com.br200]} source={require('../../imgs/tx.png')}/>
-                            ):(<Image style={[com.wh32,com.br200]} source={{uri:this.state.log.avatar}}/>)}
+                                <Image style={[com.tcp,com.wh32,com.br20]} source={require('../../imgs/tx.png')}/>
+                            ):(<Image style={[com.wh32,com.br20]} source={{uri:this.state.log.avatar}}/>)}
                         </View>
                         <View style={[com.mgl5]}>
                             <Text>{this.state.log.employeeName}</Text>

@@ -447,8 +447,8 @@ export default class DailyDetail extends Component {
                 reviewlist.push(
                     <View style={[com.row,com.mgt5,com.pdt5l15]}  key={i}>
                         {(review[i].avatar==""||review[i].avatar==null)?(
-                            <Image style={[com.tcp,com.wh32,com.br200]} source={require('../imgs/tx.png')}/>
-                        ):(<Image style={[com.wh32,com.br200]} source={{uri:review[i].avatar}}/>)}
+                            <Image style={[com.tcp,com.wh32,com.br20]} source={require('../imgs/tx.png')}/>
+                        ):(<Image style={[com.wh32,com.br20]} source={{uri:review[i].avatar}}/>)}
 
                         <View style={[com.mgl15,com.flex,com.bbwc,com.mgb5]}>
                             <View style={[com.row,com.jcsb,com.mgb5]}>
@@ -499,10 +499,10 @@ export default class DailyDetail extends Component {
                             { /*<Text style={[com.cbe,com.fs10]}>暂无工作进展(这是无数据时显示)</Text>*/}
                             <View style={[com.row,com.jcsb,com.aic]}>
                                 <View style={[com.row]}>
-                                    <View style={[com.bwd,com.br200,com.mgr5]}>
+                                    <View style={[com.bwd,com.br20,com.mgr5]}>
                                         {(report[i].avatar==""||report[i].avatar==null)?(
-                                            <Image style={[com.tcp,com.wh32,com.br200]} source={require('../imgs/tx.png')}/>
-                                        ):(<Image style={[com.wh32,com.br200]} source={{uri:report[i].avatar}}/>)}
+                                            <Image style={[com.tcp,com.wh32,com.br20]} source={require('../imgs/tx.png')}/>
+                                        ):(<Image style={[com.wh32,com.br20]} source={{uri:report[i].avatar}}/>)}
 
                                     </View>
                                     <View style={[com.aic,com.jcc]}>
@@ -589,10 +589,10 @@ export default class DailyDetail extends Component {
                             { /*<Text style={[com.cbe,com.fs10]}>暂无工作进展(这是无数据时显示)</Text>*/}
                             <View style={[com.row,com.jcsb,com.aic]}>
                                 <View style={[com.row]}>
-                                    <View style={[com.bwd,com.br200,com.mgr5]}>
+                                    <View style={[com.bwd,com.br20,com.mgr5]}>
                                         {(report[i].avatar==""||report[i].avatar==null)?(
-                                            <Image style={[com.tcp,com.wh32,com.br200]} source={require('../imgs/tx.png')}/>
-                                        ):(<Image style={[com.wh32,com.br200]} source={{uri:report[i].avatar}}/>)}
+                                            <Image style={[com.tcp,com.wh32,com.br20]} source={require('../imgs/tx.png')}/>
+                                        ):(<Image style={[com.wh32,com.br20]} source={{uri:report[i].avatar}}/>)}
                                     </View>
                                     <View style={[com.aic,com.jcc]}>
                                         <Text>{report[i].creater}</Text>

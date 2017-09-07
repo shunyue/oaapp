@@ -152,8 +152,8 @@ export default class ChooseSubordinate extends Component {
                                             unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
                                             />
                                         {(subordinate[i].avatar==""||subordinate[i].avatar==null)?(
-                                            <Image style={[com.tcp,com.wh32,com.mgr5,com.br200]} source={require('../../imgs/tx.png')}/>
-                                        ):(<Image style={[com.wh32,com.br200,com.mgr5]} source={{uri:subordinate[i].avatar}}/>)}
+                                            <Image style={[com.tcp,com.wh32,com.mgr5,com.br20]} source={require('../../imgs/tx.png')}/>
+                                        ):(<Image style={[com.wh32,com.br20,com.mgr5]} source={{uri:subordinate[i].avatar}}/>)}
                                         <Text>{subordinate[i].name}</Text>
                                     </View>
                                     <View style={styles.listRowSide}>

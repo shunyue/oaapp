@@ -199,8 +199,8 @@ export default class Log extends Component {
                             <View style={[com.row,com.jcsb,com.bbwc,com.pdb10,com.aic]}>
                                 <View style={[com.row,]}>
                                     {(data[i].avatar==""||data[i].avatar==null)?(
-                                        <Image style={[com.tcp,com.wh32,com.br200]} source={require('../../imgs/tx.png')}/>
-                                    ):(<Image style={[com.wh32,com.br200]} source={{uri:data[i].avatar}}/>)}
+                                        <Image style={[com.tcp,com.wh32,com.br20]} source={require('../../imgs/tx.png')}/>
+                                    ):(<Image style={[com.wh32,com.br20]} source={{uri:data[i].avatar}}/>)}
                                     <View style={[com.mgl10]}>
                                         <Text>{data[i].employeeName}</Text>
                                         <Text style={[com.fs10,com.cbe]}>{data[i].datetime}</Text>

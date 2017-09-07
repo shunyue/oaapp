@@ -77,7 +77,7 @@ export default class LogSearch extends Component {
                             {(user[i].avatar == "" || user[i].avatar == null) ? (
                                 <Image style={[com.wh32,com.mgr10,com.tcp]}
                                        source={require('../../imgs/tx.png')}/>
-                            ) : (<Image style={[com.wh32,com.br200,com.mgr10]} source={{uri:user[i].avatar}}/>)}
+                            ) : (<Image style={[com.wh32,com.br20,com.mgr10]} source={{uri:user[i].avatar}}/>)}
                             <View>
                                 <Text style={[com.cr]}>{user[i].name}</Text>
                                 <Text style={[com.fs10,com.ceb]}>{user[i].depart_name}</Text>

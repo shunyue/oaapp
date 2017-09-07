@@ -89,8 +89,8 @@ export default class DailyExecutor extends Component {
                     <View style={[styles.linerow]} >
                             <View style={[styles.name,styles.flexRow]}>
                                 {(executor[i].avatar==""||executor[i].avatar==null)?(
-                                    <Image style={[{tintColor: 'purple',width: 32, height: 32},com.br200,com.mgr5]} source={require('../../imgs/tx.png')}/>
-                                ):(<Image style={[{width: 32, height: 32},com.br200,com.mgr5]} source={{uri:executor[i].avatar}}/>)}
+                                    <Image style={[{tintColor: 'purple',width: 32, height: 32},com.br20,com.mgr5]} source={require('../../imgs/tx.png')}/>
+                                ):(<Image style={[{width: 32, height: 32},com.br20,com.mgr5]} source={{uri:executor[i].avatar}}/>)}
                                 <Text>{executor[i].name}</Text>
                             </View>
                             <View style={styles.name}>

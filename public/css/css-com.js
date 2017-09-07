@@ -470,6 +470,7 @@ const com = StyleSheet.create({
   br5: {borderRadius: 5},
   br10: {borderRadius: 10},
   br15: {borderRadius: 15},
+  br20: {borderRadius: 20},
   br200: {borderRadius: 200},
   btw: {borderTopWidth: 1},
   brw: {borderRightWidth: 1},
