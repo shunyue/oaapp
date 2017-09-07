@@ -11,7 +11,8 @@ import {
     Image,
     ScrollView,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Platform,
     } from 'react-native';
 import Header from '../common/header';
 export default class Mine extends Component {
@@ -31,6 +32,7 @@ export default class Mine extends Component {
     render() {
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <Header navigation = {this.props.navigation}
                         title = "设置"
                         onPress={()=>this.OpBack()}/>

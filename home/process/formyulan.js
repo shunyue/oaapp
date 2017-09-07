@@ -2,7 +2,6 @@
  * 表单预览
  *
  * */
-
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -18,7 +17,14 @@ import {
     Alert,
     TextInput,
     TouchableOpacity,
+<<<<<<< HEAD
+    TouchableWithoutFeedback,
+    Platform,
+    } from 'react-native';
+import { StackNavigator,TabNavigator } from "react-navigation";
+=======
     DeviceEventEmitter,
+>>>>>>> 0a6460a6ffaabf94f29f63ee0601b4272da2432e
 
 } from 'react-native';
 const screenW = Dimensions.get('window').width;
@@ -26,9 +32,7 @@ const screenH = Dimensions.get('window').height;
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
 import ImagePicker from 'react-native-image-crop-picker';
-
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -36,7 +40,7 @@ import Modal from 'react-native-modal';
 import CheckBox from 'react-native-check-box';
 import ProcessModal from '../../common/processModal';
 import Picker from 'react-native-picker';
-export default class formDetail extends Component {
+export default class formyulan extends Component {
 
 
     constructor(props,context) {
@@ -176,13 +180,11 @@ export default class formDetail extends Component {
 
 
 
-    //接收表单id  查出表单的的详情
+
     componentDidMount() {
-
-
-        alert(JSON.stringify(this.props.navigation.state.params.form_field));
-
-
+        this.setState({
+            forminfo:this.props.navigation.state.params.form_field
+        })
 
 
         //接收审批人
@@ -234,69 +236,6 @@ export default class formDetail extends Component {
 
     }
 
-    //点击确认按钮
-    addproduct() {
-        //判断是否选择了审批人
-        if(this.state.approver_people.length==0){
-            return toast.center('请选择审批人');
-        }
-
-        //排除照片 的标识
-        var inputsing=[];  //['sing15','sing16','sing17']
-        for(var i in this.state.forminfo) {
-            if (this.state.forminfo[i]['field_type'] == '照片') {
-            } else {
-                inputsing.push(this.state.forminfo[i]['sing']);
-            }
-        }
-
-        //将图片放入 formdata
-        let formData = new FormData();
-        for(var imgi in this.state.imgs){
-            let file = {uri: this.state.imgs[imgi], type: 'multipart/form-data',name:this.state.imgs[imgi]};
-            formData.append(this.state.imgs[imgi],file);
-        }
-
-        //将照片之外的 放入formdata  {['sing15',cheer]，['sing20',男]}
-        for(var i in inputsing){
-            formData.append(inputsing[i],this.state[inputsing[i]]);
-        }
-
-
-        //将表单的id 放入formdata 给PHP使用
-        formData.append('form_id',this.state.form_id);
-
-        //将审批人放入 formdata  只能传递字符串
-        var appprover_people_info=[];
-        for(var i in this.state.approver_people){
-            appprover_people_info.push(this.state.approver_people[i].id+','+this.state.approver_people[i].depart_id+','+this.state.approver_people[i].company_id);
-        }
-        formData.append('approver_peopel',appprover_people_info.join("--"));
-
-
-        //console.log(formData);
-        var url=config.api.base + config.api.sava_form;
-        fetch(url,{
-            method:'POST',
-            headers:{
-                'Content-Type':'multipart/form-data'
-            },
-            body:formData
-        })
-            .then((response) => response.json() )
-            .then((res)=>{
-
-                if(res.sing==0){
-                    toast.center(res.msg);
-                }else if(res.sing==1){
-                    toast.center(res.msg);
-                }
-            })
-            .catch((error)=>{
-                toast.bottom('网络连接失败，请检查网络后重试');
-            });
-    };
-    //点击确认按钮
 
 
     //将多选的 生成二维数组 就可以存储多个多选框了
@@ -377,7 +316,7 @@ export default class formDetail extends Component {
             }else if(forminfo[i].field_type=='单选'){
                 var optionvalue=[];//单选的选项值
                 for (var j=1;j<=5;j++){
-                    var optionkey='data'+'_'+j;
+                    var optionkey='option'+j;
                     if(forminfo[i][optionkey]!=null){
                         optionvalue.push(forminfo[i][optionkey])
                     }
@@ -508,6 +447,16 @@ export default class formDetail extends Component {
 
 
         return (
+<<<<<<< HEAD
+            <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
+                <View style={styles.container}>
+                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
+                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
+                        <Text style={styles.back_text}>返回</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.formHeader}>模板样式预览</Text>
+=======
             <View style={styles.body}>
                 {/*导航栏*/}
                 <View style={styles.nav}>
@@ -519,15 +468,16 @@ export default class formDetail extends Component {
                             <Image source={require('../../imgs/navxy.png')}/>
                             <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
                         </View>
+>>>>>>> 0a6460a6ffaabf94f29f63ee0601b4272da2432e
 
                     </TouchableHighlight>
-                    <Text style={styles.fSelf}>{this.props.navigation.state.params.formname}</Text>
+                    <Text style={styles.fSelf}>表单样式预览</Text>
                     <TouchableHighlight
                         onPress={()=>this.addproduct()}
                         underlayColor="#d5d5d5"
                     >
                         <View style={styles.navltys}>
-                            <Text  onPress={this.addproduct.bind(this)} style={styles.navFont}>提交</Text>
+                            <Text></Text>
                         </View>
                     </TouchableHighlight>
                 </View>

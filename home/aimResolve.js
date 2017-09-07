@@ -19,6 +19,7 @@ import {
     TextInput,
     TouchableWithoutFeedback,
     DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 import config from '../common/config';
 import request from '../common/request';
@@ -446,6 +447,7 @@ export default class AimResolve extends Component {
         const {navigate} = this.props.navigation
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <View style={{flexDirection:'row'}}>

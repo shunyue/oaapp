@@ -234,6 +234,7 @@ export default class PersonalLog extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={[styles.navCon,com.aic]}>
                     <TouchableHighlight

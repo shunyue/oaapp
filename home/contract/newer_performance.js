@@ -13,7 +13,7 @@ import {
     TouchableHighlight,
     TouchableWithoutFeedback,
     ScrollView,
-
+    Platform,
     } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import Picker from 'react-native-picker';
@@ -205,6 +205,7 @@ export default class HomePlan extends Component {
         const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={[styles.container,{justifyContent:'space-between',paddingLeft:15,paddingRight:15}]}>
                     <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this.OpBack();this._hide()}}>
                         <View style={{flexDirection:'row'}}>

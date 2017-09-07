@@ -88,6 +88,7 @@ export default class Approvalfaqi extends Component {
         return (
 
             <View style={styles.body}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={styles.nav}>
                     <TouchableHighlight

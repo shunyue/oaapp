@@ -14,6 +14,7 @@ import {
     Image,
     TextInput,
     DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 import config from '../common/config';
 import request from '../common/request';
@@ -173,6 +174,7 @@ export default class AttendanceWhiteDetail extends Component {
         }
         return(
             <View style={[styles.container]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.header}>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <View style={{ flexDirection :'row',alignItems:'center',justifyContent:'center'}}>

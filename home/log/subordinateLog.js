@@ -230,6 +230,7 @@ export default class SubordinateLog extends Component {
         }
         return (
             <View style={[com.flex]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <TouchableWithoutFeedback onPress={()=>{this._hide()}}>
                     <View style={[com.flex]}>
                         {/*导航栏*/}

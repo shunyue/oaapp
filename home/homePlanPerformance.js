@@ -14,7 +14,7 @@ import {
     TouchableHighlight,
     TouchableWithoutFeedback,
     ScrollView,
-
+    Platform,
     } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import Picker from 'react-native-picker';
@@ -344,6 +344,7 @@ export default class HomePlanPerformance extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <TouchableWithoutFeedback onPress={()=>this._hide()}>
                     <View style={styles.ancestorCon}>
                         <View style={[styles.container,{justifyContent:'space-between',paddingLeft:15,paddingRight:15}]}>

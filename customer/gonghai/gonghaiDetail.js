@@ -21,7 +21,8 @@ import {
     TouchableWithoutFeedback,
     Linking,
     Alert,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform
 } from 'react-native';
 import config from '../../common/config';
 import toast from '../../common/toast';
@@ -168,6 +169,7 @@ export default class GonghaiDetail extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 15,backgroundColor: '#FF0019'}}></View>:null}
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <TouchableHighlight underlayColor={'#ed2437'} style={[styles.goback,styles.go]} onPress={()=>this.props.navigation.goBack(null)}>
@@ -183,7 +185,7 @@ export default class GonghaiDetail extends Component {
                         <Text style={{marginTop:5,color:'#fff'}}>{this.state.customer.position?this.state.customer.position: null}</Text>
                     </View>
                 </View>
-                <View style={{width:screenW,height:screenH*0.1,position:'absolute',top:95}}>
+                <View style={{width:screenW,height:screenH*0.1,position:'absolute',top: Platform.OS ==='ios'?115:95,}}>
                     <Image style={{width:screenW,height:screenH*0.045}} source={require('../../imgs/customer/detail_bj.png' )}/>
                 </View>
                 <View style={{height: 40,justifyContent: 'center',paddingLeft: 12,backgroundColor: '#fff',borderBottomWidth: 1,borderColor: '#e3e3e3'}}>
@@ -282,7 +284,7 @@ const styles = StyleSheet.create({
 
     go:{
         position:'absolute',
-        top:8
+        top: Platform.OS ==='ios'?8:8
     },
     goback:{
         left:20,

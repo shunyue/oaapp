@@ -237,6 +237,8 @@ import order_select_costom from '../home/order/order_select_costom';
 import order_select_people from '../home/order/order_select_people';
 //表单 多选框跳转
 import checkbox_select from '../home/process/checkbox_select';
+//表单 多选框跳转 预览
+import checkbox_select_yulan from '../home/process/checkbox_select_yulan';
 
 
 //周飞飞
@@ -558,6 +560,7 @@ const app = StackNavigator({
     newer_performance: {screen: newer_performance,navigationOptions: {header: null}},
     performance_constrast: {screen: performance_constrast,navigationOptions: {header: null}},
     checkbox_select: {screen: checkbox_select,navigationOptions: {header: null}},
+    checkbox_select_yulan: {screen: checkbox_select_yulan,navigationOptions: {header: null}},
 
 
     //周飞飞

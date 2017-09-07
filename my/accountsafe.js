@@ -17,7 +17,8 @@ import {
     Image,
     ScrollView,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform,
     } from 'react-native';
 import config from '../common/config';
 import request from '../common/request';

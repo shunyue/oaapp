@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
     TextInput,
     TouchableWithoutFeedback,
-    CheckBox,
     AsyncStorage,
     DeviceEventEmitter,
     } from 'react-native';
@@ -186,6 +185,7 @@ export default class SubordinateDailyList  extends Component {
         if (this.state.load) {
             return (
                 <ScrollView style={[com.pos,com.flex,{height:screenH}]}>
+                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                     {/*事件插件区域*/}
                     <View style={[com.posr,com.bbwc,com.jcc,com.aic,com.bgce6,com.ww,com.btbwd]}>
                         <Calendar

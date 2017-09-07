@@ -15,7 +15,8 @@ import {
     ScrollView,
     DeviceEventEmitter,
     Switch,
-    Alert
+    Alert,
+    Platform,
     } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import {StackNavigator,TabNavigator } from "react-navigation";
@@ -214,6 +215,7 @@ export default class AddAlert extends Component {
        const {params} = this.props.navigation.state;
            return (
                <View style={styles.ancestorCon}>
+                   {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                    <View style={styles.container}>
                        <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack(false)}>
                            <View style={{flexDirection :'row',alignItems:'center',justifyContent:'center'}}>

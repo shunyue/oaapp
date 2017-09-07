@@ -10,7 +10,8 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    Dimensions
+    Dimensions,
+    Platform,
     } from 'react-native';
 import config from '../../common/config';
 import request from '../../common/request';

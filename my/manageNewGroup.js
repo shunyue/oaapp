@@ -17,6 +17,7 @@ import {
     TouchableOpacity,
     DeviceEventEmitter,
     Alert,
+    Platform,
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -477,6 +478,7 @@ export default class ManageNewGroup extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <View style={{ flexDirection :'row',alignItems:'center',justifyContent:'center'}}>

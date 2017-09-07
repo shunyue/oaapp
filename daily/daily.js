@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
     TextInput,
     TouchableWithoutFeedback,
-    CheckBox,
     AsyncStorage,
     DeviceEventEmitter,
     } from 'react-native';
@@ -171,6 +170,7 @@ export default class Daily extends Component {
         var daily=[];
         return (
             <View style={[com.flex]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*自定义导航*/}
                 {/*自定义导航栏-中间*/}
                 <View style={[com.row,com.jcc,com.bckfff,com.pos]}>
