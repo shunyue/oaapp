@@ -1,5 +1,5 @@
 /*
-* 表单多选框 选项页面
+* 表单多选框 选项页面 预览页面
 * */
 import React, { Component } from 'react';
 import {
@@ -34,30 +34,20 @@ export default class ChoosePeople  extends Component {
     }
 
     componentDidMount() {
-      //  alert(this.props.navigation.state.params.optionvaue)
-
-        var url = config.api.base + config.api.checkbox_option;
-        request.post(url,{
-            sing: this.props.navigation.state.params.sing,
-        }).then((result)=> {
-
-          // alert(JSON.stringify(result));
-            if(result.sing == 1) {
-                this.setState({
-                    userData: result.data
-                })
-            }else{
-                return Alert.alert(
-                    '提示',
-                    result.message,
-                    [{text: '确定'}]
-                )
+        for(var i in this.props.navigation.state.params.data){
+            if(this.props.navigation.state.params.data[i].field_name==this.props.navigation.state.params.sing){
+                var optionvalue=[];//多选的选项值
+                for (var j=1;j<=5;j++){
+                    var optionkey='option'+j;
+                    if(this.props.navigation.state.params.data[i][optionkey]!=''){
+                        optionvalue.push(this.props.navigation.state.params.data[i][optionkey])
+                    }
+                }
             }
-        }).catch((error)=>{
-            toast.bottom('网络连接失败，请检查网络后重试');
-        });
-
-
+        }
+        this.setState({
+            userData: optionvalue
+        })
     }
 
 
@@ -71,7 +61,6 @@ export default class ChoosePeople  extends Component {
     //判断是否 多选框选中
     contains(arr,id) {
 
-
         for(var i in arr ){
             if(arr[i]==id){
                 return true;
@@ -84,20 +73,8 @@ export default class ChoosePeople  extends Component {
 
     //确定
     _confirm() {
-
-        for (var i = 0; i < this.state.checkBoxData.length; i++) {
-            if(this.state.checkBoxData[i]!=null && this.state.checkBoxData[i].state.isChecked == true){
-                this.state.checkedData.push(this.state.checkBoxData[i].props.value);
-            }
-        }
-
-        var checkbox_value=new Array()
-        checkbox_value['data']=this.state.checkedData;
-        checkbox_value['sing']=this.props.navigation.state.params.sing;
-        DeviceEventEmitter.emit('checkbox_value', checkbox_value);
         this.props.navigation.goBack(null);
     }
-
 
     //id 是 选择值 在选项数组中的排序
     _pressUser(id) {
@@ -105,7 +82,6 @@ export default class ChoosePeople  extends Component {
     }
 
     render() {
-
         var userData = this.state.userData;
         var userList=[]
         isChecked=false;

@@ -225,7 +225,7 @@ export default class formyulan extends Component {
 
     //多选框 跳转选择
     checkbox_select(e){
-        this.props.navigation.navigate('checkbox_select',{sing:e,optionvaue:this.state[e]});
+        this.props.navigation.navigate('checkbox_select_yulan',{sing:e,data:this.props.navigation.state.params.form_field});
 
     }
 
@@ -349,7 +349,7 @@ export default class formyulan extends Component {
                             <Text style={[styles.divFontCom]}>{this.state[textName]}</Text>
                             <View style={{flexWrap:'wrap',width:screenW-70,flexDirection:'row'}}>
 
-                                <TouchableOpacity   onPress={()=>this.checkbox_select(textName)}>
+                                <TouchableOpacity   onPress={this.checkbox_select.bind(this,forminfo[i].field_name)}>
 
                                     <Image style={styles.imgStyle} source={require('../../imgs/customer/arrow_r.png')}/>
                                 </TouchableOpacity>
