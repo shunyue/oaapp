@@ -441,10 +441,8 @@ export default class formyulan extends Component {
 
 
         return (
-
-            <View style={styles.ancestorCon}>
+            <View style={styles.body}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-
                 {/*导航栏*/}
                 <View style={styles.nav}>
                     <TouchableHighlight
@@ -459,11 +457,10 @@ export default class formyulan extends Component {
                     </TouchableHighlight>
                     <Text style={styles.fSelf}>表单样式预览</Text>
                     <TouchableHighlight
-                        onPress={()=>this.addproduct()}
                         underlayColor="#d5d5d5"
                     >
                         <View style={styles.navltys}>
-                            <Text></Text>
+                            <Text  ></Text>
                         </View>
                     </TouchableHighlight>
                 </View>
