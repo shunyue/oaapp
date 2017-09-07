@@ -845,8 +845,8 @@ const styles = StyleSheet.create({
 
     },
     rowConCommonSize: {
-        paddingLeft:5,
-        paddingRight:5
+        paddingLeft:8,
+        paddingRight:8
     },
     rowConCommonColor: {
         color: '#000'
