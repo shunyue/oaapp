@@ -14,6 +14,7 @@ import {
     Image,
     ScrollView,
     TextInput,
+    Platform,
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 
@@ -34,6 +35,7 @@ export default class OrientationManage extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <View style={{ flexDirection :'row',alignItems:'center',justifyContent:'center'}}>

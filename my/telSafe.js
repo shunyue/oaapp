@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    TouchableHighlight
+    TouchableHighlight,
+    Platform,
     } from 'react-native';
 import config from '../common/config';
 import request from '../common/request';
@@ -58,6 +59,7 @@ export default class TelSafe extends Component {
         const {params} = this.props.navigation.state;
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <Header navigation = {this.props.navigation}
                         title = "电话号"
                         onPress={()=>this.OpBack()}/>

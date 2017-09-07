@@ -19,7 +19,8 @@ import {
     TouchableWithoutFeedback,
     Alert,
     DeviceEventEmitter,
-    Linking
+    Linking,
+    Platform,
     } from 'react-native';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
@@ -124,6 +125,7 @@ export default class CusContactDetail extends Component {
     render() {
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <View style={[styles.header,{justifyContent:'space-between',backgroundColor:'#e15151',paddingLeft:15,paddingRight:15}]}>
                         <TouchableHighlight underlayColor={'transparent'} style={styles.goback} onPress={()=>this.OpBack()}>

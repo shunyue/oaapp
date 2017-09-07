@@ -14,7 +14,8 @@ import {
     Image,
     TextInput,
     ScrollView,
-    Alert
+    Alert,
+    Platform
 } from 'react-native';
 import config from '../../common/config';
 import toast from '../../common/toast';
@@ -95,6 +96,7 @@ export default class app extends Component {
 
         return (
             <View style={styles.container}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.search_bj}>
                     <View style={styles.search_border}>
                         <Image style={styles.subNav_img} source={require('../../imgs/customer/search.png')}/>

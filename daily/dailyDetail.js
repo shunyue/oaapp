@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
     TextInput,
     TouchableWithoutFeedback,
-    CheckBox,
     DeviceEventEmitter,
     Alert
     } from 'react-native';
@@ -643,6 +642,7 @@ export default class DailyDetail extends Component {
         }
         return (
             <View style={[com.flex,com.bgcf5]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*nav*/}
                 <View style={[com.row,com.aic,com.jcsb,com.pdt5l15,com.bbwc,com.bgcfff]}>
                     <TouchableHighlight

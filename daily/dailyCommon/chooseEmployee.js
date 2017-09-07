@@ -13,7 +13,8 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 const ScreenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
@@ -216,6 +217,7 @@ export default class ChooseEmployee extends Component {
         const {params} = this.props.navigation.state;
         return (
             <View style={styles.container}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.nav}>
                     <TouchableOpacity
                         onPress={()=>this._goBack()}>

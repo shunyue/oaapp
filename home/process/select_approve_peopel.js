@@ -12,7 +12,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     DeviceEventEmitter,
-    Alert
+    Alert,
+    Platform,
 } from 'react-native';
 import Header from '../../common/header';
 import config from '../../common/config';

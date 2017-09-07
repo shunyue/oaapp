@@ -15,7 +15,8 @@ import {
     TextInput,
     DeviceEventEmitter,
     TouchableHighlight,
-    ScrollView
+    ScrollView,
+    Platform,
     }from 'react-native';
 import {StackNavigator,TabNavigator } from "react-navigation";
 import CheckBox from 'react-native-check-box';
@@ -175,6 +176,7 @@ export default class ChooseExecutor extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack(this.state.selectInfo)}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

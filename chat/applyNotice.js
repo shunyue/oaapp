@@ -14,7 +14,8 @@ import {
     ScrollView,
     TouchableHighlight,
     TouchableWithoutFeedback,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 import ScrollableTabView, { DefaultTabBar} from 'react-native-scrollable-tab-view';
 //配置文件

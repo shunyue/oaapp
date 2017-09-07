@@ -18,7 +18,8 @@ import {
     TouchableWithoutFeedback,
     AsyncStorage,
     DeviceEventEmitter,
-    Alert
+    Alert,
+    Platform,
     } from 'react-native';
 
 import Modal from 'react-native-modal'
@@ -247,7 +248,7 @@ export default class app extends Component {
         return (
 
             <View style={styles.container}>
-
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={{width:screenW,height:47,flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingRight:15}}>
                     <TouchableOpacity onPress={() => this.goPage()}>
                         <Image style={styles.icon} source={require('../imgs/customer/baobiao.png')}/>

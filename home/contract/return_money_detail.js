@@ -15,6 +15,7 @@ import {
     TouchableHighlight,
     DeviceEventEmitter,
     TouchableWithoutFeedback,
+    Platform,
     } from 'react-native';
 
 
@@ -188,6 +189,7 @@ export default class return_money_detail extends Component {
         const {state} = this.props.navigation;
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

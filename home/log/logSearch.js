@@ -98,6 +98,7 @@ export default class LogSearch extends Component {
         }
         return (
             <View style={[com.flex]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={[com.bckfff,com.row,com.aic,com.pdt5l10,com.bbwe9,]}>
                     <View style={[com.ROW,com.AIC,com.bcke6,com.PD5,com.BR,com.mgr10]}>
                         <Image

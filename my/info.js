@@ -15,6 +15,7 @@ import {
     Dimensions,
     Modal,
     DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 import config from '../common/config';
 import request from '../common/request';

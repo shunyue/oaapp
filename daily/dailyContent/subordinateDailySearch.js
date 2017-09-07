@@ -12,7 +12,7 @@ import {
     TouchableOpacity,
     TextInput,
     TouchableWithoutFeedback,
-    DeviceEventEmitter
+    DeviceEventEmitter,
     } from 'react-native';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
@@ -495,6 +495,7 @@ export default class SubordinateDailySearch extends Component {
         return (
             <View style={[]}>
                 <View style={[com.row,com.jcsa,com.pdt5l15,com.bbwc,com.aic,com.bgcfff]}>
+                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                     <TouchableOpacity style={[com.pos]}
                                       onPress={() => {this.setState({isModalVisible: !this.state.isModalVisible})}}>
                         {this.show_StatusName()}
