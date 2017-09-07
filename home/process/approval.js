@@ -86,8 +86,7 @@ export default class Approval extends Component {
     }
 
     back() {
-       // this.props.navigation.goBack(null);
-        this.props.navigation.navigate('Home');
+       this.props.navigation.goBack(null);
     }
 
     //审批筛选
