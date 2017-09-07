@@ -445,13 +445,7 @@ export default class formyulan extends Component {
 
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>模板样式预览</Text>
-            <View style={styles.body}>
+
                 {/*导航栏*/}
                 <View style={styles.nav}>
                     <TouchableHighlight
