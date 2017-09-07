@@ -219,7 +219,6 @@ export default class Home extends Component {
 
     //商机
     business() {
-        //this.props.navigation.navigate('Business'),
         this.props.navigation.navigate('BusinessTest')
     }
 
@@ -240,7 +239,7 @@ export default class Home extends Component {
 
     //目标
     aim() {
-        this.props.navigation.navigate('Aim')
+        this.props.navigation.navigate('Aim',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //审批

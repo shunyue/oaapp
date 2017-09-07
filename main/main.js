@@ -559,8 +559,7 @@ const app = StackNavigator({
 
 
     //周飞飞
-    // my页面
-
+    // my页面 和 目标
     myInfo:{screen: myInfo,navigationOptions: {header: null}},
     Mine:{screen: Mine,navigationOptions: {header: null}},
     AccountSafe:{screen: AccountSafe,navigationOptions: {header: null}},
