@@ -14,7 +14,6 @@ import {
     TouchableHighlight,
     TouchableWithoutFeedback,
     ScrollView,
-
     } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import Picker from 'react-native-picker';
@@ -68,7 +67,6 @@ export default class HomePlanPerformance extends Component {
             yearMonth:this.props.navigation.state.params.yearMonth,
             status:change
         }).then((responseJson) => {
-            alert(JSON.stringify(responseJson.data));
             this.setState({
                 reslovedata:responseJson.data,
             })
@@ -129,25 +127,45 @@ export default class HomePlanPerformance extends Component {
             selectedValue:valuePickerData,
             onPickerConfirm: data => {
                 this.setState({yearMonth:data[1]+'年'+data[2]});
+                //number=1，代表是月度目标
+                //number=2，代表是季度目标
+                //number=3，代表是年度目标
+                var temp=  this.state.yearMonth;
+                var realLength = 0, len = temp.length, charCode = -1;
+                var change;   //3代表年度，2代表季度，1代表月度
+                for (var i = 0; i < len; i++) {
+                    charCode = temp.charCodeAt(i);
+                    if (charCode >= 0 && charCode <= 128) realLength += 1;
+                    else realLength += 2;
+                }
+                if(Number(realLength)==6){
+                    change=3
+                }else if(Number(realLength)==11){
+                    change=2
+                }else{
+                    change=1
+                }
+                var url=config.api.base + config.api.achievement;
+                request.post(url,{
+                    cid:this.props.navigation.state.params.company_id,
+                    yearMonths:this.state.yearMonth,
+                    number:change
+                }).then((responseJson) => {
+                    this.setState({
+                        total_money: responseJson.data.total_money,
+                        aimsell: responseJson.data.aimsell,
+                        achievemoney:  responseJson.data.achievemoney,
+                        result: responseJson.data.result,
+                        achievesell:  responseJson.data.achievesell,
+                        sellresult: responseJson.data.sellresult,
+                        reslovedata:responseJson.data.resolve,
+                    })
+                }).catch((error)=>{
+                    toast.bottom('网络连接失败，请检查网络后重试');
+                })
             },
         });
         Picker.show();
-        //number=1，代表是月度目标
-        //number=2，代表是季度目标
-        //number=3，代表是年度目标
-        if(this.state.yearMonth==season){
-            this.setState({
-                number:1
-            })
-        } else if(this.state.yearMonth==yue){
-            this.setState({
-                number:2
-            })
-        }  else if(this.state.yearMonth==yearing){
-            this.setState({
-                number:3
-            })
-        }
     }
     _hide(){
         Picker.hide();
@@ -168,14 +186,15 @@ export default class HomePlanPerformance extends Component {
                     <View style={[styles.mean,styles.bg]}>
                         <Text style={{color:'#64b0f0'}}>{datalist[i].name}</Text>
                     </View>
+
                     <View style={[styles.mean]}>
-                        <Text>{(datalist[i].percent1*100).toFixed(2)+'%'}</Text>
+                        <Text>{(datalist[i].total_money && datalist[i].sum1)?(datalist[i].percent1*100).toFixed(2)+'%':datalist[i].sum1?100+'%':0+'%'}</Text>
                     </View>
                     <View style={[styles.mean]}>
                         <Text>{datalist[i].sum1}</Text>
                     </View>
                     <View style={[styles.mean]}>
-                        <Text>{datalist[i].total_money}</Text>
+                        <Text>{datalist[i].total_money? datalist[i].total_money:0}</Text>
                     </View>
                 </View>
             )
@@ -184,7 +203,7 @@ export default class HomePlanPerformance extends Component {
         var sellpercent=Number(this.state.achievesell)/Number(this.state.aimsell);
         var complete=Number(this.state.sellresult); /* 销量完成量*/
         var reach2 =Number(this.state.sellresult);  /* 指针图表位置*/
-        const series2 = [reach2, 1-reach2]
+        var series2 = [reach2, 1-reach2];
         const deg2 = reach2*180+'deg' ;
         var selllist=[];
         var selldata=this.state.reslovedata;
@@ -195,13 +214,13 @@ export default class HomePlanPerformance extends Component {
                         <Text style={{color:'#64b0f0'}}>{datalist[i].name}</Text>
                     </View>
                     <View style={[styles.mean]}>
-                        <Text>{(datalist[i].sellpercent1*100).toFixed(2)+'%'}</Text>
+                        <Text>{(datalist[i].sell_number && datalist[i].num1) ?(datalist[i].sellpercent1*100).toFixed(2)+'%':datalist[i].num1?100+'%':0+'%'}</Text>
                     </View>
                     <View style={[styles.mean]}>
                         <Text>{datalist[i].num1}</Text>
                     </View>
                     <View style={[styles.mean]}>
-                        <Text>{datalist[i].sell_number}</Text>
+                        <Text>{datalist[i].sell_number?datalist[i].sell_number:0}</Text>
                     </View>
                 </View>
             )
@@ -360,9 +379,9 @@ export default class HomePlanPerformance extends Component {
                         </View>
                         <View  style={{height:60,backgroundColor: '#fff',justifyContent:'center',}}>
                             <View style={[{height:30,flexDirection:"row",justifyContent:'space-between'},styles.padding]}>
-                               <View style={{width:80}}>
-                                   <Text style={this.state.change?{display:'none'}:{fontSize:11,}}>单位：元</Text>
-                               </View>
+                                <View style={{width:80}}>
+                                    <Text style={this.state.change?{display:'none'}:{fontSize:11,}}>单位：元</Text>
+                                </View>
                                 <Text style={{color:'#333'}}>{this.state.yearMonth}</Text>
                                 <TouchableHighlight style={{width:80,height:25,borderColor:'#e15151',borderWidth:1,borderRadius:4,justifyContent:'center'}} underlayColor={'transparent'} onPress={()=>{this.setState({change:!this.state.change})}}>
                                     <View style={{width:80,height:25,borderColor:'#e15151',borderWidth:1,borderRadius:4,justifyContent:'center'}}>
