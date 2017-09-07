@@ -324,7 +324,7 @@ export default class Home extends Component {
 
 
     render() {
-        const chart_wh = 150
+        const chart_wh = 130
         var reach =Number(this.state.result)
         const series = [reach, 1-reach]
         const deg = reach*180+'deg'
@@ -536,7 +536,7 @@ export default class Home extends Component {
                                             <Text style={[styles.rowConCommonSize,{fontSize:12}]}>单位：万元</Text>
                                         </View>
                                     </View>
-                                    <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
+                                    <View style={[{justifyContent:'center',alignItems:'center',marginTop:10},Platform.OS === 'ios'?{height: 100}:null]}>
                                         <PieChart
                                             chart_wh={chart_wh}
                                             series={series}
@@ -547,7 +547,7 @@ export default class Home extends Component {
                                         />
 
                                         <View style={{padding:10,position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                            <Image style={{width:66,height:12}} tintColor={'#aaa'} source={require('../imgs/pointer.png')}/>
+                                            <Image style={{width:60,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
                                         </View>
                                         <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
                                             <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
