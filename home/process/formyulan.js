@@ -17,16 +17,11 @@ import {
     Alert,
     TextInput,
     TouchableOpacity,
-<<<<<<< HEAD
     TouchableWithoutFeedback,
     Platform,
+    DeviceEventEmitter
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
-=======
-    DeviceEventEmitter,
->>>>>>> 0a6460a6ffaabf94f29f63ee0601b4272da2432e
-
-} from 'react-native';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 import config from '../../common/config';
