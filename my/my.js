@@ -19,11 +19,8 @@ import {
     TouchableHighlight,
     DeviceEventEmitter,
     Dimensions,
-<<<<<<< HEAD
     Platform,
-=======
     AsyncStorage
->>>>>>> 0a6460a6ffaabf94f29f63ee0601b4272da2432e
 } from 'react-native';
 const screenW = Dimensions.get('window').width;
 import config from '../common/config';
