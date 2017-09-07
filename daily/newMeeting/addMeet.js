@@ -14,7 +14,8 @@ import {
     TextInput,
     ScrollView,
     TouchableHighlight,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 import {StackNavigator,TabNavigator } from "react-navigation";
 const screenW = Dimensions.get('window').width;
@@ -374,6 +375,7 @@ export default class AddMeeting extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Text style={styles.back_text}>取消</Text>

@@ -15,6 +15,7 @@ import {
     TextInput,
     ScrollView,
     Modal,
+    Platform,
     DeviceEventEmitter,
     } from 'react-native';
 import Header from '../../common/header';
@@ -103,6 +104,7 @@ export default class EditCusContact extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

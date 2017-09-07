@@ -15,6 +15,7 @@ import {
     ListView,
     TouchableHighlight,
     ScrollView,
+    Platform,
 } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 

@@ -222,6 +222,7 @@ export default class SubordinateLogDetail extends Component {
         }
         return (
             <View style={[com.flex,com.bgcf3]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*NAV*/}
                 <View style={[com.row,com.jcsb,com.pdlr5,com.bgcfff,com.bbwcc,com.aic,com.h35,]}>
                     <TouchableHighlight

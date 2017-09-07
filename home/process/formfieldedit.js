@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     Switch,
     DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 
@@ -144,6 +145,7 @@ export default class app extends Component {
             return (
 
                 <View style={styles.ancestorCon}>
+                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                     <View style={styles.container}>
                         <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                             <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

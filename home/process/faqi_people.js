@@ -12,7 +12,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     DeviceEventEmitter,
-    Alert
+    Alert,
+    Platform,
 } from 'react-native';
 import Header from '../../common/header';
 import config from '../../common/config';
@@ -165,6 +166,7 @@ export default class faqi_people  extends Component {
 
         return (
             <View style={styles.container}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <Header navigation = {this.props.navigation}
                         title = "发起人员"/>
                 <View style={styles.centerContent}>

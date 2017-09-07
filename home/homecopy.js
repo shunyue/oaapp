@@ -6,13 +6,15 @@ import { AppRegistry,
     Text,
     Button,
     ScrollView,
-    Image
+    Image,
+    Platform,
 } from 'react-native';
 export default class Home extends Component {
 
     render() {
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*头部导航*/}
                 <View style={styles.nav}>
                     <Image  style={styles.sz} source={require('../imgs/bb.png')}/>

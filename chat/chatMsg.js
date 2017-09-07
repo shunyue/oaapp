@@ -6,8 +6,8 @@ import {
     View,
     TouchableOpacity,
     AsyncStorage,
-    Platform,
     DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 //引入聊天组件
 import { GiftedChat,Bubble } from 'react-native-gifted-chat';

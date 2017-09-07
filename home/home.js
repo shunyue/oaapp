@@ -9,7 +9,8 @@ import { AppRegistry,
     Image,
     TouchableHighlight,
     AsyncStorage,
-    Dimensions
+    Dimensions,
+    Platform,
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -302,7 +303,7 @@ export default class Home extends Component {
 
 
     render() {
-        const chart_wh = 150
+        const chart_wh = 130
         const reach =0.7
         const series = [reach, 1-reach]
         const deg = reach*180+'deg'
@@ -310,6 +311,7 @@ export default class Home extends Component {
         const {navigate}=this.props.navigation
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
                 {/*头部导航*/}
                 <View style={styles.nav}>
                     <TouchableHighlight
@@ -503,7 +505,7 @@ export default class Home extends Component {
                                         <Text style={[styles.rowConCommonSize,{fontSize:11}]}>单位：万元</Text>
                                     </View>
                                 </View>
-                                <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
+                                <View style={[{justifyContent:'center',alignItems:'center',marginTop:10},Platform.OS == 'ios'?{height: 100}:null]}>
                                     <PieChart
                                         chart_wh={chart_wh}
                                         series={series}
@@ -513,12 +515,10 @@ export default class Home extends Component {
                                         coverFill={'#FFF'}
                                         />
                                     <View style={{position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                        <Image style={{width:66,height:12,tintColor:'#aaa'}} source={require('../imgs/pointer.png')}/>
+                                        <Image style={{width:60,height:10,tintColor:'#aaa'}} source={require('../imgs/pointer.png')}/>
                                     </View>
-                                    <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
-                                        <Text style={reach==1?{display:'none'}:{fontSize:12}}>{reach}</Text>
-                                    </View>
-                                    <View style={{position:'absolute',width:140,top:70,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+
+                                    <View style={{position:'absolute',width:140,top:70,height:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
                                         <Text>0 </Text>
                                         <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
                                         <Text>1</Text>

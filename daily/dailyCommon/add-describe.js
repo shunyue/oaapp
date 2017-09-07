@@ -13,7 +13,8 @@ import {
     TextInput,
     Dimensions,
     TouchableHighlight,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 
@@ -38,6 +39,7 @@ export default class AddDescribe extends Component {
         const {params} = this.props.navigation.state;
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight
                         underlayColor={'#fff'}

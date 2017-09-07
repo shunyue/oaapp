@@ -12,7 +12,8 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    TouchableHighlight
+    TouchableHighlight,
+    Platform,
     } from 'react-native';
 import config from '../common/config';
 import request from '../common/request';
