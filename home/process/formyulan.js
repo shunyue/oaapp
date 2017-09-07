@@ -18,7 +18,6 @@ import {
     TextInput,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Platform,
     DeviceEventEmitter
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
