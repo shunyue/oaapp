@@ -70,6 +70,7 @@ export default class Home extends Component {
                 this.getNet();//最新业绩
                 this.getNet1();//业绩对比
                 this.getNet2();//目标达成
+                this.requestData();   //周飞飞  添加获取目标达成数据的方法
             })
 
     }
@@ -240,7 +241,7 @@ export default class Home extends Component {
 
     //目标
     aim() {
-        this.props.navigation.navigate('Aim')
+        this.props.navigation.navigate('Aim',{company_id:this.state.company_id,user_id:this.state.user_id})
     }
 
     //审批
@@ -299,7 +300,26 @@ export default class Home extends Component {
         this.props.navigation.navigate('performance_constrast',{user_id:this.state.user_id,company_id:this.state.company_id})
 
     }
-
+    //获取目标达成中的数据
+    //周飞飞
+    requestData(){
+        var url=config.api.base + config.api.achievement;
+        request.post(url,{
+            company_id:this.state.company_id,
+        }).then((responseJson) => {
+            this.setState({
+                yearMonth:responseJson.data.yearMonth,
+                total_money: responseJson.data.total_money,
+                aimsell: responseJson.data.aimsell,
+                achievemoney:  responseJson.data.achievemoney,
+                result: responseJson.data.result,
+                achievesell:  responseJson.data.achievesell,
+                sellresult: responseJson.data.sellresult,
+            })
+        }).catch((error)=>{
+            toast.bottom('网络连接失败，请检查网络后重试');
+        })
+    }
 
     render() {
         const chart_wh = 150
@@ -492,39 +512,51 @@ export default class Home extends Component {
                                 </View>
                             </TouchableHighlight>
 
-                            <View style={[styles.slide,styles.slideBj]}>
-                                {/*块级导航*/}
-                                <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
-                                    <View style={{width:80}}>
-                                        <Text style={[styles.bestMark,{width:60}]}>目标达成</Text>
+                            <TouchableHighlight underlayColor={'#fff'}
+                                                onPress={()=>{navigate('HomePlanPerformance',{yearMonth:this.state.yearMonth,
+                                                                            total_money: this.state.total_money,
+                                                                            aimsell:this.state.aimsell,
+                                                                            achievemoney: this.state.achievemoney,
+                                                                            achievesell: this.state.achievesell,
+                                                                            result:this.state.result,
+                                                                            sellresult:this.state.sellresult,
+                                                                            company_id:this.state.company_id})}}>
+                                <View style={[styles.slide,styles.slideBj]}>
+                                    {/*块级导航*/}
+                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
+                                        <View style={{width:80}}>
+                                            <Text style={[styles.bestMark,{width:55}]}>目标达成</Text>
+                                        </View>
+                                        <Text style={[styles.rowConCommonSize,styles.rowConCommonColor]}>{this.state.yearMonth}</Text>
+                                        <View style={{width:80}}>
+                                            <Text style={[styles.rowConCommonSize,{fontSize:12}]}>单位：万元</Text>
+                                        </View>
                                     </View>
-                                    <Text style={[styles.rowConCommonSize,styles.rowConCommonColor]}>2017年08月</Text>
-                                    <View style={{width:80}}>
-                                        <Text style={[styles.rowConCommonSize,{fontSize:11}]}>单位：万元</Text>
+                                    <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
+                                        <PieChart
+                                            chart_wh={chart_wh}
+                                            series={series}
+                                            sliceColor={sliceColor}
+                                            doughnut={true}
+                                            coverRadius={0.5}
+                                            coverFill={'#FFF'}
+                                            />
+
+                                        <View style={{padding:10,position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
+                                            <Image style={{width:66,height:12}} tintColor={'#aaa'} source={require('../imgs/pointer.png')}/>
+                                        </View>
+                                        <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
+                                            <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
+                                        </View>
+                                        <View style={{position:'absolute',width:140,top:75,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                                            <Text>0 </Text>
+                                            <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
+                                            <Text>1</Text>
+                                        </View>
                                     </View>
+
                                 </View>
-                                <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
-                                    <PieChart
-                                        chart_wh={chart_wh}
-                                        series={series}
-                                        sliceColor={sliceColor}
-                                        doughnut={true}
-                                        coverRadius={0.5}
-                                        coverFill={'#FFF'}
-                                        />
-                                    <View style={{position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                        <Image style={{width:66,height:12,tintColor:'#aaa'}} source={require('../imgs/pointer.png')}/>
-                                    </View>
-                                    <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
-                                        <Text style={reach==1?{display:'none'}:{fontSize:12}}>{reach}</Text>
-                                    </View>
-                                    <View style={{position:'absolute',width:140,top:70,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-                                        <Text>0 </Text>
-                                        <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
-                                        <Text>1</Text>
-                                    </View>
-                                </View>
-                            </View>
+                            </TouchableHighlight>
                         </Carousel>
                     </View>
 
@@ -580,9 +612,8 @@ export default class Home extends Component {
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
-
+                                underlayColor={'transparent'}
                                 onPress={()=>this.aim()}
-                                underlayColor="#f5f5f5"
                                 >
                                 <View style={styles.flexRow_width}>
                                     <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>

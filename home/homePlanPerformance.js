@@ -68,7 +68,6 @@ export default class HomePlanPerformance extends Component {
             yearMonth:this.props.navigation.state.params.yearMonth,
             status:change
         }).then((responseJson) => {
-            alert(JSON.stringify(responseJson.data));
             this.setState({
                 reslovedata:responseJson.data,
             })

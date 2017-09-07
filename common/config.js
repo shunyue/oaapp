@@ -226,5 +226,26 @@ module.exports = {
         //新增合同对应的回款记录
         add_return_money_record:'oa/index.php?c=ContractInterface&a=add_return_money_record',
 
+        //获取个人信息（姓名，头像，电话，邮箱，部门，职位，地址）
+        //周飞飞
+        myselfInfomation:'oa/index.php?c=Employee&a=index',
+        imageupload:'oa/index.php?c=NoticeInterface&a=imageupload',
+        myselfload:'oa/index.php?c=Employee&a=imageupload',
+        changeAttendance:'oa/index.php?c=Employee&a=changeAttendance',
+        searchEmployee:'oa/index.php?c=Employee&a=searchEmployee',
+        getCompanyEmployee:'oa/index.php?c=Employee&a=getCompany',
+        getDepartInfo:'oa/index.php?c=Employee&a=getDepartInfo',
+        getAttendanceData:'oa/index.php?c=Employee&a=getAttendanceData',
+        modifyAttendanceData:'oa/index.php?c=Employee&a=modifyAttendanceData',
+        deleteAttendanceData:'oa/index.php?c=Employee&a=deleteAttendanceData',
+        target:'oa/index.php?c=Target&a=index',
+        getProductInfo:'oa/index.php?c=ProductInterface&a=getProductInfo',
+        addGoal:'oa/index.php?c=Target&a=addGoal',
+        modifyGoal:'oa/index.php?c=Target&a=modifyGoal',
+        aimDetail:'oa/index.php?c=Target&a=aimDetail',
+        resolveGoal: 'oa/index.php?c=Target&a=resolveGoal',
+        deleteGoal: 'oa/index.php?c=Target&a=deleteGoal',
+        achievement: 'oa/index.php?c=Target&a=achievement',
+
     },
 };

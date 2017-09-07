@@ -19,6 +19,7 @@ import {
     TouchableHighlight,
     DeviceEventEmitter,
     Dimensions,
+    AsyncStorage,
 } from 'react-native';
 const screenW = Dimensions.get('window').width;
 import config from '../common/config';
@@ -44,7 +45,15 @@ export default class My extends Component {
                 avatar:value
             })
         });
-        this.getNet();
+        AsyncStorage.getItem('user')
+            .then((res) => {
+                var data = JSON.parse(res);
+                this.setState({
+                    user_id: data.user_id,
+                    company_id: data.company_id,
+                })
+                this.getNet();
+            })
     }
 
     componentWillUnmount(){

@@ -254,6 +254,7 @@ import AimResolve from '../home/aimResolve';
 import SelectResolver from '../home/selectResolver';
 import EditResolve from '../home/editResolve';
 import ResolveAimDetail from '../home/resolveDetail';
+import HomePlanPerformance from '../home/homePlanPerformance'
 
 //周飞飞
 //工商局查询
@@ -581,6 +582,7 @@ const app = StackNavigator({
     ChooseStaffs:{screen:ChooseStaffs,navigationOptions:{header:null}},
     ModifyPassword :{screen:ModifyPassword,navigationOptions:{header:null}},
     AddGoal:{screen:AddGoal,navigationOptions:{header:null}},
+    Aim:{screen:Aim,navigationOptions:{header:null}},
     AimEditContent:{screen:AimEditContent,navigationOptions:{header:null}},
     AimDetail:{screen:AimDetail,navigationOptions:{header:null}},
     AimResolve:{screen:AimResolve,navigationOptions:{header:null}},
@@ -588,6 +590,7 @@ const app = StackNavigator({
     SelectResolver: {screen:SelectResolver,navigationOptions:{header:null}},
     EditResolve: {screen:EditResolve,navigationOptions:{header:null}},
     ResolveAimDetail: {screen:ResolveAimDetail,navigationOptions:{header:null}},
+    HomePlanPerformance: {screen:HomePlanPerformance,navigationOptions:{header:null}},
 
 
     //公共客户
