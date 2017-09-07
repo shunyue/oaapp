@@ -19,6 +19,7 @@ import {
     TouchableHighlight,
     DeviceEventEmitter,
     Dimensions,
+    AsyncStorage
 } from 'react-native';
 const screenW = Dimensions.get('window').width;
 import config from '../common/config';
@@ -44,7 +45,15 @@ export default class My extends Component {
                 avatar:value
             })
         });
-        this.getNet();
+        AsyncStorage.getItem('user')
+            .then((res) => {
+                var data = JSON.parse(res);
+                this.setState({
+                    user_id: data.user_id,
+                    company_id: data.company_id,
+                })
+                this.getNet();
+            })
     }
 
     componentWillUnmount(){
@@ -52,7 +61,7 @@ export default class My extends Component {
     }
     getNet(){
         var url = config.api.base + config.api.myselfInfomation;
-        var id=5;
+        var id=this.state.user_id;
         request.post(url,{
             id: id,
         }).then((responseJson) => {
@@ -77,7 +86,7 @@ export default class My extends Component {
         this.props.navigation.navigate('WebViewExample')
     };
     companySetting(){
-        this.props.navigation.navigate('CompanySetting',{companyid:3});
+        this.props.navigation.navigate('CompanySetting',{companyid:this.state.company_id});
         //alert("公司设置！");
     };
     selfSetting(){

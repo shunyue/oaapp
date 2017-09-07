@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
     AppRegistry,
     StyleSheet,
@@ -16,30 +15,54 @@ import {
     DeviceEventEmitter,
 } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
-
-
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 export default class app extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            //添加拦位
+            animationType: 'none',//none slide fade
+            modalVisible: false,//模态场景是否可见
+            transparent: true,//是否透明显示
+            //添加拦位
+            form_name:'', //表单名称
+            form_icon:'http://118.178.241.223/oa/icon_shenpi/ling.png', //表单图标
+            form_dec:'',  //表单描述
+            form_fanwei:'',//表单使用范围
+            form_field:[],//表单字段
+
+            sing_array:[],//字段标识
+            sing_array_new:[]
+        };
+    }
+
+
     OpBack() {
         this.props.navigation.goBack(null)
     }
-
     //预览
     goPage_yulan() {
-        this.props.navigation.navigate('Formyulan')
-    };
 
+        var form_field_array=[];
+        for(var i in this.state.sing_array_new){
+            for(var j in this.state.form_field){
+                if(this.state.sing_array_new[i]==this.state.form_field[j].sing){
+                    form_field_array.push(this.state.form_field[j]);
+                }
+            }
+        }
+
+        this.props.navigation.navigate('Formyulan',{form_field:form_field_array})
+    };
     //表单图标
     formiconlist() {
         this.props.navigation.navigate('Formiconlist')
     };
-
-
 
     //表单字段编辑
     formfieldedit(id){
@@ -50,30 +73,6 @@ export default class app extends Component {
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-
-            //添加拦位
-            animationType: 'none',//none slide fade
-            modalVisible: false,//模态场景是否可见
-            transparent: true,//是否透明显示
-            //添加拦位
-
-            form_name:'', //表单名称
-            form_icon:'http://118.178.241.223/oa/icon_shenpi/ling.png', //表单图标
-            form_dec:'',  //表单描述
-            form_fanwei:'',//表单使用范围
-
-            form_field:[] //表单字段
-
-
-        };
-    }
-
-
-
 
 
     //接收监听返回的字段名 字段类型 是否必填
@@ -89,7 +88,22 @@ export default class app extends Component {
             var option5=value['option5'];
 
             //给表单字段赋值 二维数组添加一组数据
-            this.state.form_field.push({field_name: field_name,field_type:field_type,bitian:bitian,option1:option1,option2:option2,option3:option3,option4:option4,option5:option5});
+            //第一次添加 sing=1
+            if(this.state.form_field.length==0){
+                this.state.form_field.push({sing:1,field_name: field_name,field_type:field_type,bitian:bitian,option1:option1,option2:option2,option3:option3,option4:option4,option5:option5});
+
+                this.state.sing_array_new.push(1);
+            }else{
+                //第一次后 sing值最大的加1 赋值
+
+                for(var i in  this.state.form_field){
+                    this.state.sing_array.push(this.state.form_field[i]['sing']);
+                }
+
+                var sing_max= Math.max.apply(null, this.state.sing_array)-(-1);
+                this.state.form_field.push({sing:sing_max,field_name: field_name,field_type:field_type,bitian:bitian,option1:option1,option2:option2,option3:option3,option4:option4,option5:option5});
+                this.state.sing_array_new.push(sing_max);
+            }
             //必须有  重新渲染页面
             this.setState({
 
@@ -102,8 +116,6 @@ export default class app extends Component {
             this.setState({
                 form_icon:value,
             });
-
-
         })
 
 
@@ -114,9 +126,27 @@ export default class app extends Component {
     }
 
 
+    //删除字符
+    del_field(e){
+        this.state.sing_array_new.splice( this.state.sing_array_new.indexOf(e), 1);
+        this.setState({
+        });
+    }
+
+
+    //判断字段是否有效
+    if_isset(e){
+        for(var i  in this.state.sing_array_new){
+            if(this.state.sing_array_new[i]==e){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //保存表单
     save(){
+
         if(this.state.form_name==''){
             return toast.center('表单名称不能为空');
         }
@@ -126,10 +156,20 @@ export default class app extends Component {
         if(this.state.form_fanwei==''){
             return toast.center('表单使用范围不能为空');
         }
-        if(this.state.form_field==''){
+        if(this.state.sing_array_new==''){
             return toast.center('表单字段不能为空');
         }
 
+        var form_field_array=[];
+        for(var i in this.state.sing_array_new){
+            for(var j in this.state.form_field){
+                if(this.state.sing_array_new[i]==this.state.form_field[j].sing){
+                    form_field_array.push(this.state.form_field[j]);
+                }
+            }
+        }
+
+        // alert(JSON.stringify(form_field_array));
 
         var url = config.api.base + config.api.addform;
         request.post(url,{
@@ -137,11 +177,11 @@ export default class app extends Component {
             icon: this.state.form_icon,//表单图标
             dec: this.state.form_dec,//表单描述
             fanwei: this.state.form_fanwei,//表单范围
-            field: this.state.form_field,//表单字段
+            field: form_field_array,//表单字段
 
         }).then((responseJson) => {
 
-          // alert(JSON.stringify(responseJson));
+            // alert(JSON.stringify(responseJson));
 
             if(responseJson.sing==0){
                 toast.center('添加失败');
@@ -165,25 +205,55 @@ export default class app extends Component {
 
         var list=[];
         var form_field =this.state.form_field;
-        for(var i in form_field){
-            list.push(
 
-                <View style={[styles.module_name,styles.module_]} key={i}>
-                    <Image  style={styles.back_icon} source={require('../../imgs/shenpi/shanchu .png')}/>
-                    <Text style={{marginLeft:25,width:80,}}>{form_field[i].field_name}</Text>
+        for (var i in form_field) {
 
 
-                    <Image  style={{marginLeft:70,width:14, height:14}} source={require('../../imgs/shenpi/chilun.png')}/>
+            if(this.if_isset(form_field[i].sing)==false){
 
-                    <Text style={{marginLeft:10,width:80,}}>{form_field[i].field_type}</Text>
+                list.push(
+                    <View style={[styles.module_name,styles.module_]} key={i} style={{display:'none'}}>
 
-                    <Text style={{marginLeft:10}}>{form_field[i].bitian}</Text>
+                        <TouchableHighlight onPress={this.del_field.bind(this,form_field[i].sing)} underlayColor={'#F3F3F3'}>
+                            <Image  style={styles.back_icon} source={require('../../imgs/shenpi/shanchu .png')}/>
+                        </TouchableHighlight>
+                        <Text style={{marginLeft:25,width:80,}}>{form_field[i].field_name}</Text>
 
-                </View>
 
-            )
+                        <Image  style={{marginLeft:70,width:14, height:14}} source={require('../../imgs/shenpi/chilun.png')}/>
+
+                        <Text style={{marginLeft:10,width:80,}}>{form_field[i].field_type}</Text>
+
+                        <Text style={{marginLeft:10}}>{form_field[i].bitian}</Text>
+
+                    </View>
+
+                )
+            }else{
+                list.push(
+                    <View style={[styles.module_name,styles.module_]} key={i} >
+
+                        <TouchableHighlight onPress={this.del_field.bind(this,form_field[i].sing)} underlayColor={'#F3F3F3'}>
+                            <Image  style={styles.back_icon} source={require('../../imgs/shenpi/shanchu .png')}/>
+                        </TouchableHighlight>
+                        <Text style={{marginLeft:25,width:80,}}>{form_field[i].field_name}</Text>
+
+
+                        <Image  style={{marginLeft:70,width:14, height:14}} source={require('../../imgs/shenpi/chilun.png')}/>
+
+                        <Text style={{marginLeft:10,width:80,}}>{form_field[i].field_type}</Text>
+
+                        <Text style={{marginLeft:10}}>{form_field[i].bitian}</Text>
+
+                    </View>
+
+                )
+
+            }
+
+
+
         }
-
 
 
         //添加拦位
@@ -211,86 +281,84 @@ export default class app extends Component {
 
                 <ScrollView style={{height:screenH*0.7}} key={'ScrollView'}>
 
-                <View style={[styles.module_name,styles.module_]}>
-                    <Text style={{marginRight:15}}>模板名称</Text>
-                    <TextInput
-                        style={styles.input_text}
-                        onChangeText={(form_name) => this.setState({form_name})}
-                        placeholder ={this.state.form_name}
-                        placeholderTextColor={"#aaaaaa"}
-                        underlineColorAndroid="transparent"
-                    />
-                </View>
-
-
-
-                <TouchableHighlight
-                    onPress={()=>this.formiconlist()}
-                    underlayColor="#d5d5d5"
-                >
-
                     <View style={[styles.module_name,styles.module_]}>
-                        <Text style={{marginRight:15}}>模板图标</Text>
+                        <Text style={{marginRight:15}}>模板名称</Text>
                         <TextInput
                             style={styles.input_text}
+                            onChangeText={(form_name) => this.setState({form_name})}
+                            placeholder ={this.state.form_name}
                             placeholderTextColor={"#aaaaaa"}
                             underlineColorAndroid="transparent"
-                            editable={false}
+                        />
+                    </View>
+
+
+
+                    <TouchableHighlight
+                        onPress={()=>this.formiconlist()}
+                        underlayColor="#d5d5d5"
+                    >
+
+                        <View style={[styles.module_name,styles.module_]}>
+                            <Text style={{marginRight:15}}>模板图标</Text>
+                            <TextInput
+                                style={styles.input_text}
+                                placeholderTextColor={"#aaaaaa"}
+                                underlineColorAndroid="transparent"
+                                editable={false}
+                            />
+
+                            <View>
+                                <Image style={{width:30,height:30}}  source={{uri:this.state.form_icon}}/>
+                            </View>
+                        </View>
+
+
+
+                    </TouchableHighlight>
+
+
+                    <View style={[styles.module_name,styles.module_]}>
+                        <Text style={{marginRight:15}}>描述</Text>
+                        <TextInput
+                            style={styles.input_text}
+                            onChangeText={(form_dec) => this.setState({form_dec})}
+                            placeholder ={this.state.form_dec}
+                            placeholderTextColor={"#aaaaaa"}
+                            underlineColorAndroid="transparent"
+                        />
+                    </View>
+                    <View style={[styles.module_name,styles.module_]}>
+                        <Text style={{marginRight:15}}>使用范围</Text>
+                        <TextInput
+                            style={styles.input_text}
+                            onChangeText={(form_fanwei) => this.setState({form_fanwei})}
+                            placeholder ={this.state.form_fanwei}
+                            placeholderTextColor={"#aaaaaa"}
+                            underlineColorAndroid="transparent"
                         />
 
-                        <View>
-                            <Image style={{width:30,height:30}}  source={{uri:this.state.form_icon}}/>
+
+                    </View>
+                    <View style={[styles.module_handle,styles.module_]}>
+                        <Text style={{marginRight:10}}>删除</Text>
+                        <View style={{flexDirection :'row',alignItems:'center',backgroundColor: '#fff',}}>
+                            <Text style={{marginRight:4}}>栏目名称</Text>
+                            <Image  style={styles.back_icon} source={require('../../imgs/customer/bianji.png')}/>
                         </View>
+                        <View style={{width:screenW*0.47,flexDirection :'row',alignItems:'center',justifyContent:'center'}}>
+                            <Text>设置类型</Text>
+                        </View>
+                        <Text>是否必填</Text>
                     </View>
 
 
 
-                </TouchableHighlight>
-
-
-                <View style={[styles.module_name,styles.module_]}>
-                    <Text style={{marginRight:15}}>描述</Text>
-                    <TextInput
-                        style={styles.input_text}
-                        onChangeText={(form_dec) => this.setState({form_dec})}
-                        placeholder ={this.state.form_dec}
-                        placeholderTextColor={"#aaaaaa"}
-                        underlineColorAndroid="transparent"
-                    />
-                </View>
-                <View style={[styles.module_name,styles.module_]}>
-                    <Text style={{marginRight:15}}>使用范围</Text>
-                    <TextInput
-                        style={styles.input_text}
-                        onChangeText={(form_fanwei) => this.setState({form_fanwei})}
-                        placeholder ={this.state.form_fanwei}
-                        placeholderTextColor={"#aaaaaa"}
-                        underlineColorAndroid="transparent"
-                    />
-
-
-                </View>
-                <View style={[styles.module_handle,styles.module_]}>
-                    <Text style={{marginRight:10}}>删除</Text>
-                    <View style={{flexDirection :'row',alignItems:'center',backgroundColor: '#fff',}}>
-                        <Text style={{marginRight:4}}>栏目名称</Text>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/bianji.png')}/>
-                    </View>
-                    <View style={{width:screenW*0.47,flexDirection :'row',alignItems:'center',justifyContent:'center'}}>
-                        <Text>设置类型</Text>
-                    </View>
-                    <Text>是否必填</Text>
-                </View>
-
-
-
-                <View>
+                    <View>
                         {list}
-                </View>
+                    </View>
 
                 </ScrollView>
-
-
 
 
                 <View style={styles.module_foot}>
@@ -305,7 +373,6 @@ export default class app extends Component {
                         <Text style={styles.custom_sub}>预览</Text>
                     </TouchableOpacity>
                 </View>
-
 
                 {/*模态框*/}
                 <View style={{ alignItems: 'center', flex: 1 }}>
@@ -330,98 +397,68 @@ export default class app extends Component {
                                     <Text style={{marginLeft:25}}>单行文本</Text>
                                     <Image  style={{marginLeft:80,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
                                 </View>
-                             </TouchableHighlight>
+                            </TouchableHighlight>
 
 
                             <TouchableHighlight onPress={() => {this.formfieldedit('多行文本');this.setModalVisible(!this.state.modalVisible)}}>
-                            <View style={[styles.field]}>
-                                <Text style={{marginLeft:25}}>多行文本</Text>
-                                <Image  style={{marginLeft:80,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
-                            </View>
+                                <View style={[styles.field]}>
+                                    <Text style={{marginLeft:25}}>多行文本</Text>
+                                    <Image  style={{marginLeft:80,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
+                                </View>
                             </TouchableHighlight>
 
-                                <TouchableHighlight onPress={() => {this.formfieldedit('单选');this.setModalVisible(!this.state.modalVisible)}}>
-                            <View style={[styles.field]}>
-                                <Text style={{marginLeft:25}}>单选</Text>
-                                <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
-                            </View>
-                                </TouchableHighlight>
+                            <TouchableHighlight onPress={() => {this.formfieldedit('单选');this.setModalVisible(!this.state.modalVisible)}}>
+                                <View style={[styles.field]}>
+                                    <Text style={{marginLeft:25}}>单选</Text>
+                                    <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
+                                </View>
+                            </TouchableHighlight>
 
 
-                                    <TouchableHighlight onPress={() => {this.formfieldedit('多选');this.setModalVisible(!this.state.modalVisible)}}>
-                            <View style={[styles.field]}>
-                                <Text style={{marginLeft:25}}>多选</Text>
-                                <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
-                            </View>
-                                    </TouchableHighlight>
+                            <TouchableHighlight onPress={() => {this.formfieldedit('多选');this.setModalVisible(!this.state.modalVisible)}}>
+                                <View style={[styles.field]}>
+                                    <Text style={{marginLeft:25}}>多选</Text>
+                                    <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
+                                </View>
+                            </TouchableHighlight>
 
 
-                                        <TouchableHighlight onPress={() => {this.formfieldedit('日期');this.setModalVisible(!this.state.modalVisible)}}>
-                            <View style={[styles.field]}>
-                                <Text style={{marginLeft:25}}>日期</Text>
-                                <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
-                            </View>
-                                        </TouchableHighlight>
+                            <TouchableHighlight onPress={() => {this.formfieldedit('日期');this.setModalVisible(!this.state.modalVisible)}}>
+                                <View style={[styles.field]}>
+                                    <Text style={{marginLeft:25}}>日期</Text>
+                                    <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
+                                </View>
+                            </TouchableHighlight>
 
-                                            <TouchableHighlight onPress={() => {this.formfieldedit('日期和时间');this.setModalVisible(!this.state.modalVisible)}}>
-                            <View style={[styles.field]}>
-                                <Text style={{marginLeft:25}}>日期和时间</Text>
-                                <Image  style={{marginLeft:69,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
-                            </View>
-                                            </TouchableHighlight>
+                            <TouchableHighlight onPress={() => {this.formfieldedit('日期和时间');this.setModalVisible(!this.state.modalVisible)}}>
+                                <View style={[styles.field]}>
+                                    <Text style={{marginLeft:25}}>日期和时间</Text>
+                                    <Image  style={{marginLeft:69,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
+                                </View>
+                            </TouchableHighlight>
 
-                                                <TouchableHighlight onPress={() => {this.formfieldedit('照片');this.setModalVisible(!this.state.modalVisible)}}>
-                            <View style={[styles.field]}>
-                                <Text style={{marginLeft:25}}>照片</Text>
-                                <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
-                            </View>
-                                                </TouchableHighlight>
-
-
-
+                            <TouchableHighlight onPress={() => {this.formfieldedit('照片');this.setModalVisible(!this.state.modalVisible)}}>
+                                <View style={[styles.field]}>
+                                    <Text style={{marginLeft:25}}>照片</Text>
+                                    <Image  style={{marginLeft:110,width:14, height:14}} source={require('../../imgs/shenpi/yuanquan.png')}/>
+                                </View>
+                            </TouchableHighlight>
 
                             <Text onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={{fontSize:16,marginLeft:200,marginTop:20,color:'#387FFF'}}>取消</Text>
-
-
 
 
                         </View>
                     </Modal>
                     {/*模态框*/}
-
-
-
                 </View>
 
-
-
-
-
-
-
-
-
-
-
             </View>
-
-
-
-
-
-
-
-
         );
     }
-
-
 
     _setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
     }
-
-
 }
 
 const styles = StyleSheet.create({

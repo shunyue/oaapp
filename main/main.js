@@ -235,7 +235,8 @@ import order_search from '../home/order/order_search';
 import order_select_costom from '../home/order/order_select_costom';
 //订单选择创建人
 import order_select_people from '../home/order/order_select_people';
-
+//表单 多选框跳转
+import checkbox_select from '../home/process/checkbox_select';
 
 
 //周飞飞
@@ -556,11 +557,11 @@ const app = StackNavigator({
     order_select_people: {screen: order_select_people,navigationOptions: {header: null}},
     newer_performance: {screen: newer_performance,navigationOptions: {header: null}},
     performance_constrast: {screen: performance_constrast,navigationOptions: {header: null}},
+    checkbox_select: {screen: checkbox_select,navigationOptions: {header: null}},
 
 
     //周飞飞
-    // my页面
-
+    // my页面 和 目标
     myInfo:{screen: myInfo,navigationOptions: {header: null}},
     Mine:{screen: Mine,navigationOptions: {header: null}},
     AccountSafe:{screen: AccountSafe,navigationOptions: {header: null}},
