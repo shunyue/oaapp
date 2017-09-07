@@ -12,6 +12,7 @@ import {
     TouchableHighlight,
     TouchableOpacity,
     DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import Swiper from 'react-native-swiper';
@@ -195,7 +196,7 @@ export default class app extends Component {
                 <View style={styles.swiperItem}>
                     <View style={styles.row_list}>
 
-                        <TouchableHighlight  underlayColor={'#eee'} underlayColor={'#eee'} style={styles.icon_} onPress={()=>this.select_img('http://118.178.241.223/oa/icon_shenpi/shalou.png')}>
+                        <TouchableHighlight  underlayColor={'#eee'} style={styles.icon_} onPress={()=>this.select_img('http://118.178.241.223/oa/icon_shenpi/shalou.png')}>
                             <Image source={{uri: 'http://118.178.241.223/oa/icon_shenpi/shalou.png'}}  style={{width: 48, height: 48}} />
                         </TouchableHighlight>
 
@@ -229,6 +230,7 @@ export default class app extends Component {
     render() {
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

@@ -16,7 +16,8 @@ import {
     ScrollView,
     TouchableHighlight,
     DeviceEventEmitter,
-    Linking
+    Linking,
+    Platform,
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import Loading from '../../common/loading';
@@ -161,55 +162,9 @@ export default class PhoneContactList extends Component {
                 <View key={0}><Text style={{fontSize: 16,textAlign:'center'}}>没有记录</Text></View>
             );
         }
-        //如果查到数据
-        {/*     var contactArr=[];
-        var contactList=[];
-        if(this.state.contactInfo!="" && this.state.contactInfo !=null){//输入查询客户
-            var  contact=this.state.contactInfo;
-            for (var i in contact) {
-                var contactArr = [];
-                for(var j in contact[i]) {
-                    //alert(JSON.stringify(contact[i][j]))
-                    contactArr.push(
-                        <View  key={j}>
-                            <View style={[{backgroundColor:'#fff',justifyContent:'space-between',paddingLeft:10,paddingRight:10,},
-                            styles.flex_row,styles.borderBottom,styles.borderTop]}>
-                                <TouchableHighlight
-                                    underlayColor={'#ccc'}
-                                    onPress={this.goPage_ContactInfo.bind(this,contact[i][j])}>
-                                    <View style={[{width:screenW,flexDirection:'row',paddingTop:10,paddingBottom:10}]}>
-                                        {/!*<Image  style={{width:40,height:40,marginLeft:10,marginRight:10}}
-                                         source={require('../imgs/customer/headPortrait.png')}/>*!/}
-                                        <View>
-                                            <Text style={{color:'#333'}}>{contact[i][j].con_name}</Text>
-                                            <Text style={{marginTop:2,fontSize:12}}>{contact[i][j].cus_name}</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                                <View style={{position:'absolute',top:20,right:15}}>
-                                    <Image style={{width:20,height:20}} tintColor={'#e15151'}
-                                           source={require('../imgs/customer/phone.png')}/>
-                                </View>
-                            </View>
-                        </View>
-                    );
-                }
-                contactList.push(
-                    <View key={i}>
-                        <View style={styles.departLevel}>
-                            <Text style={styles.departText}>{contact[i][0].first_char}</Text>
-                        </View>
-                        {contactArr}
-                    </View>
-                )
-            }
-        }else{//输入查询数据
-            contactList.push(
-                <View key={0}><Text style={{fontSize: 16,textAlign:'center'}}>没有记录</Text></View>
-            );
-        }*/}
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

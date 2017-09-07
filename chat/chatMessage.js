@@ -14,6 +14,7 @@ import {
     ScrollView,
     TextInput,
     Modal,
+    Platform,
 } from 'react-native';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 const screenW = Dimensions.get('window').width;
@@ -841,6 +842,7 @@ export default class app extends Component {
 
         return(
                 <View style={styles.ancestorCon}>
+                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#e15151'}}></View>:null}
                     <View style={[styles.container,{backgroundColor:'#e15151'}]}>
                         <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                             <View style={{flexDirection:'row'}}>

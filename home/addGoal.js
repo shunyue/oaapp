@@ -880,6 +880,7 @@ export default class AddGoal extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.back()}>
                         <View style={{flexDirection:'row'}}>

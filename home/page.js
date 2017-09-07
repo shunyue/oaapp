@@ -9,7 +9,8 @@ import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    Platform,
 } from 'react-native';
 
 export default class Page extends Component {

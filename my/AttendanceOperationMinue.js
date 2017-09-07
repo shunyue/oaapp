@@ -16,6 +16,7 @@ import {
     DeviceEventEmitter,
     TouchableOpacity,
     Alert,
+    Platform,
     } from 'react-native';
 var PropTypes = React.PropTypes;
 import config from '../common/config';

@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
     TextInput,
     TouchableWithoutFeedback,
-    CheckBox,
     } from 'react-native';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
@@ -43,6 +42,7 @@ export default class VisitPosition extends Component {
     render() {
         return (
             <View style={[com.flex,com.bgcf5]}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*nav*/}
                 <View style={[com.row,com.aic,com.jcsb,com.pdt5l15,com.bbwc,com.bgcfff]}>
                     <TouchableHighlight

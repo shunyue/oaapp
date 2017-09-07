@@ -13,6 +13,7 @@ import {
     TextInput,
     TouchableHighlight,
     DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 
 const screenH = Dimensions.get('window').height;
@@ -262,6 +263,7 @@ export default class approve_detail extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <View style={{flexDirection:'row'}}>

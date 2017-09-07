@@ -13,6 +13,7 @@ import {
     TextInput,
     TouchableHighlight,
     DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 
 const screenH = Dimensions.get('window').height;

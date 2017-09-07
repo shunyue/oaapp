@@ -16,7 +16,8 @@ import {
     ScrollView,
     TouchableHighlight,
     DeviceEventEmitter,
-    Linking
+    Linking,
+    Platform,
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import Loading from '../../common/loading';
@@ -51,6 +52,7 @@ export default class PhoneContactInfo extends Component {
         let  {params}=this.props.navigation.state;
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>

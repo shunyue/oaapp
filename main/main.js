@@ -40,7 +40,7 @@ import CompanyName from '../my/departManager/companyName';
 import ChoosePeople from '../my/departManager/choosePeople';
 import UserInfo from '../my/departManager/userInfo';
 import Search from '../my/departManager/search'
-
+import HomePlanPerformance from '../home/homePlanPerformance';
 
 //客户
 
@@ -592,6 +592,8 @@ const app = StackNavigator({
     SelectResolver: {screen:SelectResolver,navigationOptions:{header:null}},
     EditResolve: {screen:EditResolve,navigationOptions:{header:null}},
     ResolveAimDetail: {screen:ResolveAimDetail,navigationOptions:{header:null}},
+    Aim:{screen:Aim,navigationOptions:{header:null}},
+    HomePlanPerformance: {screen:HomePlanPerformance,navigationOptions:{header:null}},
 
 
     //公共客户

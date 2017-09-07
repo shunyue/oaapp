@@ -21,7 +21,8 @@ import {
     TouchableWithoutFeedback,
     Linking,
     DeviceEventEmitter,
-    Alert
+    Alert,
+    Platform
     } from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import config from '../../common/config';
@@ -264,6 +265,7 @@ export default class app extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 15,backgroundColor: '#FF0019'}}></View>:null}
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <TouchableHighlight underlayColor={'#ed2437'} style={[styles.goback, styles.go]}
@@ -285,7 +287,7 @@ export default class app extends Component {
                         <Text style={{marginTop: 5, color: '#fff'}}>{this.state.thread.thread_company_name}</Text>
                     </View>
                 </View>
-                <View style={{width: screenW, height: screenH * 0.1, position: 'absolute', top: 95,}}>
+                <View style={{width: screenW, height: screenH * 0.1, position: 'absolute', top: Platform.OS ==='ios'?115:95,}}>
                     <Image style={{width: screenW, height: 30}} source={require('../../imgs/customer/detail_bj.png')}/>
                 </View>
                 <ScrollableTabView
@@ -449,7 +451,7 @@ const styles = StyleSheet.create({
 
     go:{
         position:'absolute',
-        top:8
+        top: Platform.OS==='ios'?8: 8
     },
     goback:{
         left:20,

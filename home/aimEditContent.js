@@ -17,6 +17,7 @@ import {
     TouchableOpacity,
     Picker,
     DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import moment from 'moment';
@@ -1152,6 +1153,7 @@ export default class AimEditContent extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <View style={{flexDirection:'row'}}>

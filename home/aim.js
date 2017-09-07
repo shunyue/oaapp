@@ -332,6 +332,7 @@ export default class Aim extends Component {
 
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={styles.navCon}>
                         <TouchableHighlight

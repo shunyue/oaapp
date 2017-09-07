@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     TouchableWithoutFeedback,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 import Header from '../common/header';
 import config from '../common/config';

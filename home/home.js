@@ -9,7 +9,8 @@ import { AppRegistry,
     Image,
     TouchableHighlight,
     AsyncStorage,
-    Dimensions
+    Dimensions,
+    Platform,
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -53,6 +54,7 @@ export default class Home extends Component {
             performance_current_year:0,
             performance_last_year:0,
             performance_max_year:0,
+            result:0
 
         };
     }
@@ -70,10 +72,30 @@ export default class Home extends Component {
                 this.getNet();//最新业绩
                 this.getNet1();//业绩对比
                 this.getNet2();//目标达成
+                this.requestData();  //周飞飞  添加获取目标达成数据的方法
             })
 
     }
-
+//获取目标达成中的数据
+    //周飞飞
+    requestData(){
+        var url=config.api.base + config.api.achievement;
+        request.post(url,{
+            company_id:this.state.company_id,
+        }).then((responseJson) => {
+            this.setState({
+                yearMonth:responseJson.data.yearMonth,
+                total_money: responseJson.data.total_money,
+                aimsell: responseJson.data.aimsell,
+                achievemoney:  responseJson.data.achievemoney,
+                result: responseJson.data.result,
+                achievesell:  responseJson.data.achievesell,
+                sellresult: responseJson.data.sellresult,
+            })
+        }).catch((error)=>{
+            toast.bottom('网络连接失败，请检查网络后重试');
+        })
+    }
 
     syncImmediate() {
         CodePush.sync(
@@ -303,13 +325,14 @@ export default class Home extends Component {
 
     render() {
         const chart_wh = 150
-        const reach =0.7
+        var reach =Number(this.state.result)
         const series = [reach, 1-reach]
         const deg = reach*180+'deg'
         const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
         const {navigate}=this.props.navigation
         return (
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
                 {/*头部导航*/}
                 <View style={styles.nav}>
                     <TouchableHighlight
@@ -492,39 +515,53 @@ export default class Home extends Component {
                                 </View>
                             </TouchableHighlight>
 
-                            <View style={[styles.slide,styles.slideBj]}>
-                                {/*块级导航*/}
-                                <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
-                                    <View style={{width:80}}>
-                                        <Text style={[styles.bestMark,{width:60}]}>目标达成</Text>
+
+                            <TouchableHighlight underlayColor={'#fff'}
+                                                onPress={()=>{navigate('HomePlanPerformance',{yearMonth:this.state.yearMonth,
+                                                    total_money: this.state.total_money,
+                                                    aimsell:this.state.aimsell,
+                                                    achievemoney: this.state.achievemoney,
+                                                    achievesell: this.state.achievesell,
+                                                    result:this.state.result,
+                                                    sellresult:this.state.sellresult,
+                                                    company_id:this.state.company_id})}}>
+                                <View style={[styles.slide,styles.slideBj]}>
+                                    {/*块级导航*/}
+                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
+                                        <View style={{width:80}}>
+                                            <Text style={[styles.bestMark,{width:55}]}>目标达成</Text>
+                                        </View>
+                                        <Text style={[styles.rowConCommonSize,styles.rowConCommonColor]}>{this.state.yearMonth}</Text>
+                                        <View style={{width:80}}>
+                                            <Text style={[styles.rowConCommonSize,{fontSize:12}]}>单位：万元</Text>
+                                        </View>
                                     </View>
-                                    <Text style={[styles.rowConCommonSize,styles.rowConCommonColor]}>2017年08月</Text>
-                                    <View style={{width:80}}>
-                                        <Text style={[styles.rowConCommonSize,{fontSize:11}]}>单位：万元</Text>
-                                    </View>
-                                </View>
-                                <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
-                                    <PieChart
-                                        chart_wh={chart_wh}
-                                        series={series}
-                                        sliceColor={sliceColor}
-                                        doughnut={true}
-                                        coverRadius={0.5}
-                                        coverFill={'#FFF'}
+                                    <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
+                                        <PieChart
+                                            chart_wh={chart_wh}
+                                            series={series}
+                                            sliceColor={sliceColor}
+                                            doughnut={true}
+                                            coverRadius={0.5}
+                                            coverFill={'#FFF'}
                                         />
-                                    <View style={{position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                        <Image style={{width:66,height:12,tintColor:'#aaa'}} source={require('../imgs/pointer.png')}/>
+
+                                        <View style={{padding:10,position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
+                                            <Image style={{width:66,height:12}} tintColor={'#aaa'} source={require('../imgs/pointer.png')}/>
+                                        </View>
+                                        <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
+                                            <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
+                                        </View>
+                                        <View style={{position:'absolute',width:140,top:75,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                                            <Text>0 </Text>
+                                            <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
+                                            <Text>1</Text>
+                                        </View>
                                     </View>
-                                    <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
-                                        <Text style={reach==1?{display:'none'}:{fontSize:12}}>{reach}</Text>
-                                    </View>
-                                    <View style={{position:'absolute',width:140,top:70,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-                                        <Text>0 </Text>
-                                        <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
-                                        <Text>1</Text>
-                                    </View>
+
                                 </View>
-                            </View>
+                            </TouchableHighlight>
+
                         </Carousel>
                     </View>
 
