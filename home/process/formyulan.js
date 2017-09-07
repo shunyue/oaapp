@@ -442,7 +442,7 @@ export default class formyulan extends Component {
 
 
         return (
-<<<<<<< HEAD
+
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
@@ -451,7 +451,6 @@ export default class formyulan extends Component {
                         <Text style={styles.back_text}>返回</Text>
                     </TouchableOpacity>
                     <Text style={styles.formHeader}>模板样式预览</Text>
-=======
             <View style={styles.body}>
                 {/*导航栏*/}
                 <View style={styles.nav}>
@@ -463,7 +462,6 @@ export default class formyulan extends Component {
                             <Image source={require('../../imgs/navxy.png')}/>
                             <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
                         </View>
->>>>>>> 0a6460a6ffaabf94f29f63ee0601b4272da2432e
 
                     </TouchableHighlight>
                     <Text style={styles.fSelf}>表单样式预览</Text>
