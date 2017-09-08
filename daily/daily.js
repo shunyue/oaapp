@@ -192,17 +192,17 @@ export default class Daily extends Component {
 
                 {/*自定义导航栏-定位左边*/}
             <TouchableHighlight
-                    style={[com.posr,{top:8,left:10}]}
+                    style={[com.posr,Platform.OS === 'ios'? {top:28,left:10}:{top:8,left:10}]}
                     onPress={()=>{this.repose()}}
                     underlayColor="#f5f5f5"
                     >
                     <View style={[]}>
-                        <Image style={[com.wh24,com.tcr]} source={require('../imgs/bbr32.png')}/>
+                        <Image style={[com.wh24,com.tcrjkiuui]} source={require('../imgs/bbr32.png')}/>
                     </View>
                 </TouchableHighlight>
 
                 {/*自定义导航栏-定位右边*/}
-                <View style={[com.row,com.posr,{top:8,right:10}]}>
+                <View style={[com.row,com.posr,Platform.OS === 'ios'? {top:28,right:10}:{top:8,right:10}]}>
                     <TouchableHighlight
                         style={[com.mgr15]}
                         onPress={()=>{this.setState({change:!this.state.change})}}
