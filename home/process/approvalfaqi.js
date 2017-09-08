@@ -107,7 +107,7 @@ export default class Approvalfaqi extends Component {
                         underlayColor="#d5d5d5"
                     >
                         <View style={styles.navltys}>
-                           <Text>添加模板</Text>
+                           <Text style={[styles.fSelf,styles.navltyszt]}>添加模板</Text>
                         </View>
 
                     </TouchableHighlight>
@@ -180,7 +180,7 @@ export default class Approvalfaqi extends Component {
                             underlayColor="#d5d5d5"
                         >
                             <View style={styles.navltys}>
-                                <Text>添加模板</Text>
+                                <Text style={[styles.fSelf,styles.navltyszt]}>添加模板</Text>
                             </View>
 
                         </TouchableHighlight>
@@ -231,15 +231,15 @@ export default class Approvalfaqi extends Component {
 const styles = StyleSheet.create({
     //nav
     navltys: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: (Platform.OS === 'ios') ? 50 : 30,
         alignItems: 'center',
+        width:60
     },
     navltyszt: {
         fontSize: 14,
-        fontWeight: 'normal',
+
         color: '#e4393c',
     },
 
@@ -255,11 +255,12 @@ const styles = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
+        paddingLeft:15,
+        paddingRight:15
     },
     sz: {//导航图标
         width: 30,
