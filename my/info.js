@@ -358,7 +358,8 @@ const styles = StyleSheet.create({
     },
     myself:{
         width:30,
-        height:30
+        height:30,
+        borderRadius:15
     },
 
     TotalSetting: {

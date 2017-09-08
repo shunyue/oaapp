@@ -399,7 +399,8 @@ const styles = StyleSheet.create({
     },
     myself:{
         width:40,
-        height:40
+        height:40,
+        borderRadius:20
     },
     info:{
         fontSize:15,
