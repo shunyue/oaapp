@@ -128,7 +128,7 @@ export default class Approvalfaqi extends Component {
                                 renderRow={(rowData)=>
                             <View>
 
-                             <TouchableHighlight  onPress={() => navigate('formDetail', { id: rowData.id,formname:rowData.name})}>
+                             <TouchableHighlight  onPress={() => navigate('formDetail', { id: rowData.id,formname:rowData.name,company_id: this.props.navigation.state.params.company_id,user_id:this.props.navigation.state.params.user_id})}>
                             <View  style={[styles.rowCom]}>
                                 <View style={[styles.eleTopCom]}>
 

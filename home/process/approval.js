@@ -95,7 +95,7 @@ export default class Approval extends Component {
     }
     //发起审批
     faqiApproval() {
-        this.props.navigation.navigate('Approvalfaqi')
+        this.props.navigation.navigate('Approvalfaqi',{company_id: this.props.navigation.state.params.company_id,user_id:this.props.navigation.state.params.user_id})
     }
 
     //我接收

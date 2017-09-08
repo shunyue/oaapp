@@ -268,6 +268,8 @@ export default class formDetail extends Component {
 
         //将表单的id 放入formdata 给PHP使用
         formData.append('form_id',this.state.form_id);
+        formData.append('user_id',this.props.navigation.state.params.user_id);
+        formData.append('company_id',this.props.navigation.state.params.company_id);
 
         //将审批人放入 formdata  只能传递字符串
         var appprover_people_info=[];
@@ -277,7 +279,6 @@ export default class formDetail extends Component {
         formData.append('approver_peopel',appprover_people_info.join("--"));
 
 
-        //console.log(formData);
         var url=config.api.base + config.api.sava_form;
         fetch(url,{
             method:'POST',
