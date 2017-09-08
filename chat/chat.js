@@ -374,9 +374,9 @@ export default class Chat extends Component {
 
 
             <View style={styles.container}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
+              
                 <ScrollableTabView
-                    initialPage = {1}
+
                     renderTabBar={() => <ScrollableTabBar
                               style={styles.tabar_scroll}
              />}
