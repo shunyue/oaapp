@@ -526,7 +526,9 @@ export default class Home extends Component {
                                     {/*块级导航*/}
                                     <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
                                         <View style={{width:80}}>
-                                            <Text style={[styles.bestMark,{width:55}]}>目标达成</Text>
+                                            <View style={{width:55,paddingTop:5,paddingBottom:5, backgroundColor: '#FF7C7C',}}>
+                                                <Text style={[styles.bestMark2]}>目标达成</Text>
+                                            </View>
                                         </View>
                                         <Text style={[styles.rowConCommonSize,styles.rowConCommonColor]}>{this.state.yearMonth}</Text>
                                         <View style={{width:80}}>
@@ -864,7 +866,14 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize:11,
         borderRadius: 2,
-        padding: 5,
+        padding:5,
+        borderTopLeftRadius:0,
+        borderBottomLeftRadius:0,
+    },
+    bestMark2: {
+        color: '#fff',
+        fontSize:11,
+        borderRadius: 2,
         borderTopLeftRadius:0,
         borderBottomLeftRadius:0,
     },
