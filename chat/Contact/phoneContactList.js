@@ -126,10 +126,10 @@ export default class PhoneContactList extends Component {
                                          source={require('../imgs/customer/headPortrait.png')}/>*/}
                                         {(contact[i][j].hasPic == false) ? (
                                             <Image
-                                                style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 200}}
+                                                style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 20}}
                                                 source={require('../../imgs/tx.png')}/>
                                         ) : (<Image
-                                            style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 200}}
+                                            style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 20}}
                                             source={{uri:contact[i][j].picPath}}/>)}
                                         <View>
                                             <Text style={{color:'#333'}}>{contact[i][j].name}</Text>
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     },
     go:{
         position:'absolute',
-        top:Platform.OS==='ios'?28:8
+        top:8
     },
     goback:{
         left:15,

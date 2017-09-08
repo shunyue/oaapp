@@ -67,10 +67,10 @@ export default class PhoneContactInfo extends Component {
                                  source={require('../imgs/customer/headPortrait.png')}/>*/}
                                 {(params.contactInfo.hasPic == false) ? (
                                     <Image
-                                        style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 200}}
+                                        style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 20}}
                                         source={require('../../imgs/tx.png')}/>
                                 ) : (<Image
-                                    style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 200}}
+                                    style={{width:40,height:40,marginLeft:10,marginRight:10,borderRadius: 20}}
                                     source={{uri:params.contactInfo.picPath}}/>)}
                                 <View>
                                     <Text style={{color:'#333'}}>{params.contactInfo.name}</Text>
