@@ -815,17 +815,18 @@ const styles = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: '#EA3B49',
-        padding: 5
+        paddingLeft:15,
+        paddingRight:15,
+
     },
     sz: {//导航图标
-        width: 30,
-        height: 30
+        width: 26,
+        height: 26
     },
     fSelf: {//导航字体相关
         color: '#fff',
-        height: 30,
         fontSize: 16
     },
     childContent: {//子容器页面级
@@ -900,7 +901,7 @@ const styles = StyleSheet.create({
         top: -15
     },
     textFontSize18: {
-        fontSize: 16
+        fontSize: 16,
     },
     textFontSize11: {
         fontSize: 11
