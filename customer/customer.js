@@ -332,14 +332,15 @@ export default class app extends Component {
                     <Modal
                         backdropOpacity={0}
                         transparent={true}
-                        animationType={"fade"}
+                        animationIn={'slideInDown'}
+                        animationOut={'slideOutUp'}
                         visible={this.state.isModalVisible}
                         onRequestClose={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
                         >
                         <TouchableWithoutFeedback onPress={() => {this.setState({isModalVisible: !this.state.isModalVisible})}}>
                             <View style={{flex:1}}>
                                 <View style={{width:screenW,height:Platform.OS==='ios'?(screenH-269):(screenH-274),opacity:0.4,backgroundColor:'#000',top:Platform.OS==='ios'?210:190,position:'absolute'}}></View>
-                                <View style={[{backgroundColor:'#fff',height:120, position: 'absolute',top:Platform.OS==='ios'?207:187}]}>
+                                <View style={[{backgroundColor:'#fff',height:120, position: 'absolute',top:Platform.OS==='ios'?207:170}]}>
                                     <TouchableHighlight underlayColor={'#eee'} style={styles.xinxiiala} onPress={()=>{this.selectMessage(1)}}>
                                         <Text>名称排序</Text>
                                     </TouchableHighlight>

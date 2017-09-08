@@ -39,7 +39,7 @@ export default class HomePlanPerformance extends Component {
             result:this.props.navigation.state.params.result,
             sellresult:this.props.navigation.state.params.sellresult,
             change:false,
-            color:false
+            color:false,
         }
     }
 
