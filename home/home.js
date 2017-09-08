@@ -546,8 +546,8 @@ export default class Home extends Component {
                                             coverFill={'#FFF'}
                                         />
 
-                                        <View style={{padding:10,position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                            <Image style={{width:60,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
+                                        <View style={{position:'absolute',top:61,transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
+                                            <Image style={{width:55,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
                                         </View>
                                         <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
                                             <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
@@ -874,6 +874,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fcf',
         borderRadius: 10,
+        marginTop:2
     },
     rowConCommonText: {
         borderLeftWidth: 1,
@@ -882,8 +883,8 @@ const styles = StyleSheet.create({
 
     },
     rowConCommonSize: {
-        paddingLeft:8,
-        paddingRight:8
+        paddingLeft:9,
+        paddingRight:9
     },
     rowConCommonColor: {
         color: '#000'
