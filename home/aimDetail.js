@@ -15,6 +15,7 @@ import {
     ScrollView,
     Dimensions,
     DeviceEventEmitter,
+    TouchableOpacity,
     } from 'react-native';
 
 const screenW = Dimensions.get('window').width;
@@ -161,26 +162,24 @@ export default class AimDetail extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={styles.navCon}>
-                    <TouchableHighlight
+                    <TouchableOpacity
                         onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
                         >
-                        <View style={styles.navltys}>
+                        <View style={[styles.navltys,{width:60}]}>
                             <Image source={require('../imgs/navxy.png')}/>
                             <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.fSelf}>目标详情</Text>
                     <View>
-                        <TouchableHighlight
+                        <TouchableOpacity
                             onPress={()=>this.edit(this.state.target_id)}
-                            underlayColor="#d5d5d5"
                             style={role ?{}:{display:'none'}}
                             >
-                            <View >
-                                <Text style={[styles.fSelf,styles.navltyszt]}>编辑</Text>
+                            <View style={{width:60,alignItems:'flex-end'}}>
+                                <Text style={[styles.navltyszt]}>编辑</Text>
                             </View>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <ScrollView>
@@ -333,14 +332,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEEFF4'
     },
     navCon: {//头部导航
-        height: 35,
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
+        paddingLeft:15,
+        paddingRight:15
     },
     sz: {//导航图标
         width: 30,

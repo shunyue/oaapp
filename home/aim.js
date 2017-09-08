@@ -5,6 +5,7 @@ import {
     Text,
     View,
     TouchableHighlight,
+    TouchableOpacity,
     Image,
     Platform,
     ScrollView,
@@ -335,24 +336,21 @@ export default class Aim extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={styles.navCon}>
-                        <TouchableHighlight
+                        <TouchableOpacity
                             onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
                         >
-                            <View style={styles.navltys}>
+                            <View style={[styles.navltys]}>
                                 <Image source={require('../imgs/navxy.png')}/>
                                 <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
                             </View>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                         <Text style={styles.fSelf}>{iqye}目标</Text>
-                        <View style={{width:20,height:20,marginRight:15}}>
-                            <TouchableHighlight
+                        <View style={{width:60,alignItems:'flex-end'}}>
+                            <TouchableOpacity
                                 onPress={()=>this.add()}
-                                underlayColor="#d5d5d5"
-
                                 >
                                 <Image style={this.state.role ?{width:20,height:20,}:{display:'none'}} source={require('../imgs/add.png')}/>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         </View>
 
                 </View>
@@ -407,6 +405,7 @@ const styles = StyleSheet.create({
     navltys: {
         flexDirection: 'row',
         alignItems: 'center',
+        width:60
     },
     navltyszt: {
         fontSize: 14,
@@ -423,13 +422,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEEFF4'
     },
     navCon: {//头部导航
-        height: 35,
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
+        paddingLeft:15,
+        paddingRight:15
     },
     sz: {//导航图标
         width: 30,

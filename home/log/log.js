@@ -385,16 +385,16 @@ export default class Log extends Component {
                 <ScrollView
                     style={[com.pdl15,com.pdr15]}
                     refreshControl={
-           <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={()=>this.showLogs(this.state.title)}
-              tintColor="#ff0000"
-              title="Loading..."
-              titleColor="#00ff00"
-             colors={['#ff0000', '#00ff00', '#0000ff']}
-              progressBackgroundColor="#ffff00"
-              />
-            }>
+                       <RefreshControl
+                          refreshing={this.state.isRefreshing}
+                          onRefresh={()=>this.showLogs(this.state.title)}
+                          tintColor="#ff0000"
+                          title="Loading..."
+                          titleColor="#00ff00"
+                         colors={['#ff0000', '#00ff00', '#0000ff']}
+                          progressBackgroundColor="#ffff00"
+                          />
+                        }>
                     {/*搜索员工*/}
                     {this.state.data.length!=0?( <View style={[]}>
                         <TouchableHighlight
