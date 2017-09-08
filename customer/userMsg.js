@@ -16,7 +16,8 @@ import {
     TouchableHighlight,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Linking
+    Linking,
+    Platform
     } from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import moment from 'moment';
@@ -242,6 +243,7 @@ export default class app extends Component {
         return (
 
             <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#C30000'}}></View>:null}
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
@@ -361,7 +363,7 @@ const styles = StyleSheet.create({
     },
     header:{
         width:screenW,
-        height:40,
+        height:Platform.OS==='ios'?60:40,
         flexDirection :'row',
         alignItems:'center',
         justifyContent:'center',
@@ -372,14 +374,14 @@ const styles = StyleSheet.create({
 
     go:{
         position:'absolute',
-        top:8
+        top:Platform.OS==='ios'?20:8
     },
     goback:{
-        left:20,
+        left:15,
         flexDirection :'row',
     },
     goRight:{
-        right:20
+        right:15
     },
     back_icon:{
         width:10,
