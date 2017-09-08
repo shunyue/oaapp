@@ -6,6 +6,7 @@ import {
     Text,
     View,
     TouchableHighlight,
+    TouchableOpacity,
     Image,
     Platform,
     ScrollView,
@@ -222,25 +223,23 @@ export default class Approval extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={styles.nav}>
-                    <TouchableHighlight
+                    <TouchableOpacity
                         onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
                     >
                         {/**/}
-                        <View style={styles.navltys}>
+                        <View style={[styles.navltys,{marginLeft:5}]}>
                             <Image source={require('../../imgs/navxy.png')}/>
                             <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
                         </View>
 
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.fSelf}>审批</Text>
                     <TouchableHighlight
-
                         onPress={()=>this.newBulidApproval()}
-                        underlayColor="#d5d5d5"
+                        underlayColor={"transparent"}
                     >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navld16.png')}/>
+                        <View style={[styles.navltys,{marginRight:5}]}>
+                            <Image style={{width:20,height:20}} source={require('../../imgs/navld16.png')}/>
                         </View>
 
                     </TouchableHighlight>
@@ -284,29 +283,33 @@ export default class Approval extends Component {
                         isVisible={this.state.isModalVisible}
                     >
                             <View style={{flex:1}}>
-                                <View style={{width:screenW,height:(screenH-140),opacity:0.4,backgroundColor:'#000',top:75,position:'absolute'}}></View>
+                                <TouchableOpacity style={{width:screenW,height:(screenH-140),opacity:0.4,backgroundColor:'#000',top:75,position:'absolute'}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
+                                </TouchableOpacity>
                                 <View style={styles.model_up}>
                                     {/* 下拉框 内容*/}
 
-                                    <TouchableWithoutFeedback
+                                    <TouchableHighlight
+                                        underlayColor="#d5d5d5"
                                         onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});this.getNet()}}
                                     >
                                     <View style={[styles.rowCom]}>
                                         <Image style={{width:15,height:15,marginRight:6}} source={require('../../imgs/customer/arrowU.png')}/>
                                         <Text style={[styles.eleFontCon]}>我的审批</Text>
                                     </View>
-                                    </TouchableWithoutFeedback>
+                                    </TouchableHighlight>
 
-                                    <TouchableWithoutFeedback
+                                    <TouchableHighlight
+                                        underlayColor="#d5d5d5"
                                         onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});this.my_receive()}}
                                     >
                                     <View style={[styles.rowCom,styles.rowCom_padd]}>
                                         <Image style={{width:15,height:15,marginRight:6}} source={require('../../imgs/customer/arrowU.png')}/>
                                         <Text style={[styles.eleFontCon]}>我收到的</Text>
                                     </View>
-                                    </TouchableWithoutFeedback>
+                                    </TouchableHighlight>
 
-                                    <TouchableWithoutFeedback
+                                    <TouchableHighlight
+                                        underlayColor="#d5d5d5"
                                         onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});this.my_faqi()}}
                                     >
 
@@ -314,16 +317,17 @@ export default class Approval extends Component {
                                         <Image style={{width:15,height:15,marginRight:6}} source={require('../../imgs/customer/arrowU.png')}/>
                                         <Text style={[styles.eleFontCon]}>我发起的</Text>
                                     </View>
-                                    </TouchableWithoutFeedback>
+                                    </TouchableHighlight>
 
-                                    <TouchableWithoutFeedback
+                                    <TouchableHighlight
+                                        underlayColor="#d5d5d5"
                                         onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});this.my_approve()}}
                                     >
                                     <View style={[styles.rowCom,styles.rowCom_padd]}>
                                         <Image style={{width:15,height:15,marginRight:6}} source={require('../../imgs/customer/arrowU.png')}/>
                                         <Text style={[styles.eleFontCon]}>待我审批</Text>
                                     </View>
-                                    </TouchableWithoutFeedback>
+                                    </TouchableHighlight>
 
 
                                 </View>

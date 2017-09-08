@@ -266,8 +266,8 @@ export default class form_approve extends Component {
                         <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
                     </View>
                 </View>
-                <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
-                    <Image source={{uri:this.state.approve_img}}  style={{width: 100, height: 100}} tintColor={'#37915f'}/>
+                <View style={{position:'absolute',right:20,top:20,zIndex:1000}}>
+                    <Image source={{uri:this.state.approve_img}}  style={{width: 80, height: 80}} tintColor={'#37915f'}/>
                 </View>
 
                 <ScrollView>
