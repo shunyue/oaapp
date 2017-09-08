@@ -240,14 +240,14 @@ const styles = StyleSheet.create({
     },
     go:{
         position:'absolute',
-        top:8
+        top:Platform.OS==='ios'?28:8
     },
     goback:{
-        left:20,
+        left:15,
         flexDirection :'row',
     },
     goRight:{
-        right:20
+        right:15
     },
     back_icon:{
         width:10,
