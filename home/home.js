@@ -55,11 +55,8 @@ export default class Home extends Component {
             performance_last_year:0,
             performance_max_year:0,
             result:0
-
         };
     }
-
-
     componentDidMount() {
         this.syncImmediate();
         AsyncStorage.getItem('user')
