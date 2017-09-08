@@ -55,11 +55,8 @@ export default class Home extends Component {
             performance_last_year:0,
             performance_max_year:0,
             result:0
-
         };
     }
-
-
     componentDidMount() {
         this.syncImmediate();
         AsyncStorage.getItem('user')
@@ -546,8 +543,8 @@ export default class Home extends Component {
                                             coverFill={'#FFF'}
                                         />
 
-                                        <View style={{padding:10,position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                            <Image style={{width:60,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
+                                        <View style={{position:'absolute',top:61,transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
+                                            <Image style={{width:55,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
                                         </View>
                                         <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
                                             <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
@@ -818,18 +815,19 @@ const styles = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: '#EA3B49',
-        padding: 5
+        paddingLeft:15,
+        paddingRight:15,
+
     },
     sz: {//导航图标
-        width: 30,
-        height: 30
+        width: 26,
+        height: 26
     },
     fSelf: {//导航字体相关
         color: '#fff',
-        height: 30,
-        fontSize: 20
+        fontSize: 16
     },
     childContent: {//子容器页面级
         flex: 1,
@@ -874,6 +872,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fcf',
         borderRadius: 10,
+        marginTop:2
     },
     rowConCommonText: {
         borderLeftWidth: 1,
@@ -882,8 +881,8 @@ const styles = StyleSheet.create({
 
     },
     rowConCommonSize: {
-        paddingLeft:8,
-        paddingRight:8
+        paddingLeft:9,
+        paddingRight:9
     },
     rowConCommonColor: {
         color: '#000'
@@ -902,7 +901,7 @@ const styles = StyleSheet.create({
         top: -15
     },
     textFontSize18: {
-        fontSize: 16
+        fontSize: 16,
     },
     textFontSize11: {
         fontSize: 11

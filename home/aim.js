@@ -385,7 +385,7 @@ export default class Aim extends Component {
                             </View>
                             {seasonList1}
                             <View style={temp4 ? {height:30,justifyContent:'center',marginLeft:15}:{display:'none'}}>
-                                <Text style={temp4 ? {}:{display:'none'}}>{nextyearing}年</Text>
+                                <Text style={temp4 ? {}:{display:'none'}}>{yearing}年</Text>
                             </View>
                             {seasonList2}
                         </ScrollView>

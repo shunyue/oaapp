@@ -290,7 +290,7 @@ export default class MyDailySearch extends Component {
         }
         return (
             <View style={[com.flex]}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
+
                 <View style={[com.row,com.jcsa,com.pdt5l15,com.bbwc,com.aic,com.bgcfff]}>
                     <TouchableOpacity style={[com.pos]}
                                       onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}>
@@ -315,7 +315,7 @@ export default class MyDailySearch extends Component {
                         </View>
                     </TouchableOpacity>*/}
                 </View>
-                <ScrollView style={[,com.flex,{height:screenH*0.70}]}>
+                <ScrollView style={[,com.flex,{flex:1}]}>
                     <View style={[com.bckf5,com.btwc,com.btwc]}>
                         {dailylist}
                         {/*  <View style={[]}>
@@ -422,16 +422,15 @@ export default class MyDailySearch extends Component {
                         <View>
                             <Modal
                                 backdropOpacity={0}
-                                animationIn={'slideInDown'}
-                                animationOut={'slideOutUp'}
+                                animationType={"fade"}
                                 isVisible={this.state.isModalVisible}
                                 >
                                 <TouchableWithoutFeedback
                                     onPress={() => this.setState({isModalVisible: !this.state.isModalVisible})}>
                                     <View style={{flex:1}}>
                                         <View
-                                            style={[com.posr,com.h200,{top:80,left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
-                                        <View style={[com.posr,{top:0}]}>
+                                            style={[com.posr,com.h200,{top:Platform.OS==='ios'?95:75,left:0,width:screenW,height:Platform.OS==='ios'?screenH-155:screenH-160,backgroundColor:'#000',opacity:0.6}]}></View>
+                                        <View style={[com.posr,{top:Platform.OS==='ios'?25:5}]}>
                                             <View style={[com.bckfff,com.mgt70]}>
                                                 {/*页面级-下拉框内容*/}
                                                 <View style={[com.pdt5,com.pdb5,com.row,]}>
@@ -499,16 +498,15 @@ export default class MyDailySearch extends Component {
                             </Modal>
                             <Modal
                                 backdropOpacity={0}
-                                animationIn={'slideInDown'}
-                                animationOut={'slideOutUp'}
+                                animationType={"fade"}
                                 isVisible={this.state.isModalVisibleTwo}
                                 >
                                 <TouchableWithoutFeedback
                                     onPress={() => this.setState({isModalVisibleTwo:!this.state.isModalVisibleTwo})}>
                                     <View style={{flex:1}}>
                                         <View
-                                            style={[com.posr,com.h200,{top:75,left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
-                                        <View style={[com.posr,{top:0}]}>
+                                            style={[com.posr,com.h200,{top:Platform.OS==='ios'?95:75,left:0,width:screenW,height:Platform.OS==='ios'?screenH-155:screenH-160,backgroundColor:'#000',opacity:0.6}]}></View>
+                                        <View style={[com.posr,{top:Platform.OS==='ios'?25:5}]}>
                                             <View style={[com.bckfff,com.mgt70]}>
                                                 {/*页面级-下拉框内容*/}
                                                 <View style={[com.bgcfff,com.ww,com.row,com.hh3]}>

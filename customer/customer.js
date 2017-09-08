@@ -249,7 +249,7 @@ export default class app extends Component {
 
             <View style={styles.container}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={{width:screenW,height:47,flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingRight:15}}>
+                <View style={{width:screenW,height:40,flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingRight:15}}>
                     <TouchableOpacity onPress={() => this.goPage()}>
                         <Image style={styles.icon} source={require('../imgs/customer/baobiao.png')}/>
                     </TouchableOpacity>
@@ -338,8 +338,8 @@ export default class app extends Component {
                         >
                         <TouchableWithoutFeedback onPress={() => {this.setState({isModalVisible: !this.state.isModalVisible})}}>
                             <View style={{flex:1}}>
-                                <View style={{width:screenW,height:(screenH-274),opacity:0.4,backgroundColor:'#000',top:190,position:'absolute'}}></View>
-                                <View style={styles.modelUp}>
+                                <View style={{width:screenW,height:Platform.OS==='ios'?(screenH-269):(screenH-274),opacity:0.4,backgroundColor:'#000',top:Platform.OS==='ios'?210:190,position:'absolute'}}></View>
+                                <View style={[{backgroundColor:'#fff',height:120, position: 'absolute',top:Platform.OS==='ios'?207:187}]}>
                                     <TouchableHighlight underlayColor={'#eee'} style={styles.xinxiiala} onPress={()=>{this.selectMessage(1)}}>
                                         <Text>名称排序</Text>
                                     </TouchableHighlight>
@@ -369,13 +369,13 @@ const styles = StyleSheet.create({
         height: 26,
     },
     imgContainer: {
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         borderRadius: 18,
         backgroundColor: '#4CA9FF',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 4
+        marginBottom: 5
     },
     icon_nav: {
         height: 26,
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     Nav: {
-        height:100,
+        height:90,
         flexDirection :'row',
         justifyContent:'center',
         alignItems:'center',
