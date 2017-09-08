@@ -385,6 +385,7 @@ export default class Chat extends Component {
                     tabBarActiveTextColor='#e15151'
                     tabBarInactiveTextColor='#333'
                     locked ={ false}
+                    tabBarTextStyle ={{fontSize:16,}}
                     showsVerticalScrollIndicator={false}
                     onChangeTab={(obj) => {
                             this.scrollPage(obj.i)
@@ -526,12 +527,12 @@ export default class Chat extends Component {
                     </View>
 
                 </ScrollableTabView>
-                <View style={[Platform.OS === 'ios'?{top:30}:{top: 10},{position:'absolute',left:15}]}>
+                <View style={[Platform.OS === 'ios'?{top:35}:{top: 7},{position:'absolute',left:15}]}>
                     <TouchableHighlight underlayColor={'transparent'} onPress={() => this.goPage()}>
                         <Image style={{width:26,height:26}} source={require('../imgs/customer/baobiao.png')}/>
                     </TouchableHighlight>
                 </View>
-                <View style={[Platform.OS === 'ios'?{top:30}:{top: 10},this.state.scroll[1]?{position:'absolute',right:15}:{display:'none'}]}>
+                <View style={[Platform.OS === 'ios'?{top:35}:{top: 7},this.state.scroll[1]?{position:'absolute',right:15}:{display:'none'}]}>
                     <TouchableHighlight underlayColor={'transparent'} onPress={() => { this.setState({modalVisible: !this.state.modalVisible})}}>
                         <Image style={{width:26,height:26}} source={require('../imgs/customer/add.png')}/>
                     </TouchableHighlight>
@@ -605,9 +606,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8F8F8'
     },
     tabar_scroll:{
-        height:48,
+        height:41,
         justifyContent:'center',
-        paddingBottom:8,
         borderBottomWidth:1,
         borderColor:'#ccc',
     },

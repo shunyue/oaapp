@@ -826,7 +826,7 @@ const styles = StyleSheet.create({
     fSelf: {//导航字体相关
         color: '#fff',
         height: 30,
-        fontSize: 20
+        fontSize: 16
     },
     childContent: {//子容器页面级
         flex: 1,
