@@ -8,6 +8,7 @@ import {
     AsyncStorage
 } from 'react-native';
 import Orientation from 'react-native-orientation';
+import { NavigationActions } from 'react-navigation'
 export default class Launch extends Component {
 
     componentDidMount() {
@@ -16,9 +17,21 @@ export default class Launch extends Component {
         AsyncStorage.getItem('user')
             .then((data) => {
                 if(data) {
-                    this.props.navigation.navigate('Main');
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({ routeName: 'Main'})
+                        ]
+                    });
+                    this.props.navigation.dispatch(resetAction);
                 }else{
-                    this.props.navigation.navigate('Login');
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({ routeName: 'Login',params: {type: 'login'}})
+                        ]
+                    });
+                    this.props.navigation.dispatch(resetAction);
                 }
             })
     }

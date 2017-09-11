@@ -13,8 +13,10 @@ import {
     TouchableOpacity,
     Dimensions,
     Platform,
+    AsyncStorage
     } from 'react-native';
 import Header from '../common/header';
+import { NavigationActions } from 'react-navigation'
 export default class Mine extends Component {
     OpBack() {
         this.props.navigation.goBack('Mine');
@@ -29,10 +31,21 @@ export default class Mine extends Component {
     account(){
         this.props.navigation.navigate('AccountSafe',{id:this.props.navigation.state.params.id})
     }
+    //退出登录
+    _logOut() {
+        AsyncStorage.clear();
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({ routeName: 'Login', params: {type: 'reLogin'}})
+            ]
+        });
+        this.props.navigation.dispatch(resetAction)
+    }
+
     render() {
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <Header navigation = {this.props.navigation}
                         title = "设置"
                         onPress={()=>this.OpBack()}/>
@@ -86,9 +99,11 @@ export default class Mine extends Component {
                             <Image style={{width:12,height:12,tintColor:'#888'}} source={require('../imgs/customer/arrow_r.png')}/>
                         </View>
                     </View>
-                    <View style={[styles.flexRow,styles.border_top,styles.border_bottom,{height:35,justifyContent:'center',marginTop:8}]}>
-                        <Text style={{color:'#e15151'}}>退出登录</Text>
-                    </View>
+                    <TouchableOpacity onPress={()=>this._logOut()}>
+                        <View style={[styles.flexRow,styles.border_top,styles.border_bottom,{height:35,justifyContent:'center',marginTop:8}]}>
+                            <Text style={{color:'#e15151'}}>退出登录</Text>
+                        </View>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         );

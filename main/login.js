@@ -15,6 +15,7 @@ import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
 import JPushModule from 'jpush-react-native';
+import { NavigationActions } from 'react-navigation'
 const ScreenW = Dimensions.get('window').width;
 export default class Login extends Component {
     constructor(props) {
@@ -49,7 +50,25 @@ export default class Login extends Component {
                         console.log("set alias failed, errorCode: " + map.errorCode);
                     }
                 });
-                this.props.navigation.navigate('Main');
+
+                //type==login是直接进来，type==reLogin是退出后重新登录
+                if(this.props.navigation.state.params.type == 'login') {
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({ routeName: 'Main'})
+                        ]
+                    });
+                    this.props.navigation.dispatch(resetAction)
+                }else{
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({ routeName: 'ReMain'})
+                        ]
+                    });
+                    this.props.navigation.dispatch(resetAction)
+                }
 
             }else{
                 return Alert.alert(
@@ -110,7 +129,7 @@ export default class Login extends Component {
                         />
                 </View>
                 <View style={[styles.listRowContent,{borderColor: this.state.onFocusPass?'red':'#CFCFCF'}]}>
-                    <Text style={styles.textStyle}>账号</Text>
+                    <Text style={styles.textStyle}>密码</Text>
                     <TextInput
                         ref="2"
                         placeholder={'请输入密码'}

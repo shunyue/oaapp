@@ -16,8 +16,7 @@ import Customer from '../customer/customer';
 import Daily from '../daily/daily';
 import My from '../my/my';
 
-import Page from '../home/page';
-
+import Login from '../main/login';
 
 
 //周飞飞
@@ -401,8 +400,9 @@ const styles = StyleSheet.create({
 });
 const app = StackNavigator({
     Home: {screen: MyApp,navigationOptions: {header: null}},
-    Page: {screen: Page},
 
+    Login: {screen: Login,navigationOptions: {header: null}},
+    ReMain: {screen: MyApp,navigationOptions: {header: null}},
 
     //zhoufeifei    my页面
     WebViewExample:{screen: WebViewExample,navigationOptions: {header: null}},
