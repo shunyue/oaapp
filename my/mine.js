@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     Dimensions,
     Platform,
-    AsyncStorage
+    AsyncStorage,
+    Alert
     } from 'react-native';
 import Header from '../common/header';
 import { NavigationActions } from 'react-navigation'
@@ -33,6 +34,14 @@ export default class Mine extends Component {
     }
     //退出登录
     _logOut() {
+        return Alert.alert(
+            '提示？',
+            '您确定要退出登录吗？',
+            [{text: '取消'},{text: '退出', onPress: ()=>{this._logOutWay()}}]
+        )
+
+    }
+    _logOutWay() {
         AsyncStorage.clear();
         const resetAction = NavigationActions.reset({
             index: 0,
