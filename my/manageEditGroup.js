@@ -792,11 +792,11 @@ const styles = StyleSheet.create({
         top:8,
     },
     goback:{
-        left:1,
+        left:15,
         flexDirection :'row',
     },
     goRight:{
-        right:20
+        right:15
     },
     back_icon:{
         width:10,
