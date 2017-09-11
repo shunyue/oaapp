@@ -987,7 +987,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#fff',
         fontSize: 16,
-        marginLeft:6
+        marginLeft:3
     },
     place:{
         flexDirection:'row',

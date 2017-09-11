@@ -257,20 +257,17 @@ export default class form_approve extends Component {
                     </TouchableHighlight>
                     <Text style={{color:'#333',fontSize:16}}>{this.state.example_people_name}的{this.state.example_form_name}</Text>
                 </View>
-
-
-                <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
-                    <Image  style={{width:40,height:40,marginRight:5,borderRadius:25}}  source={{uri:this.state.avatar}}/>
-                    <View>
-                        <Text style={{color:'#333'}}>{this.state.example_people_name}</Text>
-                        <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
-                    </View>
-                </View>
-                <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
-                    <Image source={{uri:this.state.approve_img}}  style={{width: 100, height: 100}} tintColor={'#37915f'}/>
-                </View>
-
                 <ScrollView>
+                    <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
+                        <Image  style={{width:40,height:40,marginRight:5,borderRadius:25}}  source={{uri:this.state.avatar}}/>
+                        <View>
+                            <Text style={{color:'#333'}}>{this.state.example_people_name}</Text>
+                            <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
+                        </View>
+                    </View>
+                    <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
+                        <Image source={{uri:this.state.approve_img}}  style={{width: 80, height: 80}} tintColor={'#37915f'}/>
+                    </View>
                     {formlist}
 
                     <View style={[{flexDirection:'row',alignItems:'center',paddingLeft:15}]}>
@@ -304,11 +301,6 @@ export default class form_approve extends Component {
                     </View>
 
                 </ScrollView>
-
-
-
-
-
                 <View style={[styles.rowCom,styles.rowCom_foot,this.props.navigation.state.params.approve_condition != '等待我审批'?{display: 'none'}: null]}>
 
                     <TouchableOpacity  onPress={() => {this.agreement()}}>
@@ -374,7 +366,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:6
+        marginLeft:3
     },
     place:{
         flexDirection:'row',
