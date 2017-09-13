@@ -346,13 +346,11 @@ export default class Home extends Component {
                         <Image style={styles.sz} source={require('../imgs/sz.png')}/>
                     </TouchableHighlight>
                 </View>
+               <View style={{width:sliderWidth,height:100,backgroundColor: '#EA3B49',position:'absolute',borderBottomLeftRadius:75, top:55,borderBottomRightRadius:100}}></View>
+
                 <ScrollView style={styles.childContent}>
                     {/*顶部滚动模块*/}
-
-                    {/*顶部滚动模块*/}
-                    <View style={{width:sliderWidth,height:100,backgroundColor: '#EA3B49',position:'absolute',borderBottomLeftRadius:100, borderBottomRightRadius:100}}></View>
-
-                    <View style={{marginBottom:10,marginTop:5}}>
+                     <View style={{marginBottom:10,marginTop:5}}>
                         <Carousel style={styles.wrapper}
                                   sliderWidth={sliderWidth}
                                   itemWidth={itemWidth}
@@ -526,7 +524,7 @@ export default class Home extends Component {
                                     {/*块级导航*/}
                                     <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
                                         <View style={{width:80}}>
-                                            <View style={{width:55,paddingTop:5,paddingBottom:5, backgroundColor: '#FF7C7C',}}>
+                                            <View style={{width:55,paddingTop:5,paddingBottom:5,alignItems:'center', backgroundColor: '#FF7C7C',}}>
                                                 <Text style={[styles.bestMark2]}>目标达成</Text>
                                             </View>
                                         </View>
