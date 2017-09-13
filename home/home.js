@@ -346,7 +346,7 @@ export default class Home extends Component {
                         <Image style={styles.sz} source={require('../imgs/sz.png')}/>
                     </TouchableHighlight>
                 </View>
-               <View style={{width:sliderWidth,height:100,backgroundColor: '#EA3B49',position:'absolute',borderBottomLeftRadius:75, top:55,borderBottomRightRadius:100}}></View>
+               <View style={{width:sliderWidth,height:100,backgroundColor: '#EA3B49',position:'absolute',borderBottomLeftRadius:75, top:55,borderBottomRightRadius:75}}></View>
 
                 <ScrollView style={styles.childContent}>
                     {/*顶部滚动模块*/}
