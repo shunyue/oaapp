@@ -221,9 +221,9 @@ export default class SubordinateDailySearch extends Component {
     }
     //显示状态名称
     show_StatusName(){
-      var  status=this.state.status_order;
+        var  status=this.state.status_order;
         if(status==1){
-          var name= '全部状态';
+            var name= '全部状态';
         }else if(status==2){
             var name= '无进展';
         }else if(status==3){
@@ -278,13 +278,13 @@ export default class SubordinateDailySearch extends Component {
         if(chooseStaff==1){//选择员工
             return(
                 <View style={[com.bgcfff]}>
-                     <TouchableOpacity style={[com.bgcfff,com.mgl15,com.bbwc,com.mgb1,com.pdb5]}
-                     onPress={() => { this.setState({isModalVisibleTwo: false});this.goPage_chooseEmployee();}}>
-                     <View style={[com.row,com.pdlr15,com.aic]}>
-                     <Image style={[com.wh16,com.tcbe,com.mgr10]} source={require('../../imgs/search.png')}/>
-                     <Text>查找下属</Text>
-                     </View>
-                     </TouchableOpacity>
+                    <TouchableOpacity style={[com.bgcfff,com.mgl15,com.bbwc,com.mgb1,com.pdb5]}
+                                      onPress={() => { this.setState({isModalVisibleTwo: false});this.goPage_chooseEmployee();}}>
+                        <View style={[com.row,com.pdlr15,com.aic]}>
+                            <Image style={[com.wh16,com.tcbe,com.mgr10]} source={require('../../imgs/search.png')}/>
+                            <Text>查找下属</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableHighlight
                         onPress={()=>{this.refs['item_all'].onClick();}}
                         underlayColor="#000000"
@@ -430,7 +430,7 @@ export default class SubordinateDailySearch extends Component {
         if(this.state.load){
             return(
                 <View style={[com.hh9,com.jcc,com.aic]}>
-                        <Loading/>
+                    <Loading/>
                 </View>
             )
         }
@@ -441,8 +441,8 @@ export default class SubordinateDailySearch extends Component {
             for (var i = 0; i <subordinate.length; i++) {
                 subordinateArr.push(
                     <View style={[com.bwr,com.mg5,com.aic,com.br,com.pdt5l10]}  key={i}>
-                         <Text style={[com.cr,com.fs10]}>{subordinate[i].name}</Text>
-                         <Text style={[com.cr,com.fs10]}>人员</Text>
+                        <Text style={[com.cr,com.fs10]}>{subordinate[i].name}</Text>
+                        <Text style={[com.cr,com.fs10]}>人员</Text>
                     </View>
                 );
             }
@@ -609,7 +609,7 @@ export default class SubordinateDailySearch extends Component {
                                                 {/*页面级-下拉框内容*/}
                                                 <View style={[com.bgcf5,com.ww,com.row,com.hh3]}>
                                                     <View>
-                                                         <TouchableHighlight
+                                                        <TouchableHighlight
                                                             style={[com.bbwc,com.ww204]}
                                                             onPress={()=>{this.goPage_chooseEmployee()}}
                                                             underlayColor="#f0f0f0"

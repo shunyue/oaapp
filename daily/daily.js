@@ -28,6 +28,8 @@ import MyDailyList from './dailyContent/myDailyList';
 import SubordinateDailyList from './dailyContent/subordinateDailyList';
 import MyDailySearch from './dailyContent/myDailySearch';
 import SubordinateDailySearch from './dailyContent/subordinateDailySearch';
+import ScrollableTabView, {ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+
 export default class Daily extends Component {
     back() {
         this.props.navigation.goBack(null);
@@ -63,21 +65,21 @@ export default class Daily extends Component {
     }
     getSubordinate(data,subordinate=""){
         //搜索人员
-            let {params} = this.props.navigation.state;
-            var url=config.api.base+config.api.searchSubordinate;
-            request.post(url,{
-                name: subordinate,
-                title: 1,
-                company_id: data.company_id,
-              //  user_id:data.user_id
-                user_id:data.user_id
-            }).then((res)=>{
-                this.setState({
-                    subordinateInfo:res.data
-                })
+        let {params} = this.props.navigation.state;
+        var url=config.api.base+config.api.searchSubordinate;
+        request.post(url,{
+            name: subordinate,
+            title: 1,
+            company_id: data.company_id,
+            //  user_id:data.user_id
+            user_id:data.user_id
+        }).then((res)=>{
+            this.setState({
+                subordinateInfo:res.data
             })
+        })
             .catch((error)=>{
-                    toast.bottom('网络连接失败,请检查网络后重试')
+                toast.bottom('网络连接失败,请检查网络后重试')
             });
     }
     setVisibleModal(visible) {
@@ -109,30 +111,35 @@ export default class Daily extends Component {
     }
     _showModal = () =>this.setState({isModalVisible: true})
     //动态信息获取 查看 我的客户
-    _getContent(user_id,company_id) {
-   var params={
-       user_id:user_id,
-       company_id:company_id,
-       navigation:this.props.navigation
-    };
+    _getContent(tab) {
+        //var params={
+        //    user_id:user_id,
+        //    company_id:company_id,
+        //    navigation:this.props.navigation
+        // };
+        var params={
+            user_id:this.state.user_id,
+            company_id:this.state.company_id,
+            navigation:this.props.navigation
+        };
         var subordinateInfo=this.state.subordinateInfo;
-        if(this.state.tab==1 && this.state.change==true && user_id){//我的日程列表
+        if(tab==1 && this.state.change==true && this.state.user_id){//我的日程列表
             return <MyDailyList
                 {...params}
                 />
-        }else if(this.state.tab==2 && this.state.change==true && user_id && subordinateInfo.length!=0){//下属日程列表
+        }else if(tab==2 && this.state.change==true && this.state.user_id && subordinateInfo.length!=0){//下属日程列表
             return <SubordinateDailyList {...params}/>
-        }else if(this.state.tab==1 && this.state.change==false && user_id){//搜索我的日程
+        }else if(tab==1 && this.state.change==false && this.state.user_id){//搜索我的日程
             return <MyDailySearch  {...params}/>
-        }else if(this.state.tab==2 && this.state.change==false && user_id && subordinateInfo.length!=0){//搜索下属日程
+        }else if(tab==2 && this.state.change==false && this.state.user_id && subordinateInfo.length!=0){//搜索下属日程
             return <SubordinateDailySearch {...params}/>
         }
     }
     //获取星期几
     getWeek(){
-      var week=moment(new Date()).format('E');
+        var week=moment(new Date()).format('E');
         if(week==1){
-          return '星期一'  ;
+            return '星期一'  ;
         }else if(week==2){
             return '星期二'  ;
         }else if(week==3){
@@ -168,67 +175,85 @@ export default class Daily extends Component {
 
     render() {
         var daily=[];
+        var params={
+            user_id:this.state.user_id,
+            company_id:this.state.company_id,
+            navigation:this.props.navigation
+        };
         return (
             <View style={[com.flex]}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*自定义导航*/}
                 {/*自定义导航栏-中间*/}
-                <View style={[com.row,com.jcc,com.bckfff,com.pos]}>
-                    <View style={[com.row]}>
-                        <TouchableHighlight
-                            style={[com.jcc,com.pd10]}
-                            onPress={()=>{this.setState({tab:1})}}
-                            underlayColor="#fff"
-                            >
-                            <View style={[{}]}>
-                                <Text style={[com.mgb5]}>我的日程</Text>
-                                {this.state.tab==1 && this.state.subordinateInfo.length!=0?(<Image style={[{height:1,width:55},com.tcr]} source={require('../imgs/daily/straightLine.png')}/>
-                                ):(null)}
-                            </View>
-                        </TouchableHighlight>
-                        {this.getTitle()}
-                    </View>
-                </View>
+                {/* <View style={[com.row]}>
+                 <TouchableHighlight
+                 style={[com.jcc,com.pd10]}
+                 onPress={()=>{this.setState({tab:1})}}
+                 underlayColor="#fff"
+                 >
+                 <View style={[{}]}>
+                 <Text style={[com.mgb5]}>我的日程</Text>
+                 {this.state.tab==1 && this.state.subordinateInfo.length!=0?(<Image style={[{height:1,width:55},com.tcr]} source={require('../imgs/daily/straightLine.png')}/>
+                 ):(null)}
+                 </View>
+                 </TouchableHighlight>
+                 {this.getTitle()}
+                 </View>*/}
+                {/*自定义导航栏-中间*/}
+                <ScrollableTabView
+                    renderTabBar={() => <ScrollableTabBar
+                              style={styles.tabar_scroll}
+                   />}
+                    ref={(tabView) => { this.tabView = tabView; }}
+                    >
+                    <TouchableOpacity tabLabel='我的日程'>
+                        {this._getContent(1)}
+                    </TouchableOpacity>
+                    <TouchableOpacity tabLabel='下属日程'>
+                        {this._getContent(2)}
+                    </TouchableOpacity>
+                </ScrollableTabView>
+
 
                 {/*自定义导航栏-定位左边*/}
-            <TouchableHighlight
-                    style={[com.posr,Platform.OS === 'ios'? {top:28,left:10}:{top:8,left:10}]}
+                <TouchableHighlight
+                    style={[com.posr,{top:8,left:10}]}
                     onPress={()=>{this.repose()}}
                     underlayColor="#f5f5f5"
                     >
                     <View style={[]}>
-                        <Image style={[com.wh24,com.tcrjkiuui]} source={require('../imgs/bbr32.png')}/>
+                        <Image style={[com.wh24,com.tcr]} source={require('../imgs/bbr32.png')}/>
                     </View>
                 </TouchableHighlight>
 
                 {/*自定义导航栏-定位右边*/}
-                <View style={[com.row,com.posr,Platform.OS === 'ios'? {top:28,right:10}:{top:8,right:10}]}>
+                <View style={[com.row,com.posr,{top:8,right:10}]}>
                     <TouchableHighlight
                         style={[com.mgr15]}
                         onPress={()=>{this.setState({change:!this.state.change})}}
                         underlayColor="#f5f5f5"
                         >
                         <View style={[]}>
-                         {this.state.change==true?(
-                            <Image style={[com.wh24,com.tcr]} source={require('../imgs/cirmenu32.png')}/>
-                         ):(<Image style={[com.wh24,com.tcr]} source={require('../imgs/cal.png')}/>)}
+                            {this.state.change==true?(
+                                <Image style={[com.wh24,com.tcr]} source={require('../imgs/cirmenu32.png')}/>
+                            ):(<Image style={[com.wh24,com.tcr]} source={require('../imgs/cal.png')}/>)}
                         </View>
                     </TouchableHighlight>
 
                     {/*     <TouchableHighlight
-                        style={[]}
-                        onPress={()=>{this.repose()}}
-                        underlayColor="#f5f5f5"
-                        >
-                        <View style={[]}>
-                            <Image style={[com.wh24,com.tcr]} source={require('../imgs/daily/rypz.png')}/>
-                        </View>
-                    </TouchableHighlight>*/}
+                     style={[]}
+                     onPress={()=>{this.repose()}}
+                     underlayColor="#f5f5f5"
+                     >
+                     <View style={[]}>
+                     <Image style={[com.wh24,com.tcr]} source={require('../imgs/daily/rypz.png')}/>
+                     </View>
+                     </TouchableHighlight>*/}
                 </View>
 
-                <ScrollView style={[com.pos,com.flex,{height:screenH}]}>
-                    {this._getContent(this.state.user_id,this.state.company_id)}
-                </ScrollView>
+                { /*  <ScrollView style={[com.pos,com.flex,{height:screenH}]}>
+                 {this._getContent(this.state.user_id,this.state.company_id)}
+                 </ScrollView>*/}
                 {/*事件触发-加号图标*/}
                 <TouchableOpacity style={[com.posr,{top:screenH*0.75,right:30,zIndex:99999}]}
                                   onPress={() => {{this.setState({show: !this.state.show})}}}>
@@ -326,4 +351,14 @@ export default class Daily extends Component {
         );
     }
 }
+const styles = StyleSheet.create({
+    tabar_scroll: {
+        height: 48,
+        justifyContent: 'center',
+        paddingBottom: 8,
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+    },
+
+})
 

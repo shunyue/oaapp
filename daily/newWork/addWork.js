@@ -149,7 +149,7 @@ export default class AddWork extends Component {
             if(res.status==1){
                 toast.center(res.message);
                 this.OpBack(res.data);
-               // this.props.navigation.navigate('Daily');
+                // this.props.navigation.navigate('Daily');
             }else{
                 toast.bottom(res.message);
             }
@@ -203,7 +203,8 @@ export default class AddWork extends Component {
             confirm_recept:this.state.confirm_recept,
             selectNum:this.state.selectNum,
             startstamp:this.state.startstamp,
-            alertName:this.state.alertName
+            alertName:this.state.alertName,
+            alertTime:this.state.alertTime
         }
         this.props.navigation.navigate('AddAlert',{timeData:data});
     }
@@ -320,7 +321,7 @@ export default class AddWork extends Component {
             }
             executorArr.push(
                 <View key={i-(-1)}>
-                    <Text>等</Text>
+                    <Text>等{executor.length}人</Text>
                 </View>
             );
         }else if(executor!=null && executor.length>0){
@@ -456,16 +457,16 @@ export default class AddWork extends Component {
                             </View>
                         </TouchableHighlight>
                     </View>
-                     <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_chooseCustomer.bind(this)}>
-                         <View style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}>
+                    <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_chooseCustomer.bind(this)}>
+                        <View style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}>
                             <Text style={{color:'#333'}}>关联客户</Text>
                             <View style={{flexDirection:'row',}}>
                                 {customerArr}
-                            <Image style={styles.textINput_arrow}
-                                source={require('../../imgs/customer/arrow_r.png')}/>
+                                <Image style={styles.textINput_arrow}
+                                       source={require('../../imgs/customer/arrow_r.png')}/>
                             </View>
                         </View>
-                     </TouchableHighlight>
+                    </TouchableHighlight>
                     <View style={[styles.customerName,styles.borderStyle]}>
                         <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_AddAlert.bind(this)}>
                             <View style={[styles.customerName2,styles.flex_position,styles.padding_value,styles.rowheight]}>

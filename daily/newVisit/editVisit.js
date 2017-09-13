@@ -53,16 +53,16 @@ export default class EditVisit extends Component {
             })
         });
         //选择员工
-      this.executorListener= DeviceEventEmitter.addListener('Executor', (a)=> {
-          var executorIds=[];
-          if(a!=null && a.length!=0) {
-              for (var i = 0; i < a.length; i++) {
-                  executorIds[i]=a[i].id;
-              }
-          }else{
-              executorIds=this.state.executorId;
-          }
-          this.setState({
+        this.executorListener= DeviceEventEmitter.addListener('Executor', (a)=> {
+            var executorIds=[];
+            if(a!=null && a.length!=0) {
+                for (var i = 0; i < a.length; i++) {
+                    executorIds[i]=a[i].id;
+                }
+            }else{
+                executorIds=this.state.executorId;
+            }
+            this.setState({
                 executor: a,
                 executorId:executorIds
             })
@@ -70,7 +70,7 @@ export default class EditVisit extends Component {
         //拜访描述
         this.describeListener=DeviceEventEmitter.addListener('visitDescibe',(a)=>{
             this.setState({
-              content:a
+                content:a
             })
         });
         //提醒页面
@@ -121,7 +121,7 @@ export default class EditVisit extends Component {
     }
     //返回上一页
     OpBack(daily=null){
-         DeviceEventEmitter.emit('Daily',daily);
+        DeviceEventEmitter.emit('Daily',daily);
         this.props.navigation.goBack(null);
     }
     //提交
@@ -153,31 +153,31 @@ export default class EditVisit extends Component {
             return false;
         }
         var url=config.api.base+config.api.editDailyInfo;
-            request.post(url,{
-                daily_id:params.dailyInfo.id,
-                customer_id:customer,
-                executor:executor,
-                start_time:this.state.starttime,
-                stop_time:this.state.stoptime,
-                description:this.state.content,
-                remind_time:this.state.alertTime,
-                confirm_recept:confirm_recept,
-                create_time:moment(new Date()).format('YYYY-MM-DD  HH:mm'),
-                position:this.state.position
-            }).then((res)=>{
-                if(res.status==1){
-                    toast.center(res.message);
-                    this.OpBack(res.data);
-                }else{
-                    toast.bottom(res.message);
-                }
+        request.post(url,{
+            daily_id:params.dailyInfo.id,
+            customer_id:customer,
+            executor:executor,
+            start_time:this.state.starttime,
+            stop_time:this.state.stoptime,
+            description:this.state.content,
+            remind_time:this.state.alertTime,
+            confirm_recept:confirm_recept,
+            create_time:moment(new Date()).format('YYYY-MM-DD  HH:mm'),
+            position:this.state.position
+        }).then((res)=>{
+            if(res.status==1){
+                toast.center(res.message);
+                this.OpBack(res.data);
+            }else{
+                toast.bottom(res.message);
+            }
 
-            })
-                .catch((error)=>{
-                    toast.bottom('网络连接失败,请检查网络后重试')
-                });
+        })
+            .catch((error)=>{
+                toast.bottom('网络连接失败,请检查网络后重试')
+            });
     }
-     //拜访描述
+    //拜访描述
     goPage_addDescribe(){
         let describe={
             title:'拜访',
@@ -243,7 +243,7 @@ export default class EditVisit extends Component {
         for(let i=1;i<61;i++){
             minutes.push(i);
         }
-        let pickerData = [years, months, days, ['am', 'pm'], hours, minutes];
+        let pickerData = [years, months, days, hours, minutes];
         let date = new Date();
         let selectedValue = [
             date.getFullYear(),
@@ -324,29 +324,29 @@ export default class EditVisit extends Component {
         const {navigate} = this.props.navigation;
         let {params} =this.props.navigation.state;
         var executorArr=[];
-            var  executor=this.state.executor;
-            if(executor!= null && executor.length>=3){
-                for (var i = 0; i <3; i++) {
-                    executorArr.push(
-                        <View key={i}>
-                            <Text> &nbsp;{executor[i].name}</Text>
-                        </View>
-                    );
-                }
+        var  executor=this.state.executor;
+        if(executor!= null && executor.length>=3){
+            for (var i = 0; i <3; i++) {
                 executorArr.push(
-                    <View key={i-(-1)}>
-                        <Text>等{executor.length}人</Text>
+                    <View key={i}>
+                        <Text> &nbsp;{executor[i].name}</Text>
                     </View>
                 );
-            }else if(executor!=null && executor.length>0){
-                for (var i = 0; i <executor.length; i++) {
-                   executorArr.push(
-                            <View  key={i}>
-                                <Text> &nbsp;{executor[i].name}&nbsp;</Text>
-                            </View>
-                        );
-                }
-            }else{
+            }
+            executorArr.push(
+                <View key={i-(-1)}>
+                    <Text>等{executor.length}人</Text>
+                </View>
+            );
+        }else if(executor!=null && executor.length>0){
+            for (var i = 0; i <executor.length; i++) {
+                executorArr.push(
+                    <View  key={i}>
+                        <Text> &nbsp;{executor[i].name}&nbsp;</Text>
+                    </View>
+                );
+            }
+        }else{
             executorArr.push(
                 <View  key={0}>
                     <Text>{params.dailyInfo.executorName}</Text>
@@ -354,19 +354,19 @@ export default class EditVisit extends Component {
             );
         }
         return (
-                <View style={styles.ancestorCon}>
-                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                    <View style={styles.container}>
-                        <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                            <Text style={styles.back_text}>取消</Text>
-                        </TouchableHighlight>
-                        <Text style={styles.formHeader}>编辑拜访</Text>
-                        <TouchableHighlight underlayColor={'#fff'} style={[styles.goRight,styles.go]} onPress={()=>this.submit()}>
-                            <Text style={styles.back_text}>完成</Text>
-                        </TouchableHighlight>
-                    </View>
-                    <ScrollView>
-                        <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_chooseCustomer.bind(this)}>
+            <View style={styles.ancestorCon}>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
+                <View style={styles.container}>
+                    <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
+                        <Text style={styles.back_text}>取消</Text>
+                    </TouchableHighlight>
+                    <Text style={styles.formHeader}>编辑拜访</Text>
+                    <TouchableHighlight underlayColor={'#fff'} style={[styles.goRight,styles.go]} onPress={()=>this.submit()}>
+                        <Text style={styles.back_text}>完成</Text>
+                    </TouchableHighlight>
+                </View>
+                <ScrollView>
+                    <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_chooseCustomer.bind(this)}>
                         <View style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}>
                             <Text>客户</Text>
                             <View style={{flexDirection:'row'}}>
@@ -376,108 +376,108 @@ export default class EditVisit extends Component {
                                        source={require('../../imgs/customer/arrow_r.png')}/>
                             </View>
                         </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            underlayColor={'#fff'}
-                            style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}
-                             onPress={this.goPage_chooseEmployee.bind(this)}>
-                            <View style={{width:screenW-50,flexDirection:'row',justifyContent:'space-between',}}>
-                                <Text style={{color:'#333'}}>执行人</Text>
-                                <View style={{flexDirection:'row',}}>
-                                   {executorArr}
-                                    <Image style={styles.textINput_arrow}
-                                           source={require('../../imgs/customer/arrow_r.png')}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        underlayColor={'#fff'}
+                        style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}
+                        onPress={this.goPage_chooseEmployee.bind(this)}>
+                        <View style={{width:screenW-50,flexDirection:'row',justifyContent:'space-between',}}>
+                            <Text style={{color:'#333'}}>执行人</Text>
+                            <View style={{flexDirection:'row',}}>
+                                {executorArr}
+                                <Image style={styles.textINput_arrow}
+                                       source={require('../../imgs/customer/arrow_r.png')}/>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                    <View style={[styles.customerName,styles.borderStyle,]}>
+                        <View style={[styles.customerName2,styles.flex_position,]}>
+                            <View style={{width:screenW*0.28,height:80,alignItems:'center',justifyContent:'center',borderColor:'#d5d5d5',borderRightWidth:1}}>
+                                <Text style={{marginBottom:5}}>起止时间</Text>
+                                <View style={{padding:2,paddingLeft:5,paddingRight:5,borderRadius:5,backgroundColor:'#e15151'}}>
+                                    <Text style={{fontSize:10,color:'#fff'}}>查看可用时间</Text>
                                 </View>
                             </View>
-                        </TouchableHighlight>
-                        <View style={[styles.customerName,styles.borderStyle,]}>
-                            <View style={[styles.customerName2,styles.flex_position,]}>
-                                <View style={{width:screenW*0.28,height:80,alignItems:'center',justifyContent:'center',borderColor:'#d5d5d5',borderRightWidth:1}}>
-                                    <Text style={{marginBottom:5}}>起止时间</Text>
-                                    <View style={{padding:2,paddingLeft:5,paddingRight:5,borderRadius:5,backgroundColor:'#e15151'}}>
-                                        <Text style={{fontSize:10,color:'#fff'}}>查看可用时间</Text>
-                                    </View>
-                                </View>
-                                <View style={{width:screenW*0.72,}}>
-                                    <TouchableHighlight underlayColor={'#fff'} onPress={this._showTimePicker.bind(this,1)}>
+                            <View style={{width:screenW*0.72,}}>
+                                <TouchableHighlight underlayColor={'#fff'} onPress={this._showTimePicker.bind(this,1)}>
                                     <View style={[styles.flex_position3,styles.padding_value,styles.borderStyle_bottom,styles.rowheight]}>
                                         <Text>{this.state.starttime}</Text>
                                         <Image style={styles.textINput_arrow}
                                                source={require('../../imgs/customer/arrow_r.png')}/>
                                     </View>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight underlayColor={'#fff'} onPress={this._showTimePicker.bind(this,2)}>
+                                </TouchableHighlight>
+                                <TouchableHighlight underlayColor={'#fff'} onPress={this._showTimePicker.bind(this,2)}>
                                     <View  style={[styles.flex_position3,styles.padding_value,styles.rowheight]}>
                                         <Text>{this.state.stoptime}</Text>
                                         <Image style={styles.textINput_arrow}
                                                source={require('../../imgs/customer/arrow_r.png')}/>
                                     </View>
-                                    </TouchableHighlight>
-                                    {/* <DateTimePicker
-                                    isVisible={this.state.isStartPickerVisible}
-                                    onConfirm={(e)=>{this._handleStartPicked(e)}}
-                                    onCancel={()=>this._hideDateTimePicker()}
-                                    mode='datetime'
-                                    is24Hour={true}
-                                    />
-                                  <DateTimePicker
-                                        isVisible={this.state.isStopPickerVisible}
-                                        onConfirm={(e)=>{this._handleStopPicked(e)}}
-                                        onCancel={()=>this._hideDateTimePicker()}
-                                        mode='datetime'
-                                        is24Hour={true}
-                                        />*/}
-                                </View>
+                                </TouchableHighlight>
+                                {/* <DateTimePicker
+                                 isVisible={this.state.isStartPickerVisible}
+                                 onConfirm={(e)=>{this._handleStartPicked(e)}}
+                                 onCancel={()=>this._hideDateTimePicker()}
+                                 mode='datetime'
+                                 is24Hour={true}
+                                 />
+                                 <DateTimePicker
+                                 isVisible={this.state.isStopPickerVisible}
+                                 onConfirm={(e)=>{this._handleStopPicked(e)}}
+                                 onCancel={()=>this._hideDateTimePicker()}
+                                 mode='datetime'
+                                 is24Hour={true}
+                                 />*/}
                             </View>
                         </View>
-                        <View style={[styles.customerName,styles.borderStyle]}>
-                            <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_addDescribe.bind(this)}>
-                                <View style={[styles.customerName2,styles.padding_value,styles.padding_topBottom,styles.borderStyle_bottom,]}>
-                                    <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',}]}>
-                                        <Text style={{color:'#333'}}>拜访描述</Text>
-                                        <Image style={styles.textINput_arrow}
-                                           source={require('../../imgs/customer/arrow_r.png')}/>
-                                    </View>
-                                    {this.state.content!=null ||this.state.content!=""?(
-                                        <View>
-                                            <Text>{this.state.content}</Text>
-                                        </View>
-                                    ):(null)}
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={[styles.customerName,styles.borderStyle]}>
+                    </View>
+                    <View style={[styles.customerName,styles.borderStyle]}>
+                        <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_addDescribe.bind(this)}>
                             <View style={[styles.customerName2,styles.padding_value,styles.padding_topBottom,styles.borderStyle_bottom,]}>
                                 <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',}]}>
-                                    <Text style={{color:'#333'}}>地点</Text>
-                                </View>
-                                <View>
-                                    <TextInput
-                                        style={[styles.textInput]}
-                                        onChangeText={(position) => this.setState({position:position})}
-                                        underlineColorAndroid="transparent"
-                                        placeholderTextColor='#aaa'
-                                        value={this.state.position}
-                                        />
-                                </View>
-
-                            </View>
-                        </View>
-                        <View style={[styles.customerName,styles.borderStyle]}>
-                            <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_AddAlert.bind(this)}>
-                                <View style={[styles.customerName2,styles.flex_position,styles.padding_value,styles.rowheight]}>
-                                    <Text style={{color:'#333'}}>提醒</Text>
-                                    <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-                                        <Text>{this.state.alertName}</Text>
-                                        <Image style={styles.textINput_arrow}
+                                    <Text style={{color:'#333'}}>拜访描述</Text>
+                                    <Image style={styles.textINput_arrow}
                                            source={require('../../imgs/customer/arrow_r.png')}/>
-                                    </View>
                                 </View>
-                            </TouchableHighlight>
+                                {this.state.content!=null ||this.state.content!=""?(
+                                    <View>
+                                        <Text>{this.state.content}</Text>
+                                    </View>
+                                ):(null)}
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                    <View style={[styles.customerName,styles.borderStyle]}>
+                        <View style={[styles.customerName2,styles.padding_value,styles.padding_topBottom,styles.borderStyle_bottom,]}>
+                            <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',}]}>
+                                <Text style={{color:'#333'}}>地点</Text>
+                            </View>
+                            <View>
+                                <TextInput
+                                    style={[styles.textInput]}
+                                    onChangeText={(position) => this.setState({position:position})}
+                                    underlineColorAndroid="transparent"
+                                    placeholderTextColor='#aaa'
+                                    value={this.state.position}
+                                    />
+                            </View>
+
                         </View>
-                    </ScrollView>
-                </View>
-            );
+                    </View>
+                    <View style={[styles.customerName,styles.borderStyle]}>
+                        <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_AddAlert.bind(this)}>
+                            <View style={[styles.customerName2,styles.flex_position,styles.padding_value,styles.rowheight]}>
+                                <Text style={{color:'#333'}}>提醒</Text>
+                                <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+                                    <Text>{this.state.alertName}</Text>
+                                    <Image style={styles.textINput_arrow}
+                                           source={require('../../imgs/customer/arrow_r.png')}/>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                </ScrollView>
+            </View>
+        );
     }
 }
 
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
         paddingRight:25,
     },
     padding_topBottom:{
-      paddingTop:10,
+        paddingTop:10,
         paddingBottom:10,
     },
 

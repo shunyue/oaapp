@@ -41,12 +41,12 @@ export default class SubordinateDailyList  extends Component {
         };
     }
     componentDidMount() {
-     this.searchDaily(this.state.time);
+        this.searchDaily(this.state.time);
         this.dailyListener= DeviceEventEmitter.addListener('dailyInfo', (a)=> {
             this.setState({
                 load: true,
             })
-        this.searchDaily(moment(new Date()).format('YYYY-MM-DD'));
+            this.searchDaily(moment(new Date()).format('YYYY-MM-DD'));
         });
         //选择下属
         this.subordinateListener= DeviceEventEmitter.addListener('Subordinate', (c)=> {
@@ -88,8 +88,8 @@ export default class SubordinateDailyList  extends Component {
         if(subordinate.length!=0){
             var subordinateIds=[];
             for (var i = 0; i < subordinate.length; i++) {
-                 subordinateIds[i]=subordinate[i].id;
-             }
+                subordinateIds[i]=subordinate[i].id;
+            }
             //添加执行人
             var condition={
                 user_id:this.props.user_id,
@@ -174,7 +174,7 @@ export default class SubordinateDailyList  extends Component {
             }
         }else{
             subordinateArr.push(
-               <View key={0}><Text style={[com.mgr5]}>我的下属</Text></View>
+                <View key={0}><Text style={[com.mgr5]}>我的下属</Text></View>
             );
         }
         const customStyle = {
@@ -189,7 +189,7 @@ export default class SubordinateDailyList  extends Component {
                     {/*事件插件区域*/}
                     <View style={[com.posr,com.bbwc,com.jcc,com.aic,com.bgce6,com.ww,com.btbwd]}>
                         <Calendar
-                            customStyle={customStyle}
+                            // customStyle={customStyle}
                             currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
                             //customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
                             dayHeadings={['日', '一', '二', '三', '四', '五','六']}               // Default: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
@@ -223,7 +223,7 @@ export default class SubordinateDailyList  extends Component {
                                 <Text>日程{this.state.count}项</Text>
                             </View>
                             <TouchableHighlight
-                                 style={[]}
+                                style={[]}
                                 onPress={
                                 this.goPage_chooseEmployee.bind(this)}
                                 >
@@ -285,11 +285,11 @@ export default class SubordinateDailyList  extends Component {
                 </View>)
         }
         return (
-            <ScrollView style={[com.pos,com.flex,{height:screenH}]}>
+            <ScrollView>
                 {/*事件插件区域*/}
-                <View style={[com.posr,com.bbwc,com.jcc,com.aic,com.bgce6,com.ww,com.btbwd]}>
+                <View>
                     <Calendar
-                        customStyle={customStyle}
+                        //customStyle={customStyle}
                         currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
                         //customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
                         dayHeadings={['日', '一', '二', '三', '四', '五','六']}               // Default: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
@@ -316,7 +316,7 @@ export default class SubordinateDailyList  extends Component {
                         weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
                         />
                 </View>
-                <View style={[{marginTop:310},com.bckf5,com.btwc,com.btwc]}>
+                <View style={[com.bckf5,com.btwc,com.btwc]}>
                     <View style={[com.row,com.jcsb,com.pdt5l15,com.bbwc]}>
                         <View style={[com.row]}>
                             {subordinateArr}

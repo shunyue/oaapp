@@ -67,7 +67,7 @@ export default class AddVisit extends Component {
                 alertTime:a.alertTime,
                 confirm_recept:a.confirm_recept,
                 selectNum:a.selectNum,
-                alertName:a.alertName
+                alertName:a.alertName,
             })
         });
     }
@@ -143,9 +143,9 @@ export default class AddVisit extends Component {
                 toast.bottom(res.message);
             }
         })
-         .catch((error)=>{
-            toast.bottom('网络连接失败,请检查网络后重试')
-        });
+            .catch((error)=>{
+                toast.bottom('网络连接失败,请检查网络后重试')
+            });
     }
     //拜访描述
     goPage_addDescribe(){
@@ -192,6 +192,7 @@ export default class AddVisit extends Component {
             confirm_recept:this.state.confirm_recept,
             selectNum:this.state.selectNum,
             startstamp:this.state.startstamp,
+            alertTime:this.state.alertTime,
             alertName:this.state.alertName
         }
         this.props.navigation.navigate('AddAlert',{timeData:data});
@@ -311,7 +312,7 @@ export default class AddVisit extends Component {
             }
             executorArr.push(
                 <View key={i-(-1)}>
-                    <Text>等</Text>
+                    <Text>等{executor.length}人</Text>
                 </View>
             );
         }else if(executor!=null && executor.length>0){
@@ -409,21 +410,21 @@ export default class AddVisit extends Component {
                         </TouchableHighlight>
                     </View>
                     <View style={[styles.customerName,styles.borderStyle]}>
-                            <View style={[styles.customerName2,styles.padding_value,styles.padding_topBottom,styles.borderStyle_bottom,]}>
-                                <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',}]}>
-                                    <Text style={{color:'#333'}}>地点</Text>
-                                </View>
-                                    <View>
-                                        <TextInput
-                                            style={[styles.textInput]}
-                                            onChangeText={(position) => this.setState({position:position})}
-                                            placeholder ='请输入拜访地点'
-                                            underlineColorAndroid="transparent"
-                                            placeholderTextColor='#aaa'
-                                            value={this.state.position}
-                                            />
-                                    </View>
+                        <View style={[styles.customerName2,styles.padding_value,styles.padding_topBottom,styles.borderStyle_bottom,]}>
+                            <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',}]}>
+                                <Text style={{color:'#333'}}>地点</Text>
                             </View>
+                            <View>
+                                <TextInput
+                                    style={[styles.textInput]}
+                                    onChangeText={(position) => this.setState({position:position})}
+                                    placeholder ='请输入拜访地点'
+                                    underlineColorAndroid="transparent"
+                                    placeholderTextColor='#aaa'
+                                    value={this.state.position}
+                                    />
+                            </View>
+                        </View>
                     </View>
                     <View style={[styles.customerName,styles.borderStyle]}>
                         <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_AddAlert.bind(this)}>
@@ -456,7 +457,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor:'#bbb',
         justifyContent:'center',
-
     },
     go:{
         position:'absolute',

@@ -158,9 +158,9 @@ export default class AddMeeting extends Component {
                 toast.bottom(res.message);
             }
         })
-        .catch((error)=>{
+            .catch((error)=>{
                 toast.bottom('网络连接失败,请检查网络后重试')
-        });
+            });
     }
     //拜访描述
     goPage_addDescribe(){
@@ -206,7 +206,8 @@ export default class AddMeeting extends Component {
             confirm_recept:this.state.confirm_recept,
             selectNum:this.state.selectNum,
             startstamp:this.state.startstamp,
-            alertName:this.state.alertName
+            alertName:this.state.alertName,
+            alertTime:this.state.alertTime
         }
         this.props.navigation.navigate('AddAlert',{timeData:data});
     }
@@ -233,7 +234,7 @@ export default class AddMeeting extends Component {
         for(let i=1;i<61;i++){
             minutes.push(i);
         }
-        let pickerData = [years, months, days, ['am', 'pm'], hours, minutes];
+        let pickerData = [years, months, days, hours, minutes];
         let date = new Date();
         let selectedValue = [
             date.getFullYear(),
@@ -324,7 +325,7 @@ export default class AddMeeting extends Component {
             }
             executorArr.push(
                 <View key={i-(-1)}>
-                    <Text>等</Text>
+                    <Text>等{executor.length}人</Text>
                 </View>
             );
         }else if(executor!=null && executor.length>0){

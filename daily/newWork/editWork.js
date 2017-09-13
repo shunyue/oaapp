@@ -194,9 +194,9 @@ export default class EditWork extends Component {
                 toast.bottom(res.message);
             }
         })
-        .catch((error)=>{
-           toast.bottom('网络连接失败,请检查网络后重试')
-        });
+            .catch((error)=>{
+                toast.bottom('网络连接失败,请检查网络后重试')
+            });
     }
     //拜访描述
     goPage_addDescribe(){
@@ -489,16 +489,16 @@ export default class EditWork extends Component {
                         </TouchableHighlight>
                     </View>
 
-                     <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_chooseCustomer.bind(this)}>
-                     <View style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}>
-                     <Text style={{color:'#333'}}>关联客户</Text>
-                     <View style={{flexDirection:'row',}}>
-                         {customerArr}
-                     <Image style={styles.textINput_arrow}
-                     source={require('../../imgs/customer/arrow_r.png')}/>
-                     </View>
-                     </View>
-                     </TouchableHighlight>
+                    <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_chooseCustomer.bind(this)}>
+                        <View style={[styles.customerName,styles.borderStyle,styles.flex_position,styles.padding_value,styles.rowheight]}>
+                            <Text style={{color:'#333'}}>关联客户</Text>
+                            <View style={{flexDirection:'row',}}>
+                                {customerArr}
+                                <Image style={styles.textINput_arrow}
+                                       source={require('../../imgs/customer/arrow_r.png')}/>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
                     <View style={[styles.customerName,styles.borderStyle]}>
                         <TouchableHighlight underlayColor={'#fff'} onPress={this.goPage_AddAlert.bind(this)}>
                             <View style={[styles.customerName2,styles.flex_position,styles.padding_value,styles.rowheight]}>

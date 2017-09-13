@@ -68,21 +68,21 @@ export default class MyDailySearch extends Component {
     _checkBokClick(id) {
         this.state.checkBoxData[id].onClick()
     }
-  //不限日程类型
+    //不限日程类型
     _selectAll() {
-            this.refs['item0'].onClick();
-            if(this.refs['item1'].state.isChecked==true){
-                this.refs['item1'].onClick();
-            }
-            if(this.refs['item2'].state.isChecked==true){
-                this.refs['item2'].onClick();
-            }
-            if(this.refs['item3'].state.isChecked==true){
-                this.refs['item3'].onClick();
-            }
-            if(this.refs['item4'].state.isChecked==true) {
-                this.refs['item4'].onClick();
-            }
+        this.refs['item0'].onClick();
+        if(this.refs['item1'].state.isChecked==true){
+            this.refs['item1'].onClick();
+        }
+        if(this.refs['item2'].state.isChecked==true){
+            this.refs['item2'].onClick();
+        }
+        if(this.refs['item3'].state.isChecked==true){
+            this.refs['item3'].onClick();
+        }
+        if(this.refs['item4'].state.isChecked==true) {
+            this.refs['item4'].onClick();
+        }
     }
     //根据日程状态查询日程
     searchDaily(title,status){
@@ -144,15 +144,15 @@ export default class MyDailySearch extends Component {
             }
         }
         request.post(url,condition).then((res)=>{
-              var data=res.data;
-                this.setState({
-                    daily:data,
-                    load:false
-                })
+            var data=res.data;
+            this.setState({
+                daily:data,
+                load:false
+            })
         })
-        .catch((error)=>{
+            .catch((error)=>{
                 toast.bottom('网络连接失败,请检查网络后重试')
-        });
+            });
     }
     setVisibleModal(visible) {
         this.setState({show: visible});
@@ -238,43 +238,37 @@ export default class MyDailySearch extends Component {
                 </View>
             )
         }
-      var daily=this.state.daily;
+        var daily=this.state.daily;
         if(daily !=""){
             var dailylist = [];
             for(var i in daily){
                 dailylist.push(
                     <View key={i}>
-                        {/*<View style={[com.mixf3,com.bbwc]}>
-                            <Text style={[com.cbe,com.fs10]}>{daily[i].datetime}</Text>
-                        </View>*/}
                         <TouchableHighlight
                             style={[com.bgcfff]}
                             onPress={this.dailyDetail.bind(this,daily[i])}
                             underlayColor="#f5f5f5"
-                        >
-                        <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
-                            {/* <View style={[com.mixf3,com.bbwc]}>
-                                <Text style={[com.cbe,com.fs10]}>07-18 周二</Text>
-                            </View>*/}
-                            <View style={[com.mgr10]}>
-                                <Text style={[com.cbe,com.fs10]}>{daily[i].timestart}</Text>
-                            </View>
-                            <View style={[com.row,com.aic,com.jcsb,com.flex]}>
-                                <View>
-                                    {(daily[i].daily_type==1)?(
-                                        <Text> {daily[i].customerName}</Text>):(<Text>{daily[i].title}</Text>)}
-                                    <View style={[com.row,com.aic,com.mgt5]}>
-                                        <Text style={[com.mgr5,com.cfff,com.fs10,com.bgcr,com.pdt1l10,com.br10]}>{daily[i].typeName}</Text>
-                                        <Text style={[com.cb4,com.fs10]}>{daily[i].executorName}</Text>
+                            >
+                            <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
+                                <View style={[com.mgr10]}>
+                                    <Text style={[com.cbe,com.fs10]}>{daily[i].timestart}</Text>
+                                </View>
+                                <View style={[com.row,com.aic,com.jcsb,com.flex]}>
+                                    <View>
+                                        {(daily[i].daily_type==1)?(
+                                            <Text> {daily[i].customerName}</Text>):(<Text>{daily[i].title}</Text>)}
+                                        <View style={[com.row,com.aic,com.mgt5]}>
+                                            <Text style={[com.mgr5,com.cfff,com.fs10,com.bgcr,com.pdt1l10,com.br10]}>{daily[i].typeName}</Text>
+                                            <Text style={[com.cb4,com.fs10]}>{daily[i].executorName}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={[]}>
+                                        {this.getStatusName(daily[i].status,daily[i].start_time)}
                                     </View>
                                 </View>
-                                <View style={[]}>
-                                    {this.getStatusName(daily[i].status,daily[i].start_time)}
-                                </View>
                             </View>
-                        </View>
                         </TouchableHighlight>
-                </View>
+                    </View>
                 )
             }
 
@@ -289,15 +283,11 @@ export default class MyDailySearch extends Component {
                 </View>)
         }
         return (
-            <View style={[com.flex]}>
-
+            <View>
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={[com.row,com.jcsa,com.pdt5l15,com.bbwc,com.aic,com.bgcfff]}>
                     <TouchableOpacity style={[com.pos]}
                                       onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}>
-                        { /*  <View style={[com.row,com.pdlr15,com.aic]}>
-                            <Text>全部状态</Text>
-                            <Image style={[com.wh16,com.mgl5]} source={require('../../imgs/jtxx.png')}/>
-                        </View>*/}
                         {this.show_StatusName()}
                     </TouchableOpacity>
                     <TouchableOpacity style={[com.pos]}
@@ -307,130 +297,25 @@ export default class MyDailySearch extends Component {
                             <Image style={[com.wh16,com.tcbe,com.mgl5]} source={require('../../imgs/jtxx.png')}/>
                         </View>
                     </TouchableOpacity>
-                    {/*  <TouchableOpacity style={[com.pos]}
-                                      onPress={() => { this.skipSearch()}}>
-                        <View style={[com.row,com.pdlr15,com.aic]}>
-                            <Image style={[com.wh16,com.tcbe,com.mgr5]} source={require('../../imgs/search.png')}/>
-                            <Text>搜索</Text>
-                        </View>
-                    </TouchableOpacity>*/}
                 </View>
-                <ScrollView style={[,com.flex,{flex:1}]}>
-                    <View style={[com.bckf5,com.btwc,com.btwc]}>
+                <ScrollView style={[{height:screenH*0.70}]}>
+                    <View style={[com.bckf5,com.btwc]}>
                         {dailylist}
-                        {/*  <View style={[]}>
-                            <View style={[com.mixf3,com.bbwc]}>
-                                <Text style={[com.cbe,com.fs10]}>07-18 周二</Text>
-                            </View>
-                            <TouchableHighlight
-                                style={[com.bgcfff]}
-                                onPress={()=>{this.dailyDetail()}}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
-                                    <View style={[com.mgr10]}>
-                                        <Text style={[com.cbe]}>16:52</Text>
-                                    </View>
-                                    <View style={[com.row,com.aic,com.jcsb,com.flex]}>
-                                        <View>
-                                            <Text>烹羊宰牛且为乐</Text>
-                                            <View style={[com.row,com.aic,com.mgt5]}>
-                                                <Text style={[com.mgr5,com.cfff,com.fs10,com.bgcr,com.pdt1l10,com.br10]}>会议</Text>
-                                                <Text style={[com.cb4,com.fs10]}>刘明</Text>
-                                            </View>
-                                        </View>
-                                        <View style={[]}>
-                                            <Text style={[com.c62,com.fs10]}>有进展</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-
-                            <TouchableHighlight
-                                style={[com.bgcfff]}
-                                onPress={()=>{this.dailyDetail()}}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
-                                    <View style={[com.mgr10]}>
-                                        <Text style={[com.cbe]}>16:52</Text>
-                                    </View>
-                                    <View style={[com.row,com.aic,com.jcsb,com.flex]}>
-                                        <View>
-                                            <Text>会须一饮三百杯</Text>
-                                            <View style={[com.row,com.aic,com.mgt5]}>
-                                                <Text style={[com.mgr5,com.cfff,com.fs10,com.bgc24,com.pdt1l10,com.br10]}>拜访</Text>
-                                                <Text style={[com.cb4,com.fs10]}>刘明</Text>
-                                            </View>
-                                        </View>
-                                        <View style={[]}>
-                                            <Text style={[com.cr,com.fs10]}>无进展</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-
-                            <TouchableHighlight
-                                style={[com.bgcfff]}
-                                onPress={()=>{this.dailyDetail()}}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
-                                    <View style={[com.mgr10]}>
-                                        <Text style={[com.cbe]}>16:52</Text>
-                                    </View>
-                                    <View style={[com.row,com.aic,com.jcsb,com.flex]}>
-                                        <View>
-                                            <Text>人如风后入江云</Text>
-                                            <View style={[com.row,com.aic,com.mgt5]}>
-                                                <Text style={[com.mgr5,com.cfff,com.fs10,com.bgc37,com.pdt1l10,com.br10]}>任务</Text>
-                                                <Text style={[com.cb4,com.fs10]}>刘明</Text>
-                                            </View>
-                                        </View>
-                                        <View style={[]}>
-                                            <Text style={[com.c62,com.fs10]}>有进展</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-
-                            <TouchableHighlight
-                                style={[com.bgcfff]}
-                                onPress={()=>{this.dailyDetail()}}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
-                                    <View style={[com.mgr10]}>
-                                        <Text style={[com.cbe]}>16:52</Text>
-                                    </View>
-                                    <View style={[com.row,com.aic,com.jcsb,com.flex]}>
-                                        <View>
-                                            <Text>情似雨馀粘地絮</Text>
-                                            <View style={[com.row,com.aic,com.mgt5]}>
-                                                <Text style={[com.mgr5,com.cfff,com.fs10,com.bgc24,com.pdt1l10,com.br10]}>临时拜访</Text>
-                                                <Text style={[com.cb4,com.fs10]}>刘明</Text>
-                                            </View>
-                                        </View>
-                                        <View style={[]}>
-                                            <Text style={[com.cbe,com.fs10]}>已结束</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-                        </View>*/}
                         {/*页面级-下拉框*/}
                         <View>
                             <Modal
                                 backdropOpacity={0}
-                                animationType={"fade"}
+                                animationIn={'slideInDown'}
+                                animationOut={'slideOutUp'}
                                 isVisible={this.state.isModalVisible}
                                 >
                                 <TouchableWithoutFeedback
                                     onPress={() => this.setState({isModalVisible: !this.state.isModalVisible})}>
                                     <View style={{flex:1}}>
                                         <View
-                                            style={[com.posr,com.h200,{top:Platform.OS==='ios'?95:75,left:0,width:screenW,height:Platform.OS==='ios'?screenH-155:screenH-160,backgroundColor:'#000',opacity:0.6}]}></View>
-                                        <View style={[com.posr,{top:Platform.OS==='ios'?25:5}]}>
+                                            style={[com.posr,com.h200,{top:80,left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
+
+                                        <View style={[com.posr,{top:0}]}>
                                             <View style={[com.bckfff,com.mgt70]}>
                                                 {/*页面级-下拉框内容*/}
                                                 <View style={[com.pdt5,com.pdb5,com.row,]}>
@@ -498,15 +383,16 @@ export default class MyDailySearch extends Component {
                             </Modal>
                             <Modal
                                 backdropOpacity={0}
-                                animationType={"fade"}
+                                animationIn={'slideInDown'}
+                                animationOut={'slideOutUp'}
                                 isVisible={this.state.isModalVisibleTwo}
                                 >
                                 <TouchableWithoutFeedback
                                     onPress={() => this.setState({isModalVisibleTwo:!this.state.isModalVisibleTwo})}>
                                     <View style={{flex:1}}>
                                         <View
-                                            style={[com.posr,com.h200,{top:Platform.OS==='ios'?95:75,left:0,width:screenW,height:Platform.OS==='ios'?screenH-155:screenH-160,backgroundColor:'#000',opacity:0.6}]}></View>
-                                        <View style={[com.posr,{top:Platform.OS==='ios'?25:5}]}>
+                                            style={[com.posr,{left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
+                                        <View style={[com.posr,{top:0}]}>
                                             <View style={[com.bckfff,com.mgt70]}>
                                                 {/*页面级-下拉框内容*/}
                                                 <View style={[com.bgcfff,com.ww,com.row,com.hh3]}>
@@ -577,7 +463,7 @@ export default class MyDailySearch extends Component {
                                                                     <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
                                                                         <View>
                                                                             <CheckBox
-                                                                               ref="item2"
+                                                                                ref="item2"
                                                                                 value="2"
                                                                                 style={[com.flex,com.pdt5l20,com.pdl30,{}]}
                                                                                 onClick={()=>{}}

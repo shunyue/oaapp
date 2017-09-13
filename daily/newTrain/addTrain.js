@@ -25,36 +25,57 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Picker from 'react-native-picker';
-export default class AddTrain extends Component {
+export default class EditTrain extends Component {
     constructor(props) {
         super(props);
+        let {params} = this.props.navigation.state;
         this.state = {
             text2:'地点',
             customer:[],
             executor:[],
-            starttime: moment(new Date()).format('YYYY-MM-DD  HH:mm'),
-            stoptime: moment(new Date()).add(1, 'hour').format('YYYY-MM-DD  HH:mm'),
-            startstamp:parseInt(new Date().getTime()/1000),
-            content:"",
+            starttime:params.dailyInfo.start_time,
+            stoptime: params.dailyInfo.stop_time,
+            content:params.dailyInfo.description,
             confirm_recept:false,
-            alertTime:" ",
+            alertTime:params.dailyInfo.remind_time,
             selectNum:1,
             alertName:"不提醒",
-            title:" ",
-            position:" "
+            title:params.dailyInfo.title,
+            position:params.dailyInfo.position,
+            executorId:[],
+            customerId:[]
         };
     }
     componentDidMount() {
+        this._getDailyMessage();
         //选择客户
         this.customerListener= DeviceEventEmitter.addListener('Customer', (a)=> {
+            var customerIds=[];
+            if(a!=null && a.length!=0) {
+                for (var i = 0; i < a.length; i++) {
+                    customerIds[i]=a[i].id;
+                }
+            }else{
+                customerIds=this.state.customerId;
+            }
             this.setState({
-                customer: a
+                customer: a,
+                customerId:customerIds
             })
         });
         //选择员工
         this.executorListener= DeviceEventEmitter.addListener('Executor', (a)=> {
+            var executorIds=[];
+            if(a!=null && a.length!=0) {
+                for (var i = 0; i < a.length; i++) {
+                    executorIds[i]=a[i].id;
+                }
+            }else{
+                executorIds=this.state.executorId;
+            }
             this.setState({
-                executor: a
+                executor: a,
+                executorId:executorIds
             })
         });
         //培训描述
@@ -79,16 +100,57 @@ export default class AddTrain extends Component {
         this.describeListener.remove();
         this.alertListener.remove();
     }
+    _getDailyMessage(){
+        let {params} = this.props.navigation.state;
+        if(params.dailyInfo.confirm_recept==1){
+            var confirm_recept=true;
+        }else{
+            var confirm_recept=false;
+        }
+        if(params.dailyInfo.remind_time!=null && params.dailyInfo.remind_time!="0000-00-00 00:00:00"){
+            var alertName=params.dailyInfo.remind_time;
+        }else{
+            var alertName='不提醒';
+        }
+        var executor=params.dailyInfo.executor;
+        if(executor!=null){
+            var  executorId= executor.split(",");
+        }else{
+            var  executorId=[];
+        }
+
+        var customer=params.dailyInfo.customer_id;
+        if(customer!=null){
+            var  customerId=customer.split(",");//转换为一维数组
+        }else{
+            var  customerId=[];
+        }
+        if(params.dailyInfo.remind_time!=null && params.dailyInfo.remind_time!="0000-00-00 00:00:00"){
+            var alertTime=this.get_unix_time(params.dailyInfo.remind_time);
+        }else{
+            var alertTime=0;
+        }
+        this.setState({
+            confirm_recept:confirm_recept,
+            executorId:executorId,
+            customerId:customerId,
+            alertName:alertName,
+            alertTime:alertTime
+        });
+    }
     //返回上一页
     OpBack(daily=null) {
-        DeviceEventEmitter.emit('newDaily',{
-            newDaily:daily
-        });
+        DeviceEventEmitter.emit('Daily',daily);
         this.props.navigation.goBack(null)
     }
     //提交
     submit(){
         let {params} = this.props.navigation.state;
+        var create_time=moment(new Date()).format('YYYY-MM-DD  HH:mm:ss');
+        if(this.state.starttime <create_time){
+            toast.bottom('只能创建当前时间以后的日程');
+            return false;
+        }
         if(this.state.title ==" "|| this.state.title==null){
             toast.bottom('培训名称不能为空');
             return false;
@@ -97,19 +159,8 @@ export default class AddTrain extends Component {
             toast.bottom('培训地点不能为空');
             return false;
         }
-        //添加执行人
-        var executorArr = this.state.executor;
-        var executorIds=[];
-        for (var i = 0; i < executorArr.length; i++) {
-            executorIds[i]=executorArr[i].id;
-        }
-        var executor = executorIds.join(",");
-        var customerArr = this.state.customer;
-        var customerIds=[];
-        for (var i = 0; i < customerArr.length; i++) {
-            customerIds[i]=customerArr[i].id;
-        }
-        var customer = customerIds.join(",");
+        var executor = this.state.executorId.join(",");
+        var customer = this.state.customerId.join(",");
         if(this.state.confirm_recept==true){
             var confirm_recept=1;
         }else{
@@ -119,20 +170,13 @@ export default class AddTrain extends Component {
             toast.bottom('至少选择一个执行人');
             return false;
         }
-
-        if(this.state.starttime>=this.state.stoptime){
-            toast.bottom('结束时间要大于开始时间');
-            return false;
-        }
-
         if(this.state.content==""||this.state.content==null){
             toast.bottom('请输入培训描述');
             return false;
         }
-        var url=config.api.base+config.api.addDaily;
+        var url=config.api.base+config.api.editDailyInfo;
         request.post(url,{
-            create_id:params.user_id,
-            company_id:params.company_id,
+            daily_id:params.dailyInfo.id,
             customer_id:customer,
             executor:executor,
             start_time:this.state.starttime,
@@ -141,8 +185,6 @@ export default class AddTrain extends Component {
             remind_time:this.state.alertTime,
             confirm_recept:confirm_recept,
             create_time:moment(new Date()).format('YYYY-MM-DD  HH:mm'),
-            daily_type:4,
-            status:1,
             title:this.state.title,
             position:this.state.position
         }).then((res)=>{
@@ -153,9 +195,9 @@ export default class AddTrain extends Component {
                 toast.bottom(res.message);
             }
         })
-        .catch((error)=>{
-            toast.bottom('网络连接失败,请检查网络后重试')
-        });
+            .catch((error)=>{
+                toast.bottom('网络连接失败,请检查网络后重试')
+            });
     }
 
     //拜访描述
@@ -166,21 +208,14 @@ export default class AddTrain extends Component {
         }
         this.props.navigation.navigate('AddDescribe',{describe:describe});
     }
-
     //选择客户
     goPage_chooseCustomer(){
         let {params} = this.props.navigation.state;
-        var customer=this.state.customer;
-        var customerIds=[];
-        for (var i = 0; i < customer.length; i++) {
-            customerIds[i]=customer[i].id;
-        }
-
         this.props.navigation.navigate('ChooseMultipleCustomer',{
-            customer:customer,
+            customer:this.state.customer,
             user_id:params.user_id,
             company_id: params.company_id,
-            customerIds:customerIds
+            customerIds:this.state.customerId
         });
     }
     //选择任务人
@@ -188,8 +223,12 @@ export default class AddTrain extends Component {
         let {params} = this.props.navigation.state;
         var executor=this.state.executor;
         var executorIds=[];
-        for (var i = 0; i < executor.length; i++) {
-            executorIds[i]=executor[i].id;
+        if(executor!=null && executor.length!=0) {
+            for (var i = 0; i < executor.length; i++) {
+                executorIds[i]=executor[i].id;
+            }
+        }else{
+            executorIds=this.state.executorId;
         }
         this.props.navigation.navigate('ChooseExecutor',{
             user_id:params.user_id,
@@ -231,7 +270,7 @@ export default class AddTrain extends Component {
         for(let i=1;i<61;i++){
             minutes.push(i);
         }
-        let pickerData = [years, months, days, ['am', 'pm'], hours, minutes];
+        let pickerData = [years, months, days, hours, minutes];
         let date = new Date();
         let selectedValue = [
             date.getFullYear(),
@@ -248,7 +287,7 @@ export default class AddTrain extends Component {
             pickerTitleText: '选择日期和时间',
             pickerToolBarFontSize: 16,
             pickerFontSize: 16,
-            wheelFlex: [2, 1, 2, 2, 1],
+            wheelFlex:  [2, 1, 2, 2, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
                 for(i=0;i<pickedValue.length;i++){
                     if(pickedValue[i]<10){
@@ -268,7 +307,6 @@ export default class AddTrain extends Component {
                         stoptime: date
                     });
                 }
-
             },
             onPickerCancel: pickedValue => {
                 Picker.hide();
@@ -288,8 +326,6 @@ export default class AddTrain extends Component {
                 }
                 // forbidden some value such as some 2.29, 4.31, 6.31...
                 if(JSON.stringify(targetValue) !== JSON.stringify(pickedValue)){
-                    // android will return String all the time，but we put Number into picker at first
-                    // so we need to convert them to Number again
                     targetValue.map((v, k) => {
                         if(k !== 3){
                             targetValue[k] = parseInt(v);
@@ -305,12 +341,13 @@ export default class AddTrain extends Component {
     get_unix_time(str) {
         str = str.replace(/-/g,'/');
         var date = new Date(str);
-        var time = parseInt(date.getTime()/1000);
+        var time = parseInt(date.getTime())/1000;
         return time;
     }
-
     render() {
-        const {params} = this.props.navigation;
+        alert(JSON.stringify(this.state.customer))
+        const {navigate} = this.props.navigation;
+        let {params} =this.props.navigation.state;
         var executorArr=[];
         var  executor=this.state.executor;
         if(executor!= null && executor.length>=3){
@@ -323,7 +360,7 @@ export default class AddTrain extends Component {
             }
             executorArr.push(
                 <View key={i-(-1)}>
-                    <Text>等</Text>
+                    <Text>等{executor.length}人</Text>
                 </View>
             );
         }else if(executor!=null && executor.length>0){
@@ -337,7 +374,7 @@ export default class AddTrain extends Component {
         }else{
             executorArr.push(
                 <View  key={0}>
-                    <Text>请选择</Text>
+                    <Text>{params.dailyInfo.executorName}</Text>
                 </View>
             );
         }
@@ -353,7 +390,7 @@ export default class AddTrain extends Component {
             }
             customerArr.push(
                 <View key={i-(-1)}>
-                    <Text>等</Text>
+                    <Text>等{customer.length}家</Text>
                 </View>
             );
         }else if(customer!=null && customer.length>0){
@@ -367,7 +404,7 @@ export default class AddTrain extends Component {
         }else{
             customerArr.push(
                 <View  key={0}>
-                    <Text>请选择</Text>
+                    <Text>{params.dailyInfo.customerName}</Text>
                 </View>
             );
         }
@@ -378,7 +415,7 @@ export default class AddTrain extends Component {
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Text style={styles.back_text}>取消</Text>
                     </TouchableHighlight>
-                    <Text style={styles.formHeader}>新建培训</Text>
+                    <Text style={styles.formHeader}>编辑培训</Text>
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goRight,styles.go]} onPress={()=>this.submit()}>
                         <Text style={styles.back_text}>完成</Text>
                     </TouchableHighlight>
@@ -392,6 +429,7 @@ export default class AddTrain extends Component {
                                 placeholder = {'培训名称'}
                                 underlineColorAndroid="transparent"
                                 placeholderTextColor='#aaa'
+                                value={this.state.title}
                                 />
                         </View>
                         <View style={[styles.customerName2,styles.flex_position,styles.padding_value]}>
@@ -401,6 +439,7 @@ export default class AddTrain extends Component {
                                 placeholder ={this.state.text2}
                                 underlineColorAndroid="transparent"
                                 placeholderTextColor='#aaa'
+                                value={this.state.position}
                                 />
                         </View>
                     </View>
