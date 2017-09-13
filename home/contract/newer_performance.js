@@ -309,12 +309,12 @@ const styles = StyleSheet.create({
     back_icon:{
        width:10,
         height:17,
-        marginTop: 3
+        marginTop: Platform.OS==='ios'?null:3
     },
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:6
+        marginLeft:3
     },
     add:{
         width:22,
