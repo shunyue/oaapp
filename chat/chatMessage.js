@@ -846,13 +846,13 @@ export default class app extends Component {
                     <View style={[styles.container,{backgroundColor:'#e15151'}]}>
                         <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                             <View style={{flexDirection:'row'}}>
-                                <Image  style={styles.back_icon} tintColor={'#fff'} source={require('../imgs/customer/back.png')}/>
+                                <Image  style={[styles.back_icon,{ tintColor:'#fff'}]} source={require('../imgs/customer/back.png')}/>
                                 <Text style={styles.back_text}>返回</Text>
                             </View>
                         </TouchableHighlight>
                         <Text style={{fontSize:17,color:'#fff'}}>{state.params.title}</Text>
                         <TouchableHighlight underlayColor={'transparent'} style={[styles.goRight,styles.go]} onPress={()=>{navigate('ChatMessageSet',{title:state.params.title})}}>
-                            <Image  style={{width:25,height:25}} tintColor={'#fff'} source={require('../imgs/chat/set.png')}/>
+                            <Image  style={[{width:24,height:24, tintColor:'#fff'}]}source={require('../imgs/chat/set.png')}/>
                         </TouchableHighlight>
                     </View>
                     <ScrollableTabView
@@ -982,7 +982,7 @@ const styles = StyleSheet.create({
     back_icon:{
         width:10,
         height:17,
-        marginTop: 3
+        marginTop:Platform.OS==='ios'?null: 3
     },
     back_text:{
         color:'#fff',
