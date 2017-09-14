@@ -24,6 +24,8 @@ import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
 import CodePush from "react-native-code-push";
+import com from '../public/css/css-com';
+import moment from 'moment';
 export default class Home extends Component {
 
     constructor(props) {
@@ -70,6 +72,8 @@ export default class Home extends Component {
                 this.getNet1();//业绩对比
                 this.getNet2();//目标达成
                 this.requestData();  //周飞飞  添加获取目标达成数据的方法
+                //获取日程
+                this.searchDaily(data.user_id,data.company_id);
             })
 
     }
@@ -192,6 +196,48 @@ export default class Home extends Component {
 
     getNet2(){
 
+    }
+    /*查找我的今日日程*/
+    searchDaily(user_id,company_id){
+        let time=moment(new Date()).format('YYYY-MM-DD');
+        var url=config.api.base+config.api.searchMyDaily;
+        request.post(url,{
+            user_id:user_id,
+            company_id:company_id,
+            current_time:time
+        }).then((res)=>{
+            var data=res.data;
+            this.setState({
+                count: data.count,
+                daily: data.info,
+                load: false
+            })
+        })
+            .catch((error)=>{
+                toast.bottom('网络连接失败,请检查网络后重试')
+            });
+    }
+    //日程详情页面
+    dailyDetail(daily) {
+        //this.props.navigation.navigate('DailyDetail',{user_id:this.props.user_id,company_id:this.props.company_id,dailyInfo:daily});
+        this.props.navigation.navigate('DailyDetail',{
+            user_id:this.props.user_id,
+            company_id:this.props.company_id,
+            dailyInfo:daily
+        });
+    }
+    //获取日程状态名称
+    getStatusName(status,start_time){
+        var today=moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+        if(status=='1' && today < start_time){
+            return '未开始';
+        }else if(status=='1' && today >= start_time){
+            return '无进展';
+        }else if(status=='2'){
+            return '有进展';
+        }else if(status=='3'){
+            return '已结束';
+        }
     }
 
     on_press(inder){
@@ -327,6 +373,54 @@ export default class Home extends Component {
         const deg = reach*180+'deg'
         const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
         const {navigate}=this.props.navigation
+        var daily= this.state.daily;
+        if(daily !=""){
+            var dailylist = [];
+            for(var i in daily){
+                dailylist.push(
+                    <View style={[]} key={i}>
+                        <TouchableHighlight
+                            style={[]}
+                            onPress={
+                                this.dailyDetail.bind(this,daily[i])
+                            }
+                            underlayColor="#f5f5f5"
+                            >
+                            <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>
+                                <View style={[com.mgr10]}>
+                                    <Text style={[com.cbe]}>{daily[i].datetime}</Text>
+                                </View>
+                                <View style={[com.row,com.aic,com.jcsb,com.flex]}>
+                                    <View>
+                                        {(daily[i].daily_type==1)?(
+                                            <Text> {daily[i].customerName}</Text>):(<Text>{daily[i].title}</Text>)}
+                                        <View style={[com.row,com.aic]}>
+                                            <Text style={[com.mgr5,com.cfff,com.fs10,com.bgc24,com.pdt1l10,com.br10]}>{daily[i].typeName}</Text>
+                                            <Text style={[com.cb4]}>{daily[i].executorName}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={[]}>
+                                        <Text style={[com.c62]}>{this.getStatusName(daily[i].status,daily[i].start_time)}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                )
+            }
+
+        }else{
+            dailylist = [];
+            dailylist.push(
+                <View style={[styles.threeTwoCenter]}>
+                <View style={[styles.row]} key={0}>
+                    <Image source={require('../imgs/rc16.png')}/>
+                    <Text style={[styles.threeText]}>
+                        您今天还没有日程
+                    </Text>
+                </View>
+                </View>    )
+        }
         return (
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
@@ -740,14 +834,18 @@ export default class Home extends Component {
                             </View>
                         </View>
                         {/*内容*/}
-                        <View style={[styles.threeTwoCenter]}>
-                            <View style={[styles.row]}>
+                        {dailylist}
+                            {/*
+                             <View style={[styles.threeTwoCenter]}>
+                             <View style={[styles.row]}>
                                 <Image source={require('../imgs/rc16.png')}/>
                                 <Text style={[styles.threeText]}>
                                     您今天还没有日程
                                 </Text>
                             </View>
-                        </View>
+                             </View>*/}
+
+
                     </View>
                     <View style={[styles.threeDIVCON]}>
                         {/*重点关注*/}

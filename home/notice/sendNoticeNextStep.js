@@ -16,15 +16,20 @@ import moment from 'moment';
 import toast from '../../common/toast';
 export default class SendNoticeNextStep extends Component {
   back() {
+      DeviceEventEmitter.emit('accepter',{
+          accepter:this.state.accepter,
+          value:this.state.value
+      });
     this.props.navigation.goBack(null);
   }
   constructor(props) {
     super(props);
     // 初始状态
+      let {params} = this.props.navigation.state;
     this.state = {
-        value:false,
+        value:params.value,
         time: moment(new Date()).format('YYYY-MM-DD HH:mm'),
-        accepter:[],
+        accepter:params.accepter,
     };
   }
 
@@ -115,7 +120,6 @@ export default class SendNoticeNextStep extends Component {
           {/*内容主题*/}
           <ScrollView style={[com.FLEX,com.BCKF5]}>
             <TouchableHighlight
-
                 onPress={()=>this.chooseRange()}
                 underlayColor="#d5d5d5"
                 >
@@ -153,7 +157,6 @@ export default class SendNoticeNextStep extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   navltys: {
     flex: 1,

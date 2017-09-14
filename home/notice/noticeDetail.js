@@ -161,7 +161,7 @@ noticeDetail(){
           )}
 
           {/*附件*/}
-          {this.state.notice.appendix == ""?(null):(
+          {/*      {this.state.notice.appendix == ""?(null):(
               <View style={[com.PDT5]}>
                 <View style={[com.PDB5]}>
                   <Text>附件</Text>
@@ -172,7 +172,7 @@ noticeDetail(){
                   <Text style={[com.CBE]}>000xxx000xxx.jpg</Text>
                 </View>
               </View>
-          )}
+          )}*/}
         </ScrollView>
 
         {/* 添加模型 */}
@@ -199,10 +199,10 @@ noticeDetail(){
                       )}}>
                   <Text style={{color:'#333'}}>撤回</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[com.jcc,com.aic,com.bbwc,com.pdt10,com.pdb10]}
+                {/*  <TouchableOpacity style={[com.jcc,com.aic,com.bbwc,com.pdt10,com.pdb10]}
                                   onPress={() => { this.setVisibleModal(!this.state.show);this.goPage_share()}}>
                   <Text style={{color:'#333'}}>分享</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
                 <TouchableOpacity style={[com.jcc,com.aic,com.pdt5,com.pdb5]}
                                   onPress={() => { this.setVisibleModal(!this.state.show)}}>
                   <Text style={{color:'#555'}}>取消</Text>

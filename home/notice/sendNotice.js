@@ -34,7 +34,23 @@ export default class SendNotice extends Component {
       url:'',
       pic:'',
       imgArr:[],
+      accepter:[]
     };
+  }
+
+  componentDidMount() {
+    this.Listener= DeviceEventEmitter.addListener('accepter', (a)=> {
+      alert(JSON.stringify(a))
+       this.setState({
+         accepter:a.accepter,
+         value:a.value
+       })
+
+    });
+  }
+  componentWillUnmount() {
+    // 移除监听
+    this.Listener.remove();
   }
   openAffix(){
     //alert('这是打开文件夹')
@@ -42,7 +58,7 @@ export default class SendNotice extends Component {
       width: 300,
       height: 400,
       cropping: true
-    }).then(image => {;
+    }).then(image => {
       this.state.imgArr.push({id: this.state.id, visible: null, path: image.path});
       this.setState({//放到这里只是为了渲染页面
         id: this.state.id + 1
@@ -129,6 +145,8 @@ export default class SendNotice extends Component {
       user_id:params.user_id,
       userName:params.userName,
       company_id:params.company_id,
+      accepter:this.state.accepter,
+      value:this.state.value
     });
   };
   render(){
