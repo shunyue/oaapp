@@ -46,7 +46,7 @@ export default class Daily extends Component {
             change:true,//有两种状态  true:日程列表 false:搜索日程
             current_day:moment(new Date()).format('DD'),
             current_month:moment(new Date()).format('MM/YYYY'),
-            subordinateInfo:[]
+            subordinateInfo:[],
         };
     }
     componentDidMount() {
@@ -112,11 +112,6 @@ export default class Daily extends Component {
     _showModal = () =>this.setState({isModalVisible: true})
     //动态信息获取 查看 我的客户
     _getContent(tab) {
-        //var params={
-        //    user_id:user_id,
-        //    company_id:company_id,
-        //    navigation:this.props.navigation
-        // };
         var params={
             user_id:this.state.user_id,
             company_id:this.state.company_id,
@@ -156,23 +151,43 @@ export default class Daily extends Component {
     }
     getTitle(){
         var subordinateInfo=this.state.subordinateInfo;
+       // subordinateInfo=[];
         if(subordinateInfo.length!=0){
             return(
-                <TouchableHighlight
-                    style={[com.jcc,com.pd10]}
-                    onPress={()=>{this.setState({tab:2})}}
+            <ScrollableTabView
+                renderTabBar={() => <ScrollableTabBar
+                              style={styles.tabar_scroll}
+                   />}
+                ref={(tabView) => {this.tabView = tabView}}
+                tabBarUnderlineStyle={{height:2,backgroundColor: '#e15151',}}
+                tabBarBackgroundColor='#FFFFFF'
+                tabBarActiveTextColor='#e15151'
+                tabBarInactiveTextColor='#333'
+                locked ={ false}
+                tabBarTextStyle ={{fontSize:16,}}
+                showsVerticalScrollIndicator={false}
+                >
+                <View tabLabel='我的日程'>
+                    {this._getContent(1)}
+                </View>
+                <View  tabLabel='下属日程'>
+                    {this._getContent(2)}
+                </View>
+            </ScrollableTabView>
+        )}else{
+            return(
+                <View>
+                <View
+                    style={[com.jcc,com.pd10,com.row]}
                     underlayColor="#fff"
                     >
-                    <View style={[{}]}>
-                        <Text style={[com.mgb5]}>下属日程</Text>
-                        {this.state.tab==2?(<Image style={[ {height:1,width:55},com.tcr]} source={require('../imgs/daily/straightLine.png')}/>
-                        ):(null)}
-                    </View>
-                </TouchableHighlight>
-            )
+                     <Text style={[com.mgb5]}>我的日程</Text>
+                </View>
+                    {this._getContent(1)}
+            </View>
+           )
         }
     }
-
     render() {
         var daily=[];
         var params={
@@ -200,23 +215,10 @@ export default class Daily extends Component {
                  {this.getTitle()}
                  </View>*/}
                 {/*自定义导航栏-中间*/}
-                <ScrollableTabView
-                    renderTabBar={() => <ScrollableTabBar
-                              style={styles.tabar_scroll}
-                   />}
-                    ref={(tabView) => { this.tabView = tabView; }}
-                    >
-                    <TouchableOpacity tabLabel='我的日程'>
-                        {this._getContent(1)}
-                    </TouchableOpacity>
-                    <TouchableOpacity tabLabel='下属日程'>
-                        {this._getContent(2)}
-                    </TouchableOpacity>
-                </ScrollableTabView>
-
+                {this.getTitle()}
 
                 {/*自定义导航栏-定位左边*/}
-                <TouchableHighlight
+                { /*  <TouchableHighlight
                     style={[com.posr,{top:8,left:10}]}
                     onPress={()=>{this.repose()}}
                     underlayColor="#f5f5f5"
@@ -224,7 +226,7 @@ export default class Daily extends Component {
                     <View style={[]}>
                         <Image style={[com.wh24,com.tcr]} source={require('../imgs/bbr32.png')}/>
                     </View>
-                </TouchableHighlight>
+                </TouchableHighlight>*/}
 
                 {/*自定义导航栏-定位右边*/}
                 <View style={[com.row,com.posr,{top:8,right:10}]}>

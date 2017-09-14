@@ -112,57 +112,11 @@ export default class MyDailyList  extends Component {
         }
     }
     render() {
-        const customStyle = {
-            calendarHeading: {
-                backgroundColor: 'blue',
-            }
-        }
-        if (this.state.load) {
-            return (
-                <ScrollView style={[com.flex]}>
-                    {/*事件插件区域*/}
-                    <View>
-                        <Calendar
-                            currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
-                            //customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
-                            dayHeadings={['日', '一', '二', '三', '四', '五','六']}               // Default: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
-                            eventDates={['2017-07-01']}       // Optional array of moment() parseable dates that will show an event indicator
-                            events={[{date:'2017-07-06'}]}// Optional array of event objects with a date property and custom styles for the event indicator
-                            monthNames={['1月','2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月']}                // Defaults to english names of months
-                            nextButtonText={'下一月'}           // Text for next button. Default: 'Next'
-                            onDateSelect={(date) => this.onDateSelect(date)} // Callback after date selection
-                            onSwipeNext={this.onSwipeNext}    // Callback for forward swipe event
-                            onSwipePrev={this.onSwipePrev}    // Callback for back swipe event
-                            onTouchNext={this.onTouchNext}    // Callback for next touch event
-                            onTouchPrev={this.onTouchPrev}    // Callback for prev touch event
-                            onTitlePress={this.onTitlePress}  // Callback on title press
-                            prevButtonText={'上一月'}           // Text for previous button. Default: 'Prev'
-                            removeClippedSubviews={false}     // Set to false for us within Modals. Default: true
-                            //renderDay={this.state.time}         // Optionally render a custom day component
-                            scrollEnabled={true}              // False disables swiping. Default: False
-                            selectedDate={this.state.time}       // Day to be selected
-                            showControls={true}               // False hides prev/next buttons. Default: False
-                            showEventIndicators={true}        // False hides event indicators. Default:False
-                            startDate={this.state.time}          // The first month that will display. Default: current month
-                            titleFormat={'YYYY MMMM'}         // Format for displaying current month. Default: 'MMMM YYYY'
-                            today={this.state.time}              // Defaults to today
-                            weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
-                            />
-                    </View>
-                    <View style={[{marginTop:310},com.bckf5,com.btwc,com.btwc]}>
-                        <View style={[com.row,com.jcsb,com.pdt5l15,com.bbwc]}>
-                            <View style={[com.row]}>
-                                <Text style={[com.mgr5]}>我的</Text>
-                                <Text>日程{this.state.count}项</Text>
-                            </View>
-                            {/* <View style={[com.row]}>
-                             <Text>筛选</Text>
-                             <Image style={[com.wh24,com.tcr]} source={require('../../imgs/navld32.png')}/>
-                             </View>*/}
-                        </View>
-                        <Loading/>
-                    </View>
-                </ScrollView>
+        if(this.state.load){
+            return(
+                <View style={[com.hh9,com.jcc,com.aic]}>
+                    <Loading/>
+                </View>
             )
         }
         var daily= this.state.daily;
@@ -204,9 +158,9 @@ export default class MyDailyList  extends Component {
         }else{
             dailylist = [];
             dailylist.push(
-                <View style={[com.jcc,com.aic,com.bgce6]} key={0}>
+                <View style={[com.jcc,com.aic,com.bgce6,com.flex]} key={0}>
                     <View style={[com.jcc,com.aic,com.bgce6]}>
-                        <Image style={[com.wh64]} source={require('../../imgs/noContent.png')}/>
+                        <Image style={[com.wh64,com.mgt20]} source={require('../../imgs/noContent.png')}/>
                         <Text>暂无日程</Text>
                     </View>
                 </View>)
@@ -216,7 +170,6 @@ export default class MyDailyList  extends Component {
                 {/*事件插件区域*/}
                 <View>
                     <Calendar
-                        // customStyle={customStyle}
                         currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
                         //customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
                         dayHeadings={['日', '一', '二', '三', '四', '五','六']}               // Default: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
@@ -243,7 +196,7 @@ export default class MyDailyList  extends Component {
                         weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
                         />
                 </View>
-                <View style={[com.bckf5,com.btwc,com.btwc]}>
+                <View style={[com.bckf5,com.btwc,com.btwc,com.flex]}>
                     <View style={[com.row,com.jcsb,com.pdt5l15,com.bbwc]}>
                         <View style={[com.row]}>
                             <Text style={[com.mgr5]}>我的</Text>
@@ -254,7 +207,11 @@ export default class MyDailyList  extends Component {
                          <Image style={[com.wh24,com.tcr]} source={require('../../imgs/navld32.png')}/>
                          </View>*/}
                     </View>
-                    {dailylist}
+                    <View style={{}}>
+                        {dailylist}
+                    </View>
+
+
                 </View>
             </ScrollView>
         );
