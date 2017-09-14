@@ -184,10 +184,10 @@ export default class SubordinateDailyList  extends Component {
         }
         if (this.state.load) {
             return (
-                <ScrollView style={[com.pos,com.flex,{height:screenH}]}>
+                <ScrollView >
                     {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                     {/*事件插件区域*/}
-                    <View style={[com.posr,com.bbwc,com.jcc,com.aic,com.bgce6,com.ww,com.btbwd]}>
+                    <View>
                         <Calendar
                             // customStyle={customStyle}
                             currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
@@ -216,7 +216,7 @@ export default class SubordinateDailyList  extends Component {
                             weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
                             />
                     </View>
-                    <View style={[{marginTop:300},com.bckf5,com.btwc,com.btwc]}>
+                    <View style={[com.bckf5,com.btwc,com.btwc]}>
                         <View style={[com.row,com.jcsb,com.pdt5l15,com.bbwc]}>
                             <View style={[com.row]}>
                                 {subordinateArr}
