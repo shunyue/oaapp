@@ -130,10 +130,6 @@ export default class AddMeeting extends Component {
             var alertTime=moment(this.state.alertTime).format('YYYY-MM-DD  HH:mm');
         }
 
-        if(this.state.content==""||this.state.content==null){
-            toast.bottom('请输入会议描述');
-            return false;
-        }
         var url=config.api.base+config.api.addDaily;
         request.post(url,{
             create_id:params.user_id,

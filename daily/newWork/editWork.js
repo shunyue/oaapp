@@ -169,10 +169,6 @@ export default class EditWork extends Component {
             toast.bottom('结束时间要大于开始时间');
             return false;
         }
-        if(this.state.content==""||this.state.content==null){
-            toast.bottom('请输入任务描述');
-            return false;
-        }
         var url=config.api.base+config.api.editDailyInfo;
         request.post(url,{
             daily_id:params.dailyInfo.id,

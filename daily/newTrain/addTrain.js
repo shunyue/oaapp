@@ -170,10 +170,7 @@ export default class EditTrain extends Component {
             toast.bottom('至少选择一个执行人');
             return false;
         }
-        if(this.state.content==""||this.state.content==null){
-            toast.bottom('请输入培训描述');
-            return false;
-        }
+
         var url=config.api.base+config.api.editDailyInfo;
         request.post(url,{
             daily_id:params.dailyInfo.id,

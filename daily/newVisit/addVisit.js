@@ -112,10 +112,6 @@ export default class AddVisit extends Component {
             toast.bottom('结束时间要大于开始时间');
             return false;
         }
-        if(this.state.content==""||this.state.content==null){
-            toast.bottom('请输入拜访描述');
-            return false;
-        }
         if(this.state.position==" "|| this.state.position==null){
             toast.bottom('请输入拜访地点');
             return false;
