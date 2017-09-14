@@ -383,9 +383,9 @@ export default class Log extends Component {
                             <Text style={[styles.fSelf,styles.navltyszt]}>部门</Text>
                         </View>
                     </TouchableHighlight>*/}
-                    <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
+                    {/* <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
                         <Image source={require('../../imgs/slh.png')}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
 
                 </View>
 

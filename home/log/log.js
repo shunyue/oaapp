@@ -383,7 +383,6 @@ export default class Log extends Component {
                     </Modal>
                 </View>
                 <ScrollView
-                    style={[com.pdl15,com.pdr15]}
                     refreshControl={
                        <RefreshControl
                           refreshing={this.state.isRefreshing}
@@ -395,21 +394,28 @@ export default class Log extends Component {
                           progressBackgroundColor="#ffff00"
                           />
                         }>
+
                     {/*搜索员工*/}
-                    {this.state.data.length!=0?( <View style={[]}>
-                        <TouchableHighlight
-                            style={[]}
-                            onPress={()=>this.goPage_logSearch()}
-                            underlayColor="#fff"
-                            >
-                            <View style={[com.ROW,com.jcc,com.AIC,com.BCKFFF,com.PD5,com.mgt5,com.BR]}>
-                                <Image
-                                    style={[com.wh16,com.mgr5]} source={require('../../imgs/search.png')}/>
-                                <Text>搜索员工</Text>
-                            </View>
-                        </TouchableHighlight>
-                    </View>):(null)}
-                    {list}
+                    <View  style={[com.mglr10]}>
+                        {this.state.data.length!=0?( <View style={[]}>
+                            <TouchableHighlight
+                                style={[]}
+                                onPress={()=>this.goPage_logSearch()}
+                                underlayColor="#fff"
+                                >
+                                <View style={[com.ROW,com.jcc,com.AIC,com.BCKFFF,com.PD5,com.mgt5,com.BR]}>
+                                    <Image
+                                        style={[com.wh16,com.mgr5]} source={require('../../imgs/search.png')}/>
+                                    <Text>搜索员工</Text>
+                                </View>
+                            </TouchableHighlight>
+                        </View>):(null)}
+                        {list}
+                    </View>
+
+
+
+
                 </ScrollView>
 
                 {/*底部通栏*/}
