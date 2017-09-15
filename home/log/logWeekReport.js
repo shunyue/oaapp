@@ -19,7 +19,7 @@ const screenH = Dimensions.get('window').height;
 import com from '../../public/css/css-com';
 import Modal from 'react-native-modal'
 import wds from '../../public/css/css-window-single'
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';

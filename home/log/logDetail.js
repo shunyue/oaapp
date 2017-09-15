@@ -24,7 +24,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
 import moment from 'moment';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 export default class Log extends Component {
     back() {
     //准备一个值

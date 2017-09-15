@@ -20,7 +20,7 @@ import {
     } from 'react-native';
 const ScreenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 import CheckBox from 'react-native-check-box';
 import config from '../common/config';
 import request from '../common/request';
