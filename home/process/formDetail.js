@@ -23,7 +23,6 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 
 import ImagePicker from 'react-native-image-picker';
-
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -44,7 +43,6 @@ export default class formDetail extends Component {
 
             form_id:'',//表单id
             approver_people:[],//审批人
-            visibleModal:false,//选择 图片还是拍照
             modalVisible: false,//模态场景是否可见
 
 
@@ -58,39 +56,40 @@ export default class formDetail extends Component {
     //时间插件
 
 
-    //选择图片
+    //选择图片 打开相机
     pic(){
+        var options = {
+            title: '',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '选择相册',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
 
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            this.state.imgs.push(image.path);
-            this.setState({
-            })
-        });
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = {uri: response.uri};
+                this.state.imgs.push(response.uri);
+                this.setState({})
+            }
+        })
     }
-    //选择图片
 
 
-    //打开相机
-    openCamera(){
-        ImagePicker.openCamera({
-            cropping: false
-        }).then(image => {
-            this.state.imgs.push(image.path);
-            this.setState({
-
-            })
-        });
-    }
-
-    //选择 图片还是拍照
-    visibleModalSet(visible) {
-        this.setState({visibleModal: visible});
-    }
-
+  //选择图片 打开相机
 
     //piker 时间
     _showTimePicker(e) {
@@ -475,7 +474,7 @@ export default class formDetail extends Component {
                     <View style={[styles.divCom]} key={i}>
                         <View style={[styles.divRowCom]}>
                             <Text style={[styles.divFontCom]}>{forminfo[i].field_name}</Text>
-                            <TouchableOpacity  onPress={()=>{this.setState({visibleModal: !this.state.visibleModal})}} >
+                            <TouchableOpacity  onPress={()=>{this.pic()}} >
                                 <Image style={{marginLeft:30,width:20,height:20}} source={require('../../imgs/icon_shenpi/xiangji.png')}/>
                             </TouchableOpacity>
 
@@ -543,45 +542,6 @@ export default class formDetail extends Component {
                         {list}
                     </View>
                 </ScrollView>
-
-
-                {/*选择图片或拍照*/}
-                <View>
-                    <Modal
-                        animationType={"slide"}
-                        transparent={true}
-                        visible={this.state.visibleModal}
-                        onRequestClose={() => {alert("Modal has been closed.")}}
-                    >
-                        <View style={{width:screenW,height:screenH,backgroundColor:'#555',opacity:0.6}}><TouchableOpacity style={{flex:1,height:screenH}} onPress={() => {
-                     this.visibleModalSet(!this.state.visibleModal)
-                    }}></TouchableOpacity>
-                        </View>
-                        <View style={styles.addCustomer_c}>
-                            <View style={[styles.addCustomer_card,styles.addCustomer_card_1]}>
-                                <TouchableOpacity
-                                    style={[styles.customerCard_content,styles.customerCard_content_2,styles.customerCard_content2]}
-                                    onPress={()=>{this.openCamera();this.visibleModalSet(!this.state.visibleModal)}}
-                                >
-                                    <Text>拍照</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.customerCard_content,styles.customerCard_content_2]}
-                                    onPress={()=>{this.pic();this.visibleModalSet(!this.state.visibleModal)}}
-                                >
-                                    <View>
-                                        <Text>从相册选取</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.addCustomer_card,styles.addCustomer_card_2]}>
-                                <TouchableOpacity  style={[styles.customerCard_content,styles.customerCard_content_2]} onPress={() => { this.visibleModalSet(!this.state.visibleModal)}}>
-                                    <Text>取消</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </Modal>
-                </View>
 
 
             </View>
