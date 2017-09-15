@@ -34,7 +34,6 @@ export default class UserInfo  extends Component {
         if(!this.state.cus_name) {
             return ;
         }
-        alert(this.state.cus_name)
         const {params} = this.props.navigation.state;
         var url = config.api.base + config.api.searchCustomerMsg;
         request.post(url,{
