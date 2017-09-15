@@ -48,7 +48,7 @@ export default class formyulan extends Component {
             form_id:'',//表单id
             approver_people:[],//审批人
             modalVisible: false,//模态场景是否可见
-            
+
         };
     }
 
