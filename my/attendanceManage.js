@@ -68,7 +68,7 @@ export default class AttendanceManage extends Component {
                     attendanceCompany: id,
                 }).then((responseJson) => {
                     this.setState({
-                        attendanceData: responseJson,
+                        attendanceData: responseJson.data.list,
                     })
                 }).catch((error)=>{
                     toast.bottom('网络连接失败，请检查网络后重试');
@@ -82,7 +82,7 @@ export default class AttendanceManage extends Component {
                     attendanceCompany: id,
                 }).then((responseJson) => {
                     this.setState({
-                        attendanceData: responseJson,
+                        attendanceData: responseJson.data.list,
                     })
                 }).catch((error)=>{
                     toast.bottom('网络连接失败，请检查网络后重试');
@@ -100,13 +100,15 @@ export default class AttendanceManage extends Component {
     _firstWhiteUser(){
         var url = config.api.base + config.api.changeAttendance;
         var id=this.state.companyid;
+        alert(this.state.user_id)
         request.post(url,{
             attendanceCompany: id,
             user_id:this.state.user_id,
         }).then((responseJson) => {
+            alert(JSON.stringify(responseJson))
             this.setState({
-                attendanceData: responseJson.list,
-                role:responseJson.role,
+                attendanceData: responseJson.data.list,
+                role:responseJson.data.role,
             })
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
