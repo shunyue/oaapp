@@ -1,3 +1,7 @@
+/*
+* 新建表单模板
+* */
+
 import React, { Component } from 'react';
 import {
     AppRegistry,

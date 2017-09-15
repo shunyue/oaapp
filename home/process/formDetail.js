@@ -21,7 +21,7 @@ const screenH = Dimensions.get('window').height;
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
+import com from '../../public/css/css-com';//删除图片的样式
 import ImagePicker from 'react-native-image-picker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -82,7 +82,7 @@ export default class formDetail extends Component {
             }
             else {
                 let source = {uri: response.uri};
-                this.state.imgs.push(response.uri);
+                this.state.imgs.push({url:response.uri,name:response.name});
                 this.setState({})
             }
         })
@@ -236,19 +236,19 @@ export default class formDetail extends Component {
 
     //点击确认按钮
     addproduct() {
-        //判断是否选择了审批人
-        if(this.state.approver_people.length==0){
-            return toast.center('请选择审批人');
-        }
-
-        //排除照片 的标识
-        var inputsing=[];  //['sing15','sing16','sing17']
-        for(var i in this.state.forminfo) {
-            if (this.state.forminfo[i]['field_type'] == '照片') {
-            } else {
-                inputsing.push(this.state.forminfo[i]['sing']);
-            }
-        }
+        ////判断是否选择了审批人
+        //if(this.state.approver_people.length==0){
+        //    return toast.center('请选择审批人');
+        //}
+        //
+        ////排除照片 的标识
+        //var inputsing=[];  //['sing15','sing16','sing17']
+        //for(var i in this.state.forminfo) {
+        //    if (this.state.forminfo[i]['field_type'] == '照片') {
+        //    } else {
+        //        inputsing.push(this.state.forminfo[i]['sing']);
+        //    }
+        //}
 
         //将图片放入 formdata
         let formData = new FormData();
@@ -257,24 +257,24 @@ export default class formDetail extends Component {
             formData.append(this.state.imgs[imgi],file);
         }
 
-        //将照片之外的 放入formdata  {['sing15',cheer]，['sing20',男]}
-        for(var i in inputsing){
-            formData.append(inputsing[i],this.state[inputsing[i]]);
-        }
-
-
-        //将表单的id 放入formdata 给PHP使用
-        formData.append('form_id',this.state.form_id);
-        formData.append('user_id',this.props.navigation.state.params.user_id);
-        formData.append('company_id',this.props.navigation.state.params.company_id);
-
-        //将审批人放入 formdata  只能传递字符串
-        var appprover_people_info=[];
-        for(var i in this.state.approver_people){
-            appprover_people_info.push(this.state.approver_people[i].id+','+this.state.approver_people[i].depart_id+','+this.state.approver_people[i].company_id);
-        }
-        formData.append('approver_peopel',appprover_people_info.join("--"));
-
+        ////将照片之外的 放入formdata  {['sing15',cheer]，['sing20',男]}
+        //for(var i in inputsing){
+        //    formData.append(inputsing[i],this.state[inputsing[i]]);
+        //}
+        //
+        //
+        ////将表单的id 放入formdata 给PHP使用
+        //formData.append('form_id',this.state.form_id);
+        //formData.append('user_id',this.props.navigation.state.params.user_id);
+        //formData.append('company_id',this.props.navigation.state.params.company_id);
+        //
+        ////将审批人放入 formdata  只能传递字符串
+        //var appprover_people_info=[];
+        //for(var i in this.state.approver_people){
+        //    appprover_people_info.push(this.state.approver_people[i].id+','+this.state.approver_people[i].depart_id+','+this.state.approver_people[i].company_id);
+        //}
+        //formData.append('approver_peopel',appprover_people_info.join("--"));
+        //
 
         var url=config.api.base + config.api.sava_form;
         fetch(url,{
@@ -315,6 +315,16 @@ export default class formDetail extends Component {
             imglist.push(
                 <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}}>
                     <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.imgs[i]}}/>
+
+                    <TouchableHighlight
+                        style={[com.MG5,com.posr,{top:-3,right:0}]}
+
+                        underlayColor="#f5f5f5"
+                    >
+                        <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
+                    </TouchableHighlight>
+
+
                 </View>
             )
         }
