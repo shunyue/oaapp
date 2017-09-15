@@ -100,12 +100,10 @@ export default class AttendanceManage extends Component {
     _firstWhiteUser(){
         var url = config.api.base + config.api.changeAttendance;
         var id=this.state.companyid;
-        alert(this.state.user_id)
         request.post(url,{
             attendanceCompany: id,
             user_id:this.state.user_id,
         }).then((responseJson) => {
-            alert(JSON.stringify(responseJson))
             this.setState({
                 attendanceData: responseJson.data.list,
                 role:responseJson.data.role,
