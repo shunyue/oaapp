@@ -394,10 +394,11 @@ export default class formDetail extends Component {
 
                     <View style={[styles.divCom]} key={i}>
                         <View style={[styles.divRowCom1]}>
+                            <View style={{flexDirection: 'row'}}>
                             <Text style={[styles.divFontCom]}>{forminfo[i].field_name}</Text>
-                            <Text style={[styles.divFontCom]}>{this.state[textName]}</Text>
+                            <Text style={[styles.divFontCom,{paddingLeft:25}]}>{this.state[textName]}</Text>
+                            </View>
                             <ScrollView>
-
 
                                 <ProcessModal
                                     processModal={false}
@@ -413,18 +414,16 @@ export default class formDetail extends Component {
 
                 list.push(
                     <View style={[styles.divCom]} key={i}>
-                        <View style={[styles.divRowCom2]}>
+                        <TouchableOpacity   onPress={()=>this.checkbox_select(textName)}>
+                        <View style={[styles.divRowCom2,{flexWrap:'wrap',flexDirection:'row',justifyContent: 'space-between',flex:1}]}>
+                            <View style={{flexDirection: 'row'}}>
                             <Text style={[styles.divFontCom,{width:50}]}>{forminfo[i].field_name}</Text>
                             <Text style={[styles.divFontCom]}>{this.state[textName]}</Text>
-                            <View style={{flexWrap:'wrap',width:screenW-70,flexDirection:'row'}}>
-
-                                <TouchableOpacity   onPress={()=>this.checkbox_select(textName)}>
-
-                                    <Image style={styles.imgStyle} source={require('../../imgs/customer/arrow_r.png')}/>
-                                </TouchableOpacity>
                             </View>
+                            <Image style={styles.imgStyle} style={{width:12,height:12}} source={require('../../imgs/customer/arrow_r.png')}/>
 
                         </View>
+                        </TouchableOpacity>
                     </View>
                 )
             }else if(forminfo[i].field_type=='日期'){
