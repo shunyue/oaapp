@@ -152,11 +152,11 @@ export default class EditMeeting extends Component {
             return false;
         }
         let {params} = this.props.navigation.state;
-        if(this.state.title ==" "|| this.state.title==null){
+        if(this.state.title ==""|| this.state.title==null){
             toast.bottom('会议名称不能为空');
             return false;
         }
-        if(this.state.position==" "|| this.state.position==null){
+        if(this.state.position==""|| this.state.position==null){
             toast.bottom('会议地点不能为空');
             return false;
         }

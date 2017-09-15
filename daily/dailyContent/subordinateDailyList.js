@@ -177,11 +177,7 @@ export default class SubordinateDailyList  extends Component {
                 <View key={0}><Text style={[com.mgr5]}>我的下属</Text></View>
             );
         }
-        const customStyle = {
-            calendarHeading: {
-                backgroundColor: 'blue',
-            }
-        }
+
         if (this.state.load) {
             return (
                 <ScrollView >
@@ -289,7 +285,6 @@ export default class SubordinateDailyList  extends Component {
                 {/*事件插件区域*/}
                 <View>
                     <Calendar
-                        //customStyle={customStyle}
                         currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
                         //customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
                         dayHeadings={['日', '一', '二', '三', '四', '五','六']}               // Default: ['S', 'M', 'T', 'W', 'T', 'F', 'S']

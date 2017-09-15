@@ -173,8 +173,6 @@ export default class MyDailyList  extends Component {
                         currentMonth={this.state.time}       // Optional date to set the currently displayed month after initialization
                         //customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
                         dayHeadings={['日', '一', '二', '三', '四', '五','六']}               // Default: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
-                        eventDates={['2017-07-01']}       // Optional array of moment() parseable dates that will show an event indicator
-                        events={[{date:'2017-07-06'}]}// Optional array of event objects with a date property and custom styles for the event indicator
                         monthNames={['1月','2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月']}                // Defaults to english names of months
                         nextButtonText={'下一月'}           // Text for next button. Default: 'Next'
                         onDateSelect={(date) => this.onDateSelect(date)} // Callback after date selection

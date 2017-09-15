@@ -28,26 +28,25 @@ import Picker from 'react-native-picker';
 export default class EditTrain extends Component {
     constructor(props) {
         super(props);
-        let {params} = this.props.navigation.state;
         this.state = {
             text2:'地点',
             customer:[],
             executor:[],
-            starttime:params.dailyInfo.start_time,
-            stoptime: params.dailyInfo.stop_time,
-            content:params.dailyInfo.description,
+            starttime:moment(new Date()).format('YYYY-MM-DD  HH:mm'),
+            stoptime:moment(new Date()).add(1, 'hour').format('YYYY-MM-DD  HH:mm'),
+            content:"",
             confirm_recept:false,
-            alertTime:params.dailyInfo.remind_time,
+            alertTime:0,
             selectNum:1,
             alertName:"不提醒",
-            title:params.dailyInfo.title,
-            position:params.dailyInfo.position,
+            title:"",
+            position:"",
             executorId:[],
-            customerId:[]
+            customerId:[],
+            startstamp:parseInt(new Date().getTime()/1000)
         };
     }
     componentDidMount() {
-        this._getDailyMessage();
         //选择客户
         this.customerListener= DeviceEventEmitter.addListener('Customer', (a)=> {
             var customerIds=[];
@@ -100,44 +99,6 @@ export default class EditTrain extends Component {
         this.describeListener.remove();
         this.alertListener.remove();
     }
-    _getDailyMessage(){
-        let {params} = this.props.navigation.state;
-        if(params.dailyInfo.confirm_recept==1){
-            var confirm_recept=true;
-        }else{
-            var confirm_recept=false;
-        }
-        if(params.dailyInfo.remind_time!=null && params.dailyInfo.remind_time!="0000-00-00 00:00:00"){
-            var alertName=params.dailyInfo.remind_time;
-        }else{
-            var alertName='不提醒';
-        }
-        var executor=params.dailyInfo.executor;
-        if(executor!=null){
-            var  executorId= executor.split(",");
-        }else{
-            var  executorId=[];
-        }
-
-        var customer=params.dailyInfo.customer_id;
-        if(customer!=null){
-            var  customerId=customer.split(",");//转换为一维数组
-        }else{
-            var  customerId=[];
-        }
-        if(params.dailyInfo.remind_time!=null && params.dailyInfo.remind_time!="0000-00-00 00:00:00"){
-            var alertTime=this.get_unix_time(params.dailyInfo.remind_time);
-        }else{
-            var alertTime=0;
-        }
-        this.setState({
-            confirm_recept:confirm_recept,
-            executorId:executorId,
-            customerId:customerId,
-            alertName:alertName,
-            alertTime:alertTime
-        });
-    }
     //返回上一页
     OpBack(daily=null) {
         DeviceEventEmitter.emit('Daily',daily);
@@ -146,16 +107,11 @@ export default class EditTrain extends Component {
     //提交
     submit(){
         let {params} = this.props.navigation.state;
-        var create_time=moment(new Date()).format('YYYY-MM-DD  HH:mm:ss');
-        if(this.state.starttime <create_time){
-            toast.bottom('只能创建当前时间以后的日程');
-            return false;
-        }
-        if(this.state.title ==" "|| this.state.title==null){
+        if(this.state.title ==""|| this.state.title==null){
             toast.bottom('培训名称不能为空');
             return false;
         }
-        if(this.state.position==" "|| this.state.position==null){
+        if(this.state.position==""|| this.state.position==null){
             toast.bottom('培训地点不能为空');
             return false;
         }
@@ -170,10 +126,14 @@ export default class EditTrain extends Component {
             toast.bottom('至少选择一个执行人');
             return false;
         }
-
-        var url=config.api.base+config.api.editDailyInfo;
+        if(this.state.starttime>=this.state.stoptime){
+            toast.bottom('结束时间要大于开始时间');
+            return false;
+        }
+        var url=config.api.base+config.api.addDaily;
         request.post(url,{
-            daily_id:params.dailyInfo.id,
+            create_id:params.user_id,
+            company_id:params.company_id,
             customer_id:customer,
             executor:executor,
             start_time:this.state.starttime,
@@ -183,7 +143,9 @@ export default class EditTrain extends Component {
             confirm_recept:confirm_recept,
             create_time:moment(new Date()).format('YYYY-MM-DD  HH:mm'),
             title:this.state.title,
-            position:this.state.position
+            position:this.state.position,
+            daily_type:4,
+            status:1
         }).then((res)=>{
             if(res.status==1){
                 toast.center(res.message);
@@ -342,9 +304,7 @@ export default class EditTrain extends Component {
         return time;
     }
     render() {
-        alert(JSON.stringify(this.state.customer))
-        const {navigate} = this.props.navigation;
-        let {params} =this.props.navigation.state;
+        const {params} = this.props.navigation;
         var executorArr=[];
         var  executor=this.state.executor;
         if(executor!= null && executor.length>=3){
@@ -371,7 +331,7 @@ export default class EditTrain extends Component {
         }else{
             executorArr.push(
                 <View  key={0}>
-                    <Text>{params.dailyInfo.executorName}</Text>
+                    <Text>请选择</Text>
                 </View>
             );
         }
@@ -387,7 +347,7 @@ export default class EditTrain extends Component {
             }
             customerArr.push(
                 <View key={i-(-1)}>
-                    <Text>等{customer.length}家</Text>
+                    <Text>等</Text>
                 </View>
             );
         }else if(customer!=null && customer.length>0){
@@ -401,7 +361,7 @@ export default class EditTrain extends Component {
         }else{
             customerArr.push(
                 <View  key={0}>
-                    <Text>{params.dailyInfo.customerName}</Text>
+                    <Text>请选择</Text>
                 </View>
             );
         }
@@ -412,7 +372,7 @@ export default class EditTrain extends Component {
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Text style={styles.back_text}>取消</Text>
                     </TouchableHighlight>
-                    <Text style={styles.formHeader}>编辑培训</Text>
+                    <Text style={styles.formHeader}>新建培训</Text>
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goRight,styles.go]} onPress={()=>this.submit()}>
                         <Text style={styles.back_text}>完成</Text>
                     </TouchableHighlight>
