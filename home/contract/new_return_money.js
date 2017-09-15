@@ -24,7 +24,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 
 export default class newBulidContract extends Component {
 

@@ -19,7 +19,7 @@ const screenH = Dimensions.get('window').height;
 import com from '../../public/css/css-com';
 import Modal from 'react-native-modal'
 import wds from '../../public/css/css-window-single'
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 //将图片上传到服务器
 //import RNFetchBlob from 'react-native-fetch-blob';
 import config from '../../common/config';

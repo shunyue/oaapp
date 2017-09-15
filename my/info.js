@@ -20,7 +20,7 @@ import {
 import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 import Header from '../common/header';
 export default class Info extends Component {
 

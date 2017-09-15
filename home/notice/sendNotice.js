@@ -19,7 +19,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import com from '../../public/css/css-com';
 /*引用图库选择插件*/
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 export default class SendNotice extends Component {
   back() {
     this.props.navigation.goBack(null);
