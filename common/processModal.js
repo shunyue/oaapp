@@ -58,7 +58,7 @@ export default class Chat extends Component {
         return (
             <TouchableWithoutFeedback style={{flex: 1}} onPress={()=>this._changeVisible()}>
         <View >
-            <View style={styles.tipStyle}>
+            <View style={[styles.tipStyle,{lexWrap:'wrap',flexDirection:'row',justifyContent: 'space-between',flex:1}]}>
                 <Text style={{textAlign: 'center'}}>{this.state.tipValue}</Text>
                 <Image style={styles.imgStyle} source={require('../imgs/customer/arrow_r.png')}/>
             </View>
@@ -73,13 +73,13 @@ export default class Chat extends Component {
                 <TouchableOpacity  style={{width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6,}}  onPress={() => {this._changeVisible(!this.state.processModal)}}>
 
                 </TouchableOpacity >
-                <View style={{backgroundColor:'#fff',width:screenW*0.7,height:screenH*0.8,position:'absolute',top:screenH*0.1,left:screenW*0.15}}>
+                <View style={{backgroundColor:'#fff',width:screenW*0.7,height:screenH*0.4,position:'absolute',top:screenH*0.1,left:screenW*0.15}}>
 
                     <Text style={{fontSize:16,marginTop:20,marginLeft:10}}>请选择</Text>
 
 
 
-                    <RadioForm style={{marginLeft:40,flexWrap:'wrap',}}
+                    <RadioForm style={{marginLeft:10,flexWrap:'wrap',}}
                                radio_props={radio_data}
                                buttonSize={10}
                                formHorizontal={false}
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     imgStyle: {
-        height: 16,
-        width: 16,
+        height: 12,
+        width: 12,
         marginRight: 10,
         tintColor: '#A8A8A8'
     },
