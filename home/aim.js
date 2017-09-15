@@ -18,6 +18,8 @@ const screenH = Dimensions.get('window').height;
 import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
+import Loading from '../common/loading';
+import com from '../public/css/css-com';
 export default class Aim extends Component {
     back() {
         this.props.navigation.goBack('Aim');
@@ -31,7 +33,8 @@ export default class Aim extends Component {
             company_name:'',
             monthData:'',
             seasonData:'',
-            yearData:''
+            yearData:'' ,
+            load:true,
         };
     }
    //新增企业目标
@@ -67,6 +70,7 @@ export default class Aim extends Component {
                 seasonData:responseJson.data.season,
                 yearData:responseJson.data.year,
                 role: responseJson.data.role,
+                load:false,
             })
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
@@ -88,6 +92,13 @@ export default class Aim extends Component {
         }
     }
     render() {
+        if(this.state.load){
+            return(
+                <View style={[com.hh9,com.jcc,com.aic]}>
+                    <Loading/>
+                </View>
+            )
+        }
         var company=this.state.companyData;
         for(var i in company){
             var iqye=company[i].company_name;

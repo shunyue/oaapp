@@ -87,7 +87,7 @@ export default class My extends Component {
         this.props.navigation.navigate('WebViewExample')
     };
     companySetting(){
-        this.props.navigation.navigate('CompanySetting',{companyid:this.state.company_id});
+        this.props.navigation.navigate('CompanySetting',{companyid:this.state.company_id,user_id:this.state.user_id});
         //alert("公司设置！");
     };
     selfSetting(){
