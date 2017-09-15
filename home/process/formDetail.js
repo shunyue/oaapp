@@ -87,8 +87,6 @@ export default class formDetail extends Component {
             }
         })
     }
-
-
   //选择图片 打开相机
 
     //piker 时间
