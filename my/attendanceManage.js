@@ -38,6 +38,8 @@ export default class AttendanceManage extends Component {
             value:'',
             select_value: '' ,
             companyid:params,
+            user_id:this.props.navigation.state.params.user_id,
+            role:0,
         }
 
     }
@@ -100,9 +102,11 @@ export default class AttendanceManage extends Component {
         var id=this.state.companyid;
         request.post(url,{
             attendanceCompany: id,
+            user_id:this.state.user_id,
         }).then((responseJson) => {
             this.setState({
-                attendanceData: responseJson,
+                attendanceData: responseJson.list,
+                role:responseJson.role,
             })
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
@@ -141,11 +145,11 @@ export default class AttendanceManage extends Component {
                     </TouchableHighlight>
                     <Text style={styles.formHeader}>考勤管理</Text>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goRight,styles.go]} onPress={() => { navigate('ManageNewGroup',{companyid:this.props.navigation.state.params.companyid});}}>
-                        <Text style={[styles.back_text,{color:'#e15151'}]}>新建</Text>
+                        <Text style={this.state.role ?[styles.back_text,{color:'#e15151'}]:{display:'none'}}>新建</Text>
                     </TouchableHighlight>
                 </View>
                 <ScrollView>
-                <View style={[styles.borderBottom]}>
+                <View style={this.state.role ?[styles.borderBottom]:{display:'none'}}>
                     <TouchableHighlight underlayColor={'transparent'} onPress={() => { navigate('AttendanceWhiteDetail',{companyid:3});}}>
                         <View style={[styles.common,styles.spaceBetween,styles.padding]}>
                             <View>

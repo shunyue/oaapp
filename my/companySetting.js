@@ -31,7 +31,7 @@ export default class CompanySetting extends Component {
         //this.props.navigation.navigate('My',{companyid:this.props.navigation.state.params.companyid})
     };
     depart(){
-        this.props.navigation.navigate('DepartManager',{company_name: '顺越集团',company_id: 3})
+        this.props.navigation.navigate('DepartManager',{company_name: '顺越集团',company_id: this.props.navigation.state.params.companyid})
     }
     render(){
         const {navigate} = this.props.navigation;
@@ -64,7 +64,7 @@ export default class CompanySetting extends Component {
                         </TouchableHighlight>
                         <TouchableHighlight
                             underlayColor={'#fff'}
-                            onPress={() => { navigate('AttendanceManage',{companyid: 3});}}
+                            onPress={() => { navigate('AttendanceManage',{companyid:this.props.navigation.state.params.companyid,user_id:this.props.navigation.state.params.user_id});}}
                             >
                             <View style={[styles.employeeDepartManage,styles.border_bottom]}>
                                 <View style={styles.tubiaoPosition}>
