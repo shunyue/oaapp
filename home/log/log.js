@@ -44,10 +44,10 @@ export default class Log extends Component {
 
     }
 
-    //耗时操作放在这里面
+   //耗时操作放在这里面
     componentDidMount() {
         //收到监听
-        this.listener = DeviceEventEmitter.addListener('backData', (e)=> {
+        /* this.listener = DeviceEventEmitter.addListener('backData', (e)=> {
             this.setState({
                 load: true
             })
@@ -67,15 +67,15 @@ export default class Log extends Component {
                 load: true
             });
             this.showLogs(this.state.title);
-        });
+        });*/
         this.showLogs(this.state.title);
     }
 
-    componentWillUnmount() {
-        // 移除监听
-        this.listener.remove();
-        this.newlogListener.remove();
-    }
+    //componentWillUnmount() {
+    //    // 移除监听
+    //    this.listener.remove();
+    //    this.newlogListener.remove();
+    //}
 
     setVisibleModal(visible) {
         this.setState({show: visible});

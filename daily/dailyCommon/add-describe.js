@@ -32,6 +32,9 @@ export default class AddDescribe extends Component {
         };
       }
     OpBack() {
+        this.props.navigation.goBack(null);
+    }
+    commit(){
         DeviceEventEmitter.emit('visitDescibe',this.state.content);
         this.props.navigation.goBack(null);
     }
@@ -54,7 +57,7 @@ export default class AddDescribe extends Component {
                     <TouchableHighlight
                         underlayColor={'#fff'}
                         style={[styles.goRight,styles.go]}
-                        onPress={()=>this.OpBack()}
+                        onPress={()=>this.commit()}
                         >
                         <Text>确定</Text>
                     </TouchableHighlight>

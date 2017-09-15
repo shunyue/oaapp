@@ -28,7 +28,7 @@ import ImagePicker from 'react-native-image-picker';
 export default class Log extends Component {
     back() {
     //准备一个值
-        DeviceEventEmitter.emit('backData',this.state.backData); //发监听
+       // DeviceEventEmitter.emit('backData',this.state.backData); //发监听
         this.props.navigation.goBack(null);
     }
     constructor(props) {
@@ -183,12 +183,13 @@ export default class Log extends Component {
                     image:""
                 });
                 //将要改变的评论放到数组中
-             this.state.backData.push(
-                {key: key,reviewLen:res.data.length, review:res.data.review}
-            );
+            // this.state.backData.push(
+            //    {key: key,reviewLen:res.data.length, review:res.data.review}
+            //);
             }else{
                 toast.bottom(res.message);
             }
+            toast.bottom(res.message);
         })
         .catch((error)=>{
             toast.bottom('网络连接失败,请检查网络后重试')
@@ -362,7 +363,7 @@ export default class Log extends Component {
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
-                <View style={[styles.navCon,com.aic]}>
+                <View style={[styles.navCon]}>
                     <TouchableHighlight
                         style={styles.navltys}
                         onPress={()=>this.back()}
@@ -374,19 +375,7 @@ export default class Log extends Component {
                         </View>
                     </TouchableHighlight>
                     <Text style={styles.fSelf}>{logname}</Text>
-                    {/*  <TouchableHighlight
-                        style={styles.navltys}
-                        onPress={()=>this.logTody()}
-                        underlayColor="#f5f5f5"
-                        >
-                        <View style={[com.jcc,styles.navltys]}>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>部门</Text>
-                        </View>
-                    </TouchableHighlight>*/}
-                    {/* <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
-                        <Image source={require('../../imgs/slh.png')}/>
-                    </TouchableOpacity>*/}
-
+                   <View style={styles.navltys}></View>
                 </View>
 
                 <ScrollView style={[]}>
@@ -646,14 +635,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEEFF4',
     },
     navCon: {//头部导航
-        height: 35,
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
+        paddingLeft:10
     },
     sz: {//导航图标
         width: 30,
