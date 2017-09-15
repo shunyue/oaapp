@@ -129,18 +129,19 @@ export default class Info extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                this.uploadImg(response.uri);
+                this.uploadImg(response.uri,response.fileName);
             }
         })
     }
 
     //上传图片
-    uploadImg(source) {
+    uploadImg(source,fileName) {
         var url =config.api.base + config.api.myselfload;
         let formData = new FormData();
-        let file = {uri:source, type: 'multipart/form-data',name:'1232'};
+        let file = {uri:source, type: 'multipart/form-data',name:fileName};
         formData.append("image",file);
         formData.append("url",source);
+        formData.append("ext",fileName);
         fetch(url,{
             method:'POST',
             headers:{
