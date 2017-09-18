@@ -104,6 +104,7 @@ export default class AttendanceManage extends Component {
             attendanceCompany: id,
             user_id:this.state.user_id,
         }).then((responseJson) => {
+            alert(JSON.stringify(responseJson.data))
             this.setState({
                 attendanceData: responseJson.data.list,
                 role:responseJson.data.role,

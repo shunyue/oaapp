@@ -67,14 +67,23 @@ export default class Chat extends Component {
         JPushModule.addReceiveCustomMsgListener((message) => {
             // this.setState({pushMsg: message});
         });
-        JPushModule.addReceiveNotificationListener((message) => {
-            if(JSON.parse(message.extras).type == 'chat') {
-                DeviceEventEmitter.emit('getChatMessage');
-                this._getAllUnRead();
-            }else if(JSON.parse(message.extras).type == 'apply') {
-                this._lastApplyTime();
-            }
-        })
+        // JPushModule.addReceiveNotificationListener((message) => {
+        //     alert(123)
+        //     if(JSON.parse(message.extras).type == 'chat') {
+        //
+        //         DeviceEventEmitter.emit('getChatMessage');
+        //         this._getAllUnRead();
+        //     }else if(JSON.parse(message.extras).type == 'apply') {
+        //         this._lastApplyTime();
+        //     }
+        // })
+        JPushModule.addReceiveNotificationListener((map) => {
+            alert(JSON.stringify(map))
+            console.log("alertContent: " + map.alertContent);
+            console.log("extras: " + map.extras);
+            // var extra = JSON.parse(map.extras);
+            // console.log(extra.key + ": " + extra.value);
+        });
 
     }
 

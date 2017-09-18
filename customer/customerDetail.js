@@ -33,6 +33,7 @@ import ScrollableTabView, {ScrollableTabBar, } from 'react-native-scrollable-tab
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 
+
 export default class app extends Component {
     constructor(props) {
         super(props);
