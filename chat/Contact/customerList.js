@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     back_icon:{
         width:10,
         height:17,
-        marginLeft:3,
+        marginLeft:5,
         marginTop: Platform.OS==='ios'?null:3
     },
     back_text:{

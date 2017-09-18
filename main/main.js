@@ -16,9 +16,11 @@ import Customer from '../customer/customer';
 import Daily from '../daily/daily';
 import My from '../my/my';
 
-import Login from '../main/login';
+import Page from '../home/page';
 
-
+import KaoQin from '../home/kaoqin/kaoqin';
+import KaoQinHistory from '../home/kaoqin/kaoqianHistory';
+import History from '../home/kaoqin/history';
 //周飞飞
 //工商局查询
 import WebViewExample from  '../my/webViewExample';
@@ -400,10 +402,10 @@ const styles = StyleSheet.create({
 });
 const app = StackNavigator({
     Home: {screen: MyApp,navigationOptions: {header: null}},
-
-    Login: {screen: Login,navigationOptions: {header: null}},
-    ReMain: {screen: MyApp,navigationOptions: {header: null}},
-
+    Page: {screen: Page},
+    KaoQin:{screen: KaoQin,navigationOptions: {header: null}},
+    KaoQinHistory:{screen: KaoQinHistory,navigationOptions: {header: null}},
+    History:{screen: History,navigationOptions: {header: null}},
     //zhoufeifei    my页面
     WebViewExample:{screen: WebViewExample,navigationOptions: {header: null}},
     CompanySetting:{screen: CompanySetting,navigationOptions: {header: null}},
