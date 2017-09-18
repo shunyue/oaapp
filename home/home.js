@@ -219,12 +219,12 @@ export default class Home extends Component {
             });
     }
     //日程详情页面
-    dailyDetail(daily) {
+    dailyDetail(id) {
         //this.props.navigation.navigate('DailyDetail',{user_id:this.props.user_id,company_id:this.props.company_id,dailyInfo:daily});
         this.props.navigation.navigate('DailyDetail',{
             user_id:this.props.user_id,
             company_id:this.props.company_id,
-            dailyInfo:daily
+            daily_id:id
         });
     }
     //获取日程状态名称
@@ -346,7 +346,7 @@ export default class Home extends Component {
                         <TouchableHighlight
                             style={[]}
                             onPress={
-                                this.dailyDetail.bind(this,daily[i])
+                                this.dailyDetail.bind(this,daily[i].id)
                             }
                             underlayColor="#f5f5f5"
                             >

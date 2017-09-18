@@ -506,7 +506,7 @@ export default class Daily extends Component {
                         <TouchableHighlight
                             style={[]}
                             onPress={
-                                this.dailyDetail.bind(this,daily[i])
+                                this.dailyDetail.bind(this,daily[i].id)
                             }
                             underlayColor="#f5f5f5"
                             >
