@@ -796,7 +796,7 @@ export default class Home extends Component {
                         <View style={[styles.threeSpaceBetween,styles.row]}>
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
-                           
+
                         </View>
                         <ScrollView>
                         {dailylist}
