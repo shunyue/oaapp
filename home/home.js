@@ -796,10 +796,7 @@ export default class Home extends Component {
                         <View style={[styles.threeSpaceBetween,styles.row]}>
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
-                            <View style={[styles.threeSpaceBetween,styles.row]}>
-                                <Text style={[styles.threeDIVCONTITSiz,styles.threeDIVCONTITPadR]}>导航</Text>
-                                <Image source={require('../imgs/threefj32.png')}/>
-                            </View>
+                           
                         </View>
                         <ScrollView>
                         {dailylist}
