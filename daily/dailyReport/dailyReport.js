@@ -28,7 +28,6 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
 import moment from 'moment';
-
 export default class DailyReport extends Component {
     constructor(props) {
         super(props);
@@ -266,7 +265,7 @@ export default class DailyReport extends Component {
         let images= this.state.imgArr;
         for(var i = 0;i<images.length;i++){
             if(images[i].visible==null){
-                let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].path};//这里的key(uri和type和name)不能改变
+                let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].name};//这里的key(uri和type和name)不能改变
                 formData.append(images[i].path,file);//这里的files就是后台需要的key
             }
         }
@@ -291,6 +290,44 @@ export default class DailyReport extends Component {
             .catch((error)=>{
                 toast.bottom('网络连接失败，请检查网络后重试');
             });
+    }
+    //选择图片
+    openAffix(){
+        //选择图片
+        var options = {
+            title: '',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '选择相册',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = {uri: response.uri};
+                this.state.imgArr.push({
+                    id: this.state.id,
+                    visible: null,
+                    path: response.uri,
+                    name:response.fileName});
+                this.setState({//放到这里只是为了渲染页面
+                    id: this.state.id + 1
+                })
+
+            }
+        })
     }
     //选择中间内容
     _getContent(){
@@ -470,7 +507,7 @@ export default class DailyReport extends Component {
                     <View style={[com.row,com.aic,com.jcsb,com.btweb,com.pdt5,com.bgcfff,com.pdt5l15]}>
                         <Text>拍照</Text>
                         <TouchableHighlight
-                            onPress={()=>{this.setState({visibleModal: !this.state.visibleModal})}}
+                            onPress={()=>{this.openAffix()}}
                             underlayColor="#ffffff"
                             >
                             <View style={[com.bgcfff]}>

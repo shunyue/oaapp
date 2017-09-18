@@ -86,13 +86,12 @@ export default class SubordinateLogDetail extends Component {
             company_id:params.company_id})
     }
     employeeInfo(){
-        let {params} = this.props.navigation.state;
-        alert('个人资料页面')
-        /*   this.props.navigation.navigate('用户组件名',
-         {user_id:params.userInfo.id,
-         company_id:params.company_id})*/
-
-
+           let {params} = this.props.navigation.state;
+           this.props.navigation.navigate('UserMsg',{
+                accept_id:params.userInfo.id,//要查看的下属员工ID
+                company_id:params.company_id,//公司的ID
+                user_id:params.user_id//当前登录者的ID
+            })
     }
     render() {
         let {params} = this.props.navigation.state;
@@ -242,7 +241,7 @@ export default class SubordinateLogDetail extends Component {
                         underlayColor="#f3f3f3"
                         >
                         <View style={[com.jcfe,]}>
-                            <Image style={[com.wh20,com.tcr]} source={require('../../imgs/log/iconth.png')}/>
+                            <Image style={[com.wh20,com.tcr]} source={require('../../imgs/personal.png')}/>
                         </View>
                     </TouchableHighlight>
                 </View>

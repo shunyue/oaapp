@@ -197,11 +197,11 @@ export default class SubordinateDailySearch extends Component {
         this.setState({show: visible});
     }
     //日程详情页面
-    dailyDetail(daily){
+    dailyDetail(id){
         this.props.navigation.navigate('DailyDetail',
             {   user_id:this.props.user_id,
                 company_id:this.props.company_id,
-                dailyInfo:daily
+                daily_id:id
             });
     }
     //获取日程状态名称
@@ -456,7 +456,7 @@ export default class SubordinateDailySearch extends Component {
                     <View key={i}>
                         <TouchableHighlight
                             style={[com.bgcfff]}
-                            onPress={this.dailyDetail.bind(this,daily[i])}
+                            onPress={this.dailyDetail.bind(this,daily[i].id)}
                             underlayColor="#f5f5f5"
                             >
                             <View style={[com.row,com.aic,com.pdt5l15,com.bbwc]}>

@@ -51,17 +51,42 @@ export default class LogWeekReport extends Component {
   }
 
   openAffix(){
-    //alert('这是打开文件夹')
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {;
-      this.state.imgArr.push({id: this.state.id, visible: null, path: image.path});
-      this.setState({//放到这里只是为了渲染页面
-        id: this.state.id + 1
-      })
-    });
+    //选择图片
+    var options = {
+      title: '',
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照',
+      chooseFromLibraryButtonTitle: '选择相册',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        let source = {uri: response.uri};
+        //this.state.imgs.push(response.uri);
+        //this.setState({})
+        this.state.imgArr.push({id: this.state.id,
+          visible: null,
+          path: response.uri,
+          name:response.fileName});
+        this.setState({//放到这里只是为了渲染页面
+          id: this.state.id + 1
+        })
+
+      }
+    })
   }
   uploadImg(){
     var url =config.api.base + config.api.imagesupload;
@@ -69,7 +94,7 @@ export default class LogWeekReport extends Component {
     let images= this.state.imgArr;
     for(var i = 0;i<images.length;i++){
       if(images[i].visible==null){
-        let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].path};//这里的key(uri和type和name)不能改变
+        let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].name};//这里的key(uri和type和name)不能改变
         formData.append(images[i].path,file);//这里的files就是后台需要的key
       }
     }

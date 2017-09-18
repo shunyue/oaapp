@@ -121,7 +121,7 @@ export default class EditVisit extends Component {
     }
     //返回上一页
     OpBack(daily=null){
-        DeviceEventEmitter.emit('Daily',daily);
+        DeviceEventEmitter.emit('EditDaily',daily);
         this.props.navigation.goBack(null);
     }
     //提交
