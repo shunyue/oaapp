@@ -88,7 +88,7 @@ export default class DailyDetail extends Component {
     //返回到上一页面
     back() {
         let {params}=this.props.navigation.state;
-        DeviceEventEmitter.emit('dailyInfo'); //发监听
+        DeviceEventEmitter.emit('DailyInfo'); //发监听
         this.props.navigation.goBack(null);
     }
     //跳转到客户详情页面

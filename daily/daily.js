@@ -72,7 +72,7 @@ export default class Daily extends Component {
                 this.searchMyDaily(moment(new Date()).format('YYYY-MM-DD'));
                 this.searchSubDaily(moment(new Date()).format('YYYY-MM-DD'));
             })
-        this.dailyListener= DeviceEventEmitter.addListener('dailyInfo', (a)=> {
+        this.dailyListener= DeviceEventEmitter.addListener('DailyInfo', (a)=> {
             this.setState({
                 load: true,
             })
