@@ -307,7 +307,7 @@ export default class Home extends Component {
     }
     //考勤
     attendance() {
-        this.props.navigation.navigate('Attendance',{user_id:this.state.user_id,company_id:this.state.company_id})
+        this.props.navigation.navigate('KaoQin',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
     //线路拜访
     lineVisit() {
