@@ -709,7 +709,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:3
+        marginLeft:5
     },
     formHeader:{
         fontSize:16,

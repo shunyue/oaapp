@@ -42,7 +42,7 @@ export default class Chat extends Component {
                 <TouchableOpacity
                     onPress={()=>this._goBack()}>
                     <View style={styles.navContent}>
-                        <Image style={{marginRight: 6}} source={require('../imgs/navxy.png')}/>
+                        <Image style={{marginRight: 3}} source={require('../imgs/navxy.png')}/>
                         <Text style={styles.navText}>返回</Text>
                     </View>
 
@@ -69,10 +69,10 @@ const styles = StyleSheet.create({
     },
     navContent: {
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
         height: 40,
         width: 80,
+        paddingLeft:10
     },
     navText: {
         fontSize: 16,

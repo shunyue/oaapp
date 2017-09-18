@@ -43,28 +43,20 @@ export default class DailyDetail extends Component {
             reportLen:0,
             picArr:[],
             review:[],
-            status:params.dailyInfo.status,
             report:[],
             datetime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-            dailyInfo:params.dailyInfo
+            dailyInfo:[]
         };
     }
     componentDidMount() {
         this.getDailyDetail();
         //选择员工
         this.reportListener= DeviceEventEmitter.addListener('Report', (a)=> {
-            var  dailyInfo=this.state.dailyInfo;
-            dailyInfo.status=a.status;
-            this.setState({
-                dailyInfo:dailyInfo,
-                report:a.reportInfo
-            })
+            this.getDailyDetail();
         });
-        this.dailyListener= DeviceEventEmitter.addListener('Daily', (c)=> {
+        this.dailyListener= DeviceEventEmitter.addListener('EditDaily', (c)=> {
             if(c!=null && c.length!=0){
-                this.setState({
-                    dailyInfo:c
-                })
+                this.getDailyDetail();
             }
         });
     }
@@ -72,14 +64,16 @@ export default class DailyDetail extends Component {
         let {params}=this.props.navigation.state;
         var url=config.api.base+config.api.getDailyDetailById;
         request.post(url,{
-            daily_id:params.dailyInfo.id
+            daily_id:params.daily_id
         }).then((res)=>{
             var data=res.data;
             this.setState({
                 reviewLen:data.reviewLen,
                 reportLen:data.reportLen,
                 review:data.review,
-                report:data.report
+                report:data.report,
+                dailyInfo:data.info,
+                status:data.info.status,
             })
         })
             .catch((error)=>{
@@ -94,7 +88,7 @@ export default class DailyDetail extends Component {
     //返回到上一页面
     back() {
         let {params}=this.props.navigation.state;
-        DeviceEventEmitter.emit('dailyInfo'); //发监听
+        DeviceEventEmitter.emit('DailyInfo'); //发监听
         this.props.navigation.goBack(null);
     }
     //跳转到客户详情页面
@@ -116,17 +110,14 @@ export default class DailyDetail extends Component {
         this.props.navigation.navigate('DailyReport',{
             user_id:params.user_id,
             company_id:params.company_id,
-            daily_id:params.dailyInfo.id,
-            title:params.dailyInfo.title,
-            daily_type:params.dailyInfo.daily_type,
-            typeName:params.dailyInfo.typeName,
-            status:params.dailyInfo.status
+            daily_id:this.state.dailyInfo.id,
+            title:this.state.dailyInfo.title,
+            daily_type:this.state.dailyInfo.daily_type,
+            typeName:this.state.dailyInfo.typeName,
+            status:this.state.dailyInfo.status
         });
     }
-    //跳转到定位页面
-    goPage_VisitPosition(){
-        alert('跳转到原生Android定位页面');
-    }
+
     //跳转到分享页面
     goPage_Share(){
         alert('跳转到分享页面')
@@ -134,7 +125,7 @@ export default class DailyDetail extends Component {
     //跳转到编辑日程界面
     goPage_Edit(){
         let {params}=this.props.navigation.state;
-        var daily_type=params.dailyInfo.daily_type;
+        var daily_type=this.state.dailyInfo.daily_type;
         if(daily_type==1){
             var title='EditVisit';
         }else if(daily_type==2){
@@ -157,7 +148,7 @@ export default class DailyDetail extends Component {
         let images= this.state.imgArr;
         for(var i = 0;i<images.length;i++){
             if(images[i].visible==null){
-                let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].path};//这里的key(uri和type和name)不能改变
+                let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].name};//这里的key(uri和type和name)不能改变
                 formData.append(images[i].path,file);//这里的files就是后台需要的key
             }
         }
@@ -200,7 +191,7 @@ export default class DailyDetail extends Component {
         }
         var url=config.api.base+config.api.sendDailyReview;
         let {params} = this.props.navigation.state;
-        let daily_id=params.dailyInfo.id;
+        let daily_id=params.daily_id;
         request.post(url,{
             daily_id:daily_id,
             user_id:params.user_id,//人员的id,从其他地方获取
@@ -248,23 +239,62 @@ export default class DailyDetail extends Component {
             imgArr: op
         })
     }
-    openFloder() {
-        this.setState({
-            emoji: false
+    //openFloder() {
+    //    this.setState({
+    //        emoji: false
+    //    })
+    //    //alert('这是打开文件夹')
+    //    ImagePicker.openPicker({
+    //        width: 300,
+    //        height: 400,
+    //        cropping: true
+    //    }).then(image => {
+    //        console.log(image.path);
+    //        //alert(this.state.id)
+    //        this.state.imgArr.push({id: this.state.id, visible: null, path: image.path});
+    //        this.setState({//放到这里只是为了渲染页面
+    //            id: this.state.id + 1
+    //        })
+    //    });
+    //}
+    openFloder(){
+        //选择图片
+        var options = {
+            title: '',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '选择相册',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = {uri: response.uri};
+                //this.state.imgs.push(response.uri);
+                //this.setState({})
+                this.state.imgArr.push({
+                    id: this.state.id,
+                    visible: null,
+                    path: response.uri,
+                    name:response.fileName});
+                this.setState({//放到这里只是为了渲染页面
+                    id: this.state.id + 1
+                })
+
+            }
         })
-        //alert('这是打开文件夹')
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            console.log(image.path);
-            //alert(this.state.id)
-            this.state.imgArr.push({id: this.state.id, visible: null, path: image.path});
-            this.setState({//放到这里只是为了渲染页面
-                id: this.state.id + 1
-            })
-        });
     }
     openLg() {
         this.setState({
@@ -288,7 +318,7 @@ export default class DailyDetail extends Component {
         }
         //去数据库修改日程的状态
         var url=config.api.base+config.api.editDailyStatus;
-        let daily_id=params.dailyInfo.id;
+        let daily_id=params.daily_id;
         request.post(url,{
             daily_id:daily_id,
             status:status
@@ -310,7 +340,7 @@ export default class DailyDetail extends Component {
     showReport(){
         let  {params}=this.props.navigation.state;
         var status=this.state.status;
-        var daily_type=params.dailyInfo.daily_type;
+        var daily_type=this.state.dailyInfo.daily_type;
         if((daily_type==1) && (status==1)){
             return(
                 <TouchableHighlight
@@ -361,7 +391,7 @@ export default class DailyDetail extends Component {
     showCustomer(){
         let  {params}=this.props.navigation.state;
         var status=this.state.status;
-        var daily_type=params.dailyInfo.daily_type;
+        var daily_type=this.state.dailyInfo.daily_type;
         var customer=this.state.dailyInfo.customer_id;
         if(daily_type==2 || daily_type==3 || daily_type==4){
             if(customer!=null){
@@ -386,10 +416,10 @@ export default class DailyDetail extends Component {
     show_edit(){
         let  {params}=this.props.navigation.state;
         //是否显示编辑
-        var daily_type=params.dailyInfo.daily_type;
-        var create_id=params.dailyInfo.create_id;
-        var user_id= params.user_id;
-        var start_time=params.dailyInfo.start_time;
+        var daily_type=this.state.dailyInfo.daily_type;
+        var create_id=this.state.dailyInfo.create_id;
+        var user_id= this.state.user_id;
+        var start_time=this.state.dailyInfo.start_time;
         var moment=this.state.datetime;
         if(moment<start_time && user_id==create_id){
             return(<TouchableOpacity style={[com.pdtb10,]}
@@ -400,6 +430,7 @@ export default class DailyDetail extends Component {
     }
     render() {
         let  {params}=this.props.navigation.state;
+       // alert(JSON.stringify(this.state.dailyInfo))
         let imgArr = this.state.imgArr;
         var list = [];
         for (var i = 0; i < imgArr.length; i++) {
@@ -472,7 +503,7 @@ export default class DailyDetail extends Component {
         var reportlist=[];
         var report=this.state.report;
         var reportLen=this.state.reportLen;
-        var daily_type=params.dailyInfo.daily_type;
+        var daily_type=this.state.dailyInfo.daily_type;
         if(report==null || report==""){
             reportlist.push(
                 <View style={[com.bgcfff,com.pd15,com.bbweb,]} key={0}>
@@ -506,7 +537,7 @@ export default class DailyDetail extends Component {
                                     </View>
                                     <View style={[com.aic,com.jcc]}>
                                         <Text>{report[i].creater}</Text>
-                                        <Text style={[com.fs10,com.cbe]}>{params.dailyInfo.typeName}汇报</Text>
+                                        <Text style={[com.fs10,com.cbe]}>{this.state.dailyInfo.typeName}汇报</Text>
                                     </View>
                                 </View>
                                 <Text style={[com.cbe,com.fs10]}>{report[i].datetime}</Text>
@@ -514,7 +545,7 @@ export default class DailyDetail extends Component {
                         </View>
                         <View style={[com.bgcfff,com.pdlr15,com.bbweb]}>
                             <View style={[com.pdtb5,]}>
-                                <Text style={[com.cbe,com.fs10]}>{params.dailyInfo.typeName}内容</Text>
+                                <Text style={[com.cbe,com.fs10]}>{this.state.dailyInfo.typeName}内容</Text>
                             </View>
                             <View style={[com.pdtb5,com.bbweb]}>
                                 <Text style={[]}>{report[i].content}</Text>
@@ -595,7 +626,7 @@ export default class DailyDetail extends Component {
                                     </View>
                                     <View style={[com.aic,com.jcc]}>
                                         <Text>{report[i].creater}</Text>
-                                        <Text style={[com.fs10,com.cbe]}>{params.dailyInfo.typeName}汇报</Text>
+                                        <Text style={[com.fs10,com.cbe]}>{this.state.dailyInfo.typeName}汇报</Text>
                                     </View>
                                 </View>
                                 <Text style={[com.cbe,com.fs10]}>{report[i].datetime}</Text>
@@ -603,7 +634,7 @@ export default class DailyDetail extends Component {
                         </View>
                         <View style={[com.bgcfff,com.pdlr15,com.bbweb]}>
                             <View style={[com.pdtb5,]}>
-                                <Text style={[com.cbe,com.fs10]}>{params.dailyInfo.typeName}内容</Text>
+                                <Text style={[com.cbe,com.fs10]}>{this.state.dailyInfo.typeName}内容</Text>
                             </View>
                             <View style={[com.pdtb5,com.bbweb]}>
                                 <Text style={[]}>{report[i].content}</Text>
@@ -644,7 +675,7 @@ export default class DailyDetail extends Component {
             <View style={[com.flex,com.bgcf5]}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*nav*/}
-                <View style={[com.row,com.aic,com.jcsb,com.pdt5l15,com.bbwc,com.bgcfff]}>
+                <View style={[com.row,com.aic,com.jcsb,com.bbwc,com.pdt10l5,com.bgcfff]}>
                     <TouchableHighlight
                         onPress={()=>this.back()}
                         underlayColor="#ffffff"
@@ -655,7 +686,7 @@ export default class DailyDetail extends Component {
                             <Text style={[com.cr]}>返回</Text>
                         </View>
                     </TouchableHighlight>
-                    <Text>{params.dailyInfo.typeName}详情</Text>
+                    <Text>{this.state.dailyInfo.typeName}详情</Text>
                     <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
                         <Image source={require('../imgs/slh.png')}/>
                     </TouchableOpacity>
@@ -663,7 +694,7 @@ export default class DailyDetail extends Component {
                 <ScrollView style={[com.flex,com.bgcf5]}>
                     <View style={[com.row,com.bgcfff,com.jcsb,com.pdt5l15,com.btweb,com.mgt5]}>
                         <View style={[com.bgcfff]}>
-                            {(params.dailyInfo.daily_type==1)?
+                            {(this.state.dailyInfo.daily_type==1)?
                                 (   <TouchableHighlight
                                     onPress={this.goPageCusDetail.bind(this,this.state.dailyInfo.customer_id,this.state.dailyInfo.company_id)}
                                     underlayColor="#fff"
@@ -712,7 +743,7 @@ export default class DailyDetail extends Component {
                     <View style={[com.pdt20l15,com.bgcfff,com.bbwc]}>
                         <Text>{this.state.dailyInfo.description}</Text>
                     </View>
-                    {this.state.dailyInfo.position==null?(null):(
+                    {this.state.dailyInfo.position==null || this.state.dailyInfo.position==""?(null):(
                         <View style={[com.row,com.jcsb,com.bbweb,com.aic,com.pdt10l15,com.bgcfff,]}>
                             <Text>地点</Text>
                             <View style={[com.row,com.aic]}>
@@ -790,14 +821,27 @@ export default class DailyDetail extends Component {
                                 </View>
                                 <Text style={[com.bgcr,com.cff,com.pd5,com.br]} onPress={()=>{this.sendReview();}}>发送</Text>
                             </View>
-                            <View style={[com.row,com.ww,com.flww,com.pdl5]}>
+                            {/*  <View style={[com.row,com.ww,com.flww,com.pdl5]}>
                                 {list}
                                 {list.length==0?(null):(<Text onPress={()=>this.uploadImg()}>上传图片</Text>)}
+                            </View>*/}
+                            <View style={[com.row,com.ww,com.flww,com.pdl5]}>
+                                {list}
+                                {list.length==0?(null):(
+                                    <TouchableHighlight
+                                        onPress={()=>this.uploadImg()}
+                                        underlayColor="#d5d5d5"
+                                        >
+                                        <View style={[com.jcc,com.aic,com.h30,com.FLEX]}>
+                                            <Text style={[com.bwr,com.bgcfff,com.br5,com.pd5,com.cr]}>上传图片</Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                )}
                             </View>
                         </View>
                     </Modal>
                     {/* 添加模型 - 分享区域*/}
-                    <View>
+                   <View>
                         <Modal
                             animationType={"fade"}
                             transparent={true}
@@ -811,15 +855,15 @@ export default class DailyDetail extends Component {
                             </View>
                             <View style={[com.row,com.bcke6,com.brtlr5,wds.pos]}>
                                 <View style={[com.aic,com.bbwc,com.ww]}>
-                                    {/*<TouchableOpacity style={[com.pdtb10,]}
+                                    <TouchableOpacity style={[com.pdtb10,]}
                                      onPress={() => { this.setState({show:!this.state.show});this.goPage_Edit()}}>
                                      <Text style={{color:'#333'}}>编辑</Text>
-                                     </TouchableOpacity>*/}
+                                     </TouchableOpacity>
                                     {this.show_edit()}
-                                    <TouchableOpacity style={[com.pdtb10,]}
+                                    {/*<TouchableOpacity style={[com.pdtb10,]}
                                                       onPress={() => { this.setState({show:!this.state.show});this.goPage_Share()}}>
                                         <Text style={{color:'#333'}}>分享</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity>*/}
                                     <TouchableOpacity style={[com.aic,com.pdtb10]} onPress={() => {this.setState({show: !this.state.show})}}>
                                         <Text style={{color:'#555'}}>取消</Text>
                                     </TouchableOpacity>

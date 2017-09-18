@@ -119,13 +119,23 @@ export default class Log extends Component {
             company_id:params.company_id})
     }
 
-    showLogs(title) {//显示日志内容及评论内容
+    showLogs(title, refresh = false) {//显示日志内容及评论内容
         let {params} = this.props.navigation.state;
-        this.setState({isRefreshing: true});
+        //如果是下拉刷新
+        if(refresh){
+            this.setState({
+                isRefreshing: true,
+            });
+        }else{
+            this.setState({
+                load:true
+            });
+        }
         var url = config.api.base + config.api.getLogs;
         request.post(url, {
             title: title,
             employee_id: params.user_id,
+            company_id:params.company_id
         }).then((res) => {
             this.setState({
                 load: false,
@@ -386,7 +396,7 @@ export default class Log extends Component {
                     refreshControl={
                        <RefreshControl
                           refreshing={this.state.isRefreshing}
-                          onRefresh={()=>this.showLogs(this.state.title)}
+                          onRefresh={()=>this.showLogs(this.state.title,true)}
                           tintColor="#ff0000"
                           title="Loading..."
                           titleColor="#00ff00"

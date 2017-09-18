@@ -91,12 +91,11 @@ export default class PersonalLog extends Component {
     }
     employeeInfo(){
         let {params} = this.props.navigation.state;
-        alert('个人资料页面')
-     /*   this.props.navigation.navigate('用户组件名',
-            {user_id:params.employee_id,
-             company_id:params.company_id})*/
-
-
+        this.props.navigation.navigate('UserMsg',{
+            accept_id:params.employee_id,//要查看的下属员工ID
+            company_id:params.company_id,//公司的ID
+            user_id:params.user_id//当前登录者的ID
+        })
     }
     logDetail(id, i) {//日志详情
         let {params} = this.props.navigation.state;

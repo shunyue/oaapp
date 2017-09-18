@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#fff',
         fontSize: 16,
-        marginLeft:3
+        marginLeft:6
     },
     place:{
         justifyContent:'center',

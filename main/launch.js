@@ -12,6 +12,7 @@ import { NavigationActions } from 'react-navigation'
 export default class Launch extends Component {
 
     componentDidMount() {
+
         //锁定竖屏
         Orientation.lockToPortrait();
         AsyncStorage.getItem('user')

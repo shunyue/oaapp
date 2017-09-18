@@ -34,13 +34,13 @@ export default class SendNotice extends Component {
       url:'',
       pic:'',
       imgArr:[],
-      accepter:[]
+      accepter:[],
+      id:1
     };
   }
 
   componentDidMount() {
     this.Listener= DeviceEventEmitter.addListener('accepter', (a)=> {
-      alert(JSON.stringify(a))
        this.setState({
          accepter:a.accepter,
          value:a.value
@@ -52,7 +52,7 @@ export default class SendNotice extends Component {
     // 移除监听
     this.Listener.remove();
   }
-  openAffix(){
+/*  openAffix(){
     //alert('这是打开文件夹')
     ImagePicker.openPicker({
       width: 300,
@@ -64,6 +64,44 @@ export default class SendNotice extends Component {
         id: this.state.id + 1
       })
     });
+  }*/
+  openAffix(){
+    //选择图片
+      var options = {
+        title: '',
+        cancelButtonTitle: '取消',
+        takePhotoButtonTitle: '拍照',
+        chooseFromLibraryButtonTitle: '选择相册',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images'
+        }
+      };
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        }
+        else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        }
+        else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          let source = {uri: response.uri};
+          //this.state.imgs.push(response.uri);
+          //this.setState({})
+          this.state.imgArr.push({id: this.state.id,
+                                 visible: null,
+                                 path: response.uri,
+                                 name:response.fileName});
+          this.setState({//放到这里只是为了渲染页面
+            id: this.state.id + 1
+          })
+
+        }
+      })
   }
   uploadImg(){
     var url =config.api.base + config.api.imagesupload;
@@ -71,7 +109,7 @@ export default class SendNotice extends Component {
     let images= this.state.imgArr;
     for(var i = 0;i<images.length;i++){
       if(images[i].visible==null){
-        let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].path};//这里的key(uri和type和name)不能改变
+        let file = {uri: images[i].path, type:'multipart/form-data', name:images[i].name};//这里的key(uri和type和name)不能改变
         formData.append(images[i].path,file);//这里的files就是后台需要的key
       }
     }
@@ -97,11 +135,11 @@ export default class SendNotice extends Component {
           toast.bottom('网络连接失败，请检查网络后重试');
         });
   }
+
   goonDel(id) {
     var imgArr = this.state.imgArr;
     var op = [];
     for (var i in imgArr) {
-      //console.log(i)
       if (imgArr[i].id === id) {
         op.push(
             {id: imgArr[i].id, visible: 'none', path: imgArr[i].path}
@@ -244,45 +282,7 @@ export default class SendNotice extends Component {
                 </TouchableHighlight>
                 )}
               </View>
-              {/* <View style={[com.ROW,com.PDB10,com.PDT10,com.AIC]}>
-                <Image style={[sef.imgSelfTwo,com.MGR5,]}
-                       source={require('../../imgs/project.png')}/>
-                <Text style={[com.FS10]}>这个地方还有图片的右上角的删除按钮</Text>
-                {this.state.path == ""?(null):(
-                    <Image
-                        style={[com.wh48,com.MGR5,]}
-                        source={{uri: this.state.path}}
-                        />
-                )}
-                {this.state.path == ""?(null):(
-                      <Text onPress={()=>this.uploadImg()}>上传图片</Text>
-                )}
-              </View>*/}
             </View>
-            { /*<View style={[com.PDT5]}>
-              <View>
-                <TouchableHighlight
-                  onPress={()=>this.openAffix()}
-                  underlayColor="#d5d5d5"
-                >
-                  <View style={[com.ROW,com.JCSB,com.MGB5]}>
-                    <Text>附件</Text>
-                    <Image style={[sef.imgRiCom,com.MGL5,com.wh16]} source={require('../../imgs/navxy2.png')}/>
-                  </View>
-                </TouchableHighlight>
-              </View>
-              <View style={[com.ROW,com.JCSB]}>
-                <View style={[com.ROW,com.AIC]}>
-                  <Image style={[sef.imgSelfTwo,com.MGR5,]}
-                         source={require('../../imgs/project.png')}/>
-                  <Text style={[com.CBE]}>000xxx000xxx.jpg</Text>
-                </View>
-                <View>
-                  <Image style={[sef.imgSelfTwo,com.MGR5]}
-                         source={require('../../imgs/project.png')}/>
-                </View>
-              </View>
-            </View>*/}
           </View>
           {/*请输入公告内容*/}
           <View style={[{height:150},com.BCKFFF,com.MGT10,com.BTW,com.BCE6,com.PDT5,com.PDL10,com.PDR10,com.PDB10]}>

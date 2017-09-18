@@ -228,7 +228,7 @@ export default class approve_detail extends Component {
             product_list.push(
                 <View key={i}>
 
-                    <View style={[styles.divRowCom1,{paddingTop:5,paddingBottom:5,paddingLeft:15}]}>
+                    <View style={[styles.divRowCom1]}>
                         <Text style={[styles.divFontCom]}>产品信息{i-(-1)}</Text>
                     </View>
 
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:3
+        marginLeft:6
     },
     place:{
         flexDirection:'row',
