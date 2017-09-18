@@ -1,3 +1,6 @@
+/*
+* 表单详情
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -44,6 +47,7 @@ export default class formDetail extends Component {
             form_id:'',//表单id
             approver_people:[],//审批人
             modalVisible: false,//模态场景是否可见
+            img_sing_array:[]//图片标记结合
 
 
         };
@@ -82,12 +86,41 @@ export default class formDetail extends Component {
             }
             else {
                 let source = {uri: response.uri};
-                this.state.imgs.push({url:response.uri,name:response.name});
-                this.setState({})
+
+                if(this.state.img_sing_array.length==0){
+                    this.state.imgs.push({url:response.uri,name:response.fileName,id:1});
+                    this.state.img_sing_array.push(1);
+                    this.setState({})
+                }else{
+                    var img_sing_max= Math.max.apply(null, this.state.img_sing_array)-(-1);
+                    this.state.imgs.push({url:response.uri,name:response.fileName,id:img_sing_max});
+                    this.state.img_sing_array.push(img_sing_max);
+                    this.setState({})
+                }
+
             }
         })
     }
   //选择图片 打开相机
+
+    //删除图片
+    del_img(e){
+
+        this.state.img_sing_array.splice( this.state.img_sing_array.indexOf(e), 1);
+        this.setState({
+        });
+    }
+
+
+    //判断图片是否有效
+    if_isset(e){
+        for(var i  in this.state.img_sing_array){
+            if(this.state.img_sing_array[i]==e){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //piker 时间
     _showTimePicker(e) {
@@ -236,6 +269,8 @@ export default class formDetail extends Component {
 
     //点击确认按钮
     addproduct() {
+
+
         ////判断是否选择了审批人
         //if(this.state.approver_people.length==0){
         //    return toast.center('请选择审批人');
@@ -252,10 +287,17 @@ export default class formDetail extends Component {
 
         //将图片放入 formdata
         let formData = new FormData();
-        for(var imgi in this.state.imgs){
-            let file = {uri: this.state.imgs[imgi], type: 'multipart/form-data',name:this.state.imgs[imgi]};
-            formData.append(this.state.imgs[imgi],file);
+        for(var i in this.state.img_sing_array){
+            for(var imgi in this.state.imgs){
+                if(this.state.img_sing_array[i]==this.state.imgs[imgi].id){
+                    let file = {uri: this.state.imgs[imgi].url, type: 'multipart/form-data',name:this.state.imgs[imgi].name};
+                    formData.append(this.state.imgs[imgi].url,file);
+                }
+
+            }
         }
+
+
 
         ////将照片之外的 放入formdata  {['sing15',cheer]，['sing20',男]}
         //for(var i in inputsing){
@@ -275,6 +317,7 @@ export default class formDetail extends Component {
         //}
         //formData.append('approver_peopel',appprover_people_info.join("--"));
         //
+
 
         var url=config.api.base + config.api.sava_form;
         fetch(url,{
@@ -312,21 +355,43 @@ export default class formDetail extends Component {
         //图片
         var imglist=[];
         for(var i in this.state.imgs){
-            imglist.push(
-                <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}}>
-                    <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.imgs[i]}}/>
-
-                    <TouchableHighlight
-                        style={[com.MG5,com.posr,{top:-3,right:0}]}
-
-                        underlayColor="#f5f5f5"
-                    >
-                        <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
-                    </TouchableHighlight>
 
 
-                </View>
-            )
+           // alert(this.if_isset(this.state.imgs[i].id))
+            if(this.if_isset(this.state.imgs[i].id)==false){
+                imglist.push(
+                    <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}} style={{display:'none'}}>
+                        <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.imgs[i].url}}/>
+
+                        <TouchableHighlight
+                            style={[com.MG5,com.posr,{top:-3,right:0}]}
+                            onPress={this.del_img.bind(this,this.state.imgs[i].id)}
+                            underlayColor="#f5f5f5"
+                        >
+                            <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
+                        </TouchableHighlight>
+
+
+                    </View>
+                )
+            }else{
+                imglist.push(
+                    <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}}>
+                        <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.imgs[i].url}}/>
+
+                        <TouchableHighlight
+                            style={[com.MG5,com.posr,{top:-3,right:0}]}
+                            onPress={this.del_img.bind(this,this.state.imgs[i].id)}
+                            underlayColor="#f5f5f5"
+                        >
+                            <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
+                        </TouchableHighlight>
+
+
+                    </View>
+                )
+            }
+
         }
         //图片
 

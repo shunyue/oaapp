@@ -22,7 +22,7 @@ import {
     Picker,
 } from 'react-native';
 const screenW = Dimensions.get('window').width;
-
+import com from '../../public/css/css-com';//删除图片的样式
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
@@ -42,6 +42,7 @@ export default class newBulidContract extends Component {
                   return_account_name:'',//回款账户名称
                   return_account_nb:'',//回款账户号
                   approver_people:[],//审批人
+                  img_sing_array:[]//图片标记结合
         };
     }
 
@@ -84,6 +85,7 @@ export default class newBulidContract extends Component {
         };
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
+
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             }
@@ -95,13 +97,40 @@ export default class newBulidContract extends Component {
             }
             else {
                 let source = {uri: response.uri};
-                this.state.imgs.push(response.uri);
-                this.setState({})
+
+                if(this.state.img_sing_array.length==0){
+                    this.state.return_proof.push({url:response.uri,name:response.fileName,id:1});
+                    this.state.img_sing_array.push(1);
+                    this.setState({})
+                }else{
+                    var img_sing_max= Math.max.apply(null, this.state.img_sing_array)-(-1);
+                    this.state.return_proof.push({url:response.uri,name:response.fileName,id:img_sing_max});
+                    this.state.img_sing_array.push(img_sing_max);
+                    this.setState({})
+                }
+
             }
         })
     }
     //选择图片
+    //删除图片
+    del_img(e){
 
+        this.state.img_sing_array.splice( this.state.img_sing_array.indexOf(e), 1);
+        this.setState({
+        });
+    }
+
+
+    //判断图片是否有效
+    if_isset(e){
+        for(var i  in this.state.img_sing_array){
+            if(this.state.img_sing_array[i]==e){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //点击确认按钮
     submmit() {
@@ -112,12 +141,19 @@ export default class newBulidContract extends Component {
            return toast.center('请完善信息');
        }
 
+
         //回款凭证 图片 formdata
         let formData = new FormData();
-        for(var imgi in this.state.return_proof){
-            let file = {uri: this.state.return_proof[imgi], type: 'multipart/form-data',name:this.state.return_proof[imgi]};
-            formData.append(this.state.return_proof[imgi],file);
+        for(var i in this.state.img_sing_array){
+            for(var imgi in this.state.return_proof){
+                if(this.state.img_sing_array[i]==this.state.return_proof[imgi].id){
+                    let file = {uri: this.state.return_proof[imgi].url, type: 'multipart/form-data',name:this.state.return_proof[imgi].name};
+                    formData.append(this.state.return_proof[imgi].url,file);
+                }
+
+            }
         }
+
 
 
         //将审批人放入 formdata  只能传递字符串
@@ -196,11 +232,39 @@ export default class newBulidContract extends Component {
         //图片
         var imglist=[];
         for(var i in this.state.return_proof){
-            imglist.push(
-                <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}}>
-                    <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.return_proof[i]}}/>
-                </View>
-            )
+            if(this.if_isset(this.state.return_proof[i].id)==false){
+                imglist.push(
+                    <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}} style={{display:'none'}}>
+                        <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.return_proof[i].url}}/>
+
+                        <TouchableHighlight
+                            style={[com.MG5,com.posr,{top:-3,right:0}]}
+                            onPress={this.del_img.bind(this,this.state.return_proof[i].id)}
+                            underlayColor="#f5f5f5"
+                        >
+                            <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
+                        </TouchableHighlight>
+
+
+                    </View>
+                )
+            }else{
+                imglist.push(
+                    <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}}>
+                        <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.return_proof[i].url}}/>
+
+                        <TouchableHighlight
+                            style={[com.MG5,com.posr,{top:-3,right:0}]}
+                            onPress={this.del_img.bind(this,this.state.return_proof[i].id)}
+                            underlayColor="#f5f5f5"
+                        >
+                            <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
+                        </TouchableHighlight>
+
+
+                    </View>
+                )
+            }
         }
         //图片
 
