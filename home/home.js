@@ -830,7 +830,9 @@ export default class Home extends Component {
                                 <Image source={require('../imgs/threefj32.png')}/>
                             </View>
                         </View>
+                        <ScrollView>
                         {dailylist}
+                        </ScrollView>
                     </View>
 
                     {/*待审批*/}
