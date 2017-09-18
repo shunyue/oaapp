@@ -37,11 +37,11 @@ export default class AddMeeting extends Component {
             startstamp:parseInt(new Date().getTime()/1000),
             content:"",
             confirm_recept:false,
-            alertTime:" ",
+            alertTime:0,
             selectNum:1,
             alertName:"不提醒",
-            title:" ",
-            position:" "
+            title:"",
+            position:""
         };
     }
     componentDidMount() {
@@ -89,11 +89,11 @@ export default class AddMeeting extends Component {
     //提交
     submit(){
         let {params} = this.props.navigation.state;
-        if(this.state.title ==" "|| this.state.title==null){
+        if(this.state.title =="" || this.state.title==null){
             toast.bottom('会议名称不能为空');
             return false;
         }
-        if(this.state.position==" "|| this.state.position==null){
+        if(this.state.position==""|| this.state.position==null){
             toast.bottom('会议地点不能为空');
             return false;
         }

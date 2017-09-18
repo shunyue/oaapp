@@ -413,7 +413,7 @@ export default class Home extends Component {
             dailylist = [];
             dailylist.push(
                 <View style={[styles.threeTwoCenter]} key={0}>
-                <View style={[styles.row]} key={0}>
+                <View style={[styles.row]} >
                     <Image source={require('../imgs/rc16.png')}/>
                     <Text style={[styles.threeText]}>
                         您今天还没有日程

@@ -21,9 +21,8 @@ const screenH = Dimensions.get('window').height;
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
+import com from '../../public/css/css-com';//删除图片的样式
 import ImagePicker from 'react-native-image-picker';
-
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -44,7 +43,6 @@ export default class formDetail extends Component {
 
             form_id:'',//表单id
             approver_people:[],//审批人
-            visibleModal:false,//选择 图片还是拍照
             modalVisible: false,//模态场景是否可见
 
 
@@ -58,39 +56,38 @@ export default class formDetail extends Component {
     //时间插件
 
 
-    //选择图片
+    //选择图片 打开相机
     pic(){
+        var options = {
+            title: '',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '选择相册',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
 
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            this.state.imgs.push(image.path);
-            this.setState({
-            })
-        });
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = {uri: response.uri};
+                this.state.imgs.push({url:response.uri,name:response.name});
+                this.setState({})
+            }
+        })
     }
-    //选择图片
-
-
-    //打开相机
-    openCamera(){
-        ImagePicker.openCamera({
-            cropping: false
-        }).then(image => {
-            this.state.imgs.push(image.path);
-            this.setState({
-
-            })
-        });
-    }
-
-    //选择 图片还是拍照
-    visibleModalSet(visible) {
-        this.setState({visibleModal: visible});
-    }
-
+  //选择图片 打开相机
 
     //piker 时间
     _showTimePicker(e) {
@@ -239,19 +236,19 @@ export default class formDetail extends Component {
 
     //点击确认按钮
     addproduct() {
-        //判断是否选择了审批人
-        if(this.state.approver_people.length==0){
-            return toast.center('请选择审批人');
-        }
-
-        //排除照片 的标识
-        var inputsing=[];  //['sing15','sing16','sing17']
-        for(var i in this.state.forminfo) {
-            if (this.state.forminfo[i]['field_type'] == '照片') {
-            } else {
-                inputsing.push(this.state.forminfo[i]['sing']);
-            }
-        }
+        ////判断是否选择了审批人
+        //if(this.state.approver_people.length==0){
+        //    return toast.center('请选择审批人');
+        //}
+        //
+        ////排除照片 的标识
+        //var inputsing=[];  //['sing15','sing16','sing17']
+        //for(var i in this.state.forminfo) {
+        //    if (this.state.forminfo[i]['field_type'] == '照片') {
+        //    } else {
+        //        inputsing.push(this.state.forminfo[i]['sing']);
+        //    }
+        //}
 
         //将图片放入 formdata
         let formData = new FormData();
@@ -260,24 +257,24 @@ export default class formDetail extends Component {
             formData.append(this.state.imgs[imgi],file);
         }
 
-        //将照片之外的 放入formdata  {['sing15',cheer]，['sing20',男]}
-        for(var i in inputsing){
-            formData.append(inputsing[i],this.state[inputsing[i]]);
-        }
-
-
-        //将表单的id 放入formdata 给PHP使用
-        formData.append('form_id',this.state.form_id);
-        formData.append('user_id',this.props.navigation.state.params.user_id);
-        formData.append('company_id',this.props.navigation.state.params.company_id);
-
-        //将审批人放入 formdata  只能传递字符串
-        var appprover_people_info=[];
-        for(var i in this.state.approver_people){
-            appprover_people_info.push(this.state.approver_people[i].id+','+this.state.approver_people[i].depart_id+','+this.state.approver_people[i].company_id);
-        }
-        formData.append('approver_peopel',appprover_people_info.join("--"));
-
+        ////将照片之外的 放入formdata  {['sing15',cheer]，['sing20',男]}
+        //for(var i in inputsing){
+        //    formData.append(inputsing[i],this.state[inputsing[i]]);
+        //}
+        //
+        //
+        ////将表单的id 放入formdata 给PHP使用
+        //formData.append('form_id',this.state.form_id);
+        //formData.append('user_id',this.props.navigation.state.params.user_id);
+        //formData.append('company_id',this.props.navigation.state.params.company_id);
+        //
+        ////将审批人放入 formdata  只能传递字符串
+        //var appprover_people_info=[];
+        //for(var i in this.state.approver_people){
+        //    appprover_people_info.push(this.state.approver_people[i].id+','+this.state.approver_people[i].depart_id+','+this.state.approver_people[i].company_id);
+        //}
+        //formData.append('approver_peopel',appprover_people_info.join("--"));
+        //
 
         var url=config.api.base + config.api.sava_form;
         fetch(url,{
@@ -318,6 +315,16 @@ export default class formDetail extends Component {
             imglist.push(
                 <View style={{paddingLeft:screenW*0.025,paddingTop:screenW*0.02,}}>
                     <Image style={{width:screenW*0.22,height:screenW*0.22,borderColor:'#d3d3d3',borderWidth:1}} source={{uri: this.state.imgs[i]}}/>
+
+                    <TouchableHighlight
+                        style={[com.MG5,com.posr,{top:-3,right:0}]}
+
+                        underlayColor="#f5f5f5"
+                    >
+                        <Image source={require('../../imgs/del162.png')} style={[com.wh16,]}/>
+                    </TouchableHighlight>
+
+
                 </View>
             )
         }
@@ -397,10 +404,11 @@ export default class formDetail extends Component {
 
                     <View style={[styles.divCom]} key={i}>
                         <View style={[styles.divRowCom1]}>
+                            <View style={{flexDirection: 'row'}}>
                             <Text style={[styles.divFontCom]}>{forminfo[i].field_name}</Text>
-                            <Text style={[styles.divFontCom]}>{this.state[textName]}</Text>
+                            <Text style={[styles.divFontCom,{paddingLeft:25}]}>{this.state[textName]}</Text>
+                            </View>
                             <ScrollView>
-
 
                                 <ProcessModal
                                     processModal={false}
@@ -416,18 +424,16 @@ export default class formDetail extends Component {
 
                 list.push(
                     <View style={[styles.divCom]} key={i}>
-                        <View style={[styles.divRowCom2]}>
+                        <TouchableOpacity   onPress={()=>this.checkbox_select(textName)}>
+                        <View style={[styles.divRowCom2,{flexWrap:'wrap',flexDirection:'row',justifyContent: 'space-between',flex:1}]}>
+                            <View style={{flexDirection: 'row'}}>
                             <Text style={[styles.divFontCom,{width:50}]}>{forminfo[i].field_name}</Text>
                             <Text style={[styles.divFontCom]}>{this.state[textName]}</Text>
-                            <View style={{flexWrap:'wrap',width:screenW-70,flexDirection:'row'}}>
-
-                                <TouchableOpacity   onPress={()=>this.checkbox_select(textName)}>
-
-                                    <Image style={styles.imgStyle} source={require('../../imgs/customer/arrow_r.png')}/>
-                                </TouchableOpacity>
                             </View>
+                            <Image style={styles.imgStyle} style={{width:12,height:12}} source={require('../../imgs/customer/arrow_r.png')}/>
 
                         </View>
+                        </TouchableOpacity>
                     </View>
                 )
             }else if(forminfo[i].field_type=='日期'){
@@ -475,7 +481,7 @@ export default class formDetail extends Component {
                     <View style={[styles.divCom]} key={i}>
                         <View style={[styles.divRowCom]}>
                             <Text style={[styles.divFontCom]}>{forminfo[i].field_name}</Text>
-                            <TouchableOpacity  onPress={()=>{this.setState({visibleModal: !this.state.visibleModal})}} >
+                            <TouchableOpacity  onPress={()=>{this.pic()}} >
                                 <Image style={{marginLeft:30,width:20,height:20}} source={require('../../imgs/icon_shenpi/xiangji.png')}/>
                             </TouchableOpacity>
 
@@ -543,45 +549,6 @@ export default class formDetail extends Component {
                         {list}
                     </View>
                 </ScrollView>
-
-
-                {/*选择图片或拍照*/}
-                <View>
-                    <Modal
-                        animationType={"slide"}
-                        transparent={true}
-                        visible={this.state.visibleModal}
-                        onRequestClose={() => {alert("Modal has been closed.")}}
-                    >
-                        <View style={{width:screenW,height:screenH,backgroundColor:'#555',opacity:0.6}}><TouchableOpacity style={{flex:1,height:screenH}} onPress={() => {
-                     this.visibleModalSet(!this.state.visibleModal)
-                    }}></TouchableOpacity>
-                        </View>
-                        <View style={styles.addCustomer_c}>
-                            <View style={[styles.addCustomer_card,styles.addCustomer_card_1]}>
-                                <TouchableOpacity
-                                    style={[styles.customerCard_content,styles.customerCard_content_2,styles.customerCard_content2]}
-                                    onPress={()=>{this.openCamera();this.visibleModalSet(!this.state.visibleModal)}}
-                                >
-                                    <Text>拍照</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.customerCard_content,styles.customerCard_content_2]}
-                                    onPress={()=>{this.pic();this.visibleModalSet(!this.state.visibleModal)}}
-                                >
-                                    <View>
-                                        <Text>从相册选取</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.addCustomer_card,styles.addCustomer_card_2]}>
-                                <TouchableOpacity  style={[styles.customerCard_content,styles.customerCard_content_2]} onPress={() => { this.visibleModalSet(!this.state.visibleModal)}}>
-                                    <Text>取消</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </Modal>
-                </View>
 
 
             </View>

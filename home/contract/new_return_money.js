@@ -1,4 +1,8 @@
-//新增合同回款
+/*
+*
+* 新增合同回款
+*
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -37,29 +41,17 @@ export default class newBulidContract extends Component {
                   return_state:'',//回款说明
                   return_account_name:'',//回款账户名称
                   return_account_nb:'',//回款账户号
-
                   approver_people:[],//审批人
-
-
-
         };
-
     }
 
-
-
-
     componentDidMount() {
-
-
         //审批人
         this.subscription = DeviceEventEmitter.addListener('choosePeople',(value) => {
             this.setState({
                 approver_people:value,
             })
         })
-
-
     }
 
 
@@ -67,11 +59,9 @@ export default class newBulidContract extends Component {
         this.subscription.remove();
     }
 
-
     back() {
         this.props.navigation.goBack(null);
     }
-
 
     //选择审批人
     select_approve_peopel(){
@@ -82,31 +72,45 @@ export default class newBulidContract extends Component {
 
     //选择图片
     pic(){
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            this.state.return_proof.push(image.path);
-            this.setState({
-            })
-        });
+        var options = {
+            title: '',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '选择相册',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = {uri: response.uri};
+                this.state.imgs.push(response.uri);
+                this.setState({})
+            }
+        })
     }
     //选择图片
 
 
     //点击确认按钮
     submmit() {
-
-
         if(this.state.approver_people.length==0){
             return toast.center('审批人不能为空');
         }
-
        if(this.state.return_price==''||this.state.return_time==''||this.state.return_state==''||this.state.return_account_name==''||this.state.return_account_nb==''){
            return toast.center('请完善信息');
        }
-
 
         //回款凭证 图片 formdata
         let formData = new FormData();
@@ -170,14 +174,9 @@ export default class newBulidContract extends Component {
     };
     //点击确认按钮
 
-
-
-
     render() {
 
-
         var isPickerVisible=''; //时间插件用
-
         //审批人
         var approverlist=[];
         for(var i in this.state.approver_people){
@@ -194,8 +193,6 @@ export default class newBulidContract extends Component {
         }
         //审批人
 
-
-
         //图片
         var imglist=[];
         for(var i in this.state.return_proof){
@@ -206,8 +203,6 @@ export default class newBulidContract extends Component {
             )
         }
         //图片
-
-
 
 
         return (
@@ -243,7 +238,6 @@ export default class newBulidContract extends Component {
                     <View style={[styles.ancestorCon]}>
                         <View style={[styles.divCom]}>
 
-
                                 <View style={[styles.divRowCom]}>
                                     <Text style={[styles.divFontCom]}>回款金额</Text>
                                     <TextInput
@@ -254,10 +248,6 @@ export default class newBulidContract extends Component {
                                     />
 
                                 </View>
-
-
-
-
 
 
                             <View style={[styles.divRowCom]}>
@@ -286,8 +276,6 @@ export default class newBulidContract extends Component {
                                     onCancel={() => this.setState({ [isPickerVisible]: false })}
                                 />
                             </View>
-
-
 
 
                             <View style={[styles.divRowCom]}>

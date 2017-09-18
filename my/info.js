@@ -102,34 +102,46 @@ export default class Info extends Component {
         }
         this.props.navigation.navigate('ModifyAddress',{canshu:data});
     }
+
     //上传图片
-    pickSingle() {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            this.uploadImg(image.path);
-        });
-    }
+    //选择图片
     //打开照相机
-    _openCamera(){
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            alert(image.path);
-            this.uploadImg(image.path);
-        });
+    pic(){
+        var options = {
+            title: '',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '选择相册',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                this.uploadImg(response.uri,response.fileName);
+            }
+        })
     }
+
     //上传图片
-    uploadImg(source) {
+    uploadImg(source,fileName) {
         var url =config.api.base + config.api.myselfload;
         let formData = new FormData();
-        let file = {uri:source, type: 'multipart/form-data',name:'1232'};
+        let file = {uri:source, type: 'multipart/form-data',name:fileName};
         formData.append("image",file);
         formData.append("url",source);
+        formData.append("ext",fileName);
         fetch(url,{
             method:'POST',
             headers:{
@@ -205,7 +217,7 @@ export default class Info extends Component {
                         onPress={()=>this.OpBack()}/>
                 <ScrollView style={styles.childContent}>
                     <TouchableHighlight underlayColor={'#666'}
-                                        onPress={() => {this.setState({visibleModal: !this.state.visibleModal})}}
+                                        onPress={() => this.pic()}
                         >
                         <View style={[styles.TotalSetting1,{height:50,}]}>
                             <Text style={{color:'#333'}}>头像</Text>
@@ -270,44 +282,6 @@ export default class Info extends Component {
                         </View>
                     </TouchableHighlight>
                 </ScrollView>
-                <View>
-                    <Modal
-                        animationType={"slide"}
-                        transparent={true}
-                        visible={this.state.visibleModal}
-                        onRequestClose={() => {alert("Modal has been closed.")}}
-                        >
-                        <View style={{width:screenW,height:screenH,backgroundColor:'#555',opacity:0.6}}>
-                            <TouchableOpacity style={{flex:1,height:screenH}} onPress={() => {
-                      this.visibleModalSet(!this.state.visibleModal)
-                    }}></TouchableOpacity>
-                        </View>
-                        <View style={styles.addCustomer_c}>
-                            <View style={[styles.addCustomer_card,styles.addCustomer_card_1]}>
-                                <TouchableOpacity
-                                    style={[styles.customerCard_content,styles.customerCard_content_2,styles.customerCard_content2]}
-                                    onPress={()=>this._openCamera()}
-                                    >
-                                    <Text>拍照</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.customerCard_content,styles.customerCard_content_2]}
-                                    onPress={()=>this.pickSingle()}
-                                    >
-                                    <View>
-                                        <Text>从相册选取</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.addCustomer_card,styles.addCustomer_card_2]}>
-                                <TouchableOpacity  style={[styles.customerCard_content,styles.customerCard_content_2]} onPress={() => { this.visibleModalSet(!this.state.visibleModal)}}>
-                                    <Text>取消</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </Modal>
-                </View>
-
             </View>
         );
     }
