@@ -59,7 +59,8 @@ export default class Home extends Component {
             performance_current_year:0,
             performance_last_year:0,
             performance_max_year:0,
-            result:0
+            result:0,
+
         };
     }
     componentDidMount() {
@@ -73,9 +74,9 @@ export default class Home extends Component {
                 })
                 this.getNet();//最新业绩
                 this.getNet1();//业绩对比
-                this.requestData();  //周飞飞  添加获取目标达成数据的方法
-                //获取日程
-                this.searchDaily(data.user_id,data.company_id);
+                this.requestData();//周飞飞  添加获取目标达成数据的方法
+                this.searchDaily(data.user_id,data.company_id); //获取日程
+                this.daishenpi(data.user_id);//待审批
             })
 
     }
@@ -241,6 +242,28 @@ export default class Home extends Component {
         }
     }
 
+    //获取待审批的信息
+     daishenpi(e){
+         var url = config.api.base + config.api.select_approve_attime;
+         request.post(url,{
+             user_id:e,//公司id
+         }).then((responseText) => {
+             if(responseText.sing==1){
+                 this.setState({
+                     process_list:responseText.data,
+                 })
+             }else{
+                 this.setState({
+                     process_list:[],
+                 })
+             }
+         }).catch((error)=>{
+             toast.bottom('网络连接失败，请检查网络后重试');
+         })
+     }
+
+    //获取待审批的信息
+
     on_press(inder){
         if(inder==0){
             this.setState({
@@ -337,6 +360,7 @@ export default class Home extends Component {
         const deg = reach*180+'deg'
         const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
         const {navigate}=this.props.navigation
+        //今日日程
         var daily= this.state.daily;
         if(daily !=""){
             var dailylist = [];
@@ -385,6 +409,58 @@ export default class Home extends Component {
                 </View>
                 </View>    )
         }
+        //今日日程
+
+        //待审批
+            if(this.state.process_list!=undefined){
+                 var process_info=[];
+                if(this.state.process_list.length==0){
+                    process_info.push(
+                        <View style={[styles.threeTwoCenter]}>
+                            <View style={[styles.row]}>
+                                <Image source={require('../imgs/gcon16.png')}/>
+                                <Text style={[styles.threeText]}>
+                                    您没有待审批的内容
+                                </Text>
+                            </View>
+                        </View>
+                    )
+                }else{
+
+
+                    for(var i in this.state.process_list){
+                         process_info.push(
+                             <View key={i}>
+                                 <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.process_list[i]['example_id'],this.state.process_list[i]['msg'])}>
+                                     <View>
+                                         <View>
+
+                                             <View >
+                                                 <Image style={{width:40,height:40}} source={{uri:this.state.process_list[i]['icon']}}/>
+                                                 <View style={{marginLeft:10}}>
+                                                     <Text>{this.state.process_list[i]['whosthing']}</Text>
+                                                     <Text
+                                                         style={this.state.process_list[i]['msg'] == '等待我审批'?{color: '#e4393c'}: null}>{this.state.process_list[i]['msg']}</Text>
+                                                 </View>
+                                             </View>
+                                             <View style={{paddingRight:15}}>
+                                                 <Text style={{fontSize:10,paddingTop:10}}>{this.state.process_list[i]['time']}</Text>
+                                             </View>
+                                         </View>
+                                     </View>
+                                 </TouchableHighlight>
+                             </View>
+                         )
+                    }
+
+
+
+                }
+
+            }
+
+
+        //待审批
         return (
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
@@ -745,10 +821,8 @@ export default class Home extends Component {
                     </View>
 
 
-                    {/*底部三大功能模块*/}
+                    {/*今日日程*/}
                     <View style={[styles.threeDIVCON]}>
-                        {/*今日日程*/}
-                        {/*头部*/}
                         <View style={[styles.threeSpaceBetween,styles.row]}>
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
@@ -757,40 +831,17 @@ export default class Home extends Component {
                                 <Image source={require('../imgs/threefj32.png')}/>
                             </View>
                         </View>
-                        {/*内容*/}
                         {dailylist}
-                            {/*
-                             <View style={[styles.threeTwoCenter]}>
-                             <View style={[styles.row]}>
-                                <Image source={require('../imgs/rc16.png')}/>
-                                <Text style={[styles.threeText]}>
-                                    您今天还没有日程
-                                </Text>
-                            </View>
-                             </View>*/}
-
-
                     </View>
 
-
+                    {/*待审批*/}
                     <View style={[styles.threeDIVCON]}>
-                        {/*待审批*/}
-                        {/*头部*/}
                         <View style={[styles.row]}>
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
                         </View>
-                        {/*内容*/}
-                        <View style={[styles.threeTwoCenter]}>
-                            <View style={[styles.row]}>
-                                <Image source={require('../imgs/gcon16.png')}/>
-                                <Text style={[styles.threeText]}>
-                                    您没有待审批的内容
-                                </Text>
-                            </View>
-                        </View>
+                        {process_info}
                     </View>
-
                 </ScrollView>
 
             </View >

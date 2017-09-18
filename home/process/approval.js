@@ -152,6 +152,8 @@ export default class Approval extends Component {
                 this.setState({
                     listview:responseText.data,
                 })
+            }else{
+                toast.center('没有数据');
             }
 
 
