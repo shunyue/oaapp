@@ -200,8 +200,9 @@ export default class app extends Component {
             return (<Text style={{fontSize:12,backgroundColor:'#00FFA5',paddingLeft:4,paddingRight:4,borderRadius:8,marginRight:10,color: '#fff'}}>培训</Text>)
         }
     }
-    _dailyDetail(daily_type, title, customer_name, executor_name,position,start_time) {
-        this.props.navigation.navigate('DailyDetail',{daily_type: daily_type,title: title,customer_name: customer_name, executor_name: executor_name,position: position,start_time: start_time})
+    _dailyDetail(id) {
+
+        this.props.navigation.navigate('DailyDetail',{user_id: this.state.user_id,company_id: this.state.company_id,daily_id: id})
     }
     //获取联系人、跟进人、工作记录、日程计划等数据
     _loadData(type) {
@@ -362,7 +363,7 @@ export default class app extends Component {
             if(dailyData[i].status == 1 || dailyData[i].daily_type == 5) {
 
                 dailyList.push(
-                    <TouchableHighlight underlayColor={'#eee'} style={{marginTop:10}} onPress={this._dailyDetail.bind(this, dailyData[i].daily_type,dailyData[i].title?dailyData[i].title: dailyData[i].customer_name,dailyData[i].customer_name,dailyData[i].executor_name, dailyData[i].position, dailyData[i].start_time)} key={i}>
+                    <TouchableHighlight underlayColor={'#eee'} style={{marginTop:10}} onPress={this._dailyDetail.bind(this, dailyData[i].id)} key={i}>
                         <View style={[styles.place,styles.borderTop,styles.borderBottom,{backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
                             <View style={[styles.place2,{height:25}]}>
                                 <Text style={{fontSize:14}}>{dailyData[i].title?dailyData[i].title: dailyData[i].customer_name}</Text>

@@ -28,6 +28,7 @@ const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 const receiveCustomMsgEvent = "receivePushMsg";
 const receiveNotificationEvent = "receiveNotification";
+const openNotificationEvent = "openNotification";
 export default class Chat extends Component {
     constructor(props) {
         super(props);
@@ -64,35 +65,23 @@ export default class Chat extends Component {
 
 
         //极光推送
-        JPushModule.addReceiveCustomMsgListener((message) => {
-            // this.setState({pushMsg: message});
-        });
-        // JPushModule.addReceiveNotificationListener((message) => {
-        //     alert(123)
-        //     if(JSON.parse(message.extras).type == 'chat') {
-        //
-        //         DeviceEventEmitter.emit('getChatMessage');
-        //         this._getAllUnRead();
-        //     }else if(JSON.parse(message.extras).type == 'apply') {
-        //         this._lastApplyTime();
-        //     }
-        // })
-        JPushModule.addReceiveNotificationListener((map) => {
-            alert(JSON.stringify(map))
-            console.log("alertContent: " + map.alertContent);
-            console.log("extras: " + map.extras);
-            // var extra = JSON.parse(map.extras);
-            // console.log(extra.key + ": " + extra.value);
-        });
+        JPushModule.addReceiveNotificationListener((message) => {
+            if(JSON.parse(message.extras).type == 'chat') {
+
+                DeviceEventEmitter.emit('getChatMessage');
+                this._getAllUnRead();
+            }else if(JSON.parse(message.extras).type == 'apply') {
+                this._lastApplyTime();
+            }
+        })
 
     }
 
     componentWillUnmount() {
         this.listener1.remove();
         this.listener2.remove();
-        JPushModule.removeReceiveCustomMsgListener(receiveCustomMsgEvent);
-        JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
 
+        JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
     }
 
     _lastApplyTime() {
