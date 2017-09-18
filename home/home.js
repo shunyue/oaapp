@@ -426,38 +426,9 @@ export default class Home extends Component {
                     )
                 }else{
 
-
-                    for(var i in this.state.process_list){
-                         process_info.push(
-                             <View key={i}>
-                                 <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.process_list[i]['example_id'],this.state.process_list[i]['msg'])}>
-                                     <View>
-                                         <View>
-
-                                             <View >
-                                                 <Image style={{width:40,height:40}} source={{uri:this.state.process_list[i]['icon']}}/>
-                                                 <View style={{marginLeft:10}}>
-                                                     <Text>{this.state.process_list[i]['whosthing']}</Text>
-                                                     <Text
-                                                         style={this.state.process_list[i]['msg'] == '等待我审批'?{color: '#e4393c'}: null}>{this.state.process_list[i]['msg']}</Text>
-                                                 </View>
-                                             </View>
-                                             <View style={{paddingRight:15}}>
-                                                 <Text style={{fontSize:10,paddingTop:10}}>{this.state.process_list[i]['time']}</Text>
-                                             </View>
-                                         </View>
-                                     </View>
-                                 </TouchableHighlight>
-                             </View>
-                         )
-                    }
-
-
-
                 }
 
             }
-
 
         //待审批
         return (
@@ -841,7 +812,14 @@ export default class Home extends Component {
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
                         </View>
-                        {process_info}
+                        <View style={[styles.threeTwoCenter]}>
+                            <View style={[styles.row]}>
+                                <Image source={require('../imgs/gcon16.png')}/>
+                                <Text style={[styles.threeText]}>
+                                    您没有待审批的内容
+                                </Text>
+                            </View>
+                        </View>
                     </View>
                 </ScrollView>
 
