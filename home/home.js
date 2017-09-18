@@ -220,7 +220,6 @@ export default class Home extends Component {
     }
     //日程详情页面
     dailyDetail(id) {
-        //this.props.navigation.navigate('DailyDetail',{user_id:this.props.user_id,company_id:this.props.company_id,dailyInfo:daily});
         this.props.navigation.navigate('DailyDetail',{
             user_id:this.props.user_id,
             company_id:this.props.company_id,
