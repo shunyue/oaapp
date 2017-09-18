@@ -98,7 +98,13 @@ export default class DailyDetail extends Component {
     }
     //跳转到日程执行人页面
     goDetailExecutor(creater,executor){
-        this.props.navigation.navigate('DailyExecutor',{creater:creater,executor:executor});
+        let {params}=this.props.navigation.state;
+        this.props.navigation.navigate('DailyExecutor',{
+            user_id:params.user_id,
+            company_id:params.company_id,
+            creater:creater,
+            executor:executor
+        });
     }
     //跳转到日程客户页面
     goDetailCustomer(customer){
@@ -239,24 +245,6 @@ export default class DailyDetail extends Component {
             imgArr: op
         })
     }
-    //openFloder() {
-    //    this.setState({
-    //        emoji: false
-    //    })
-    //    //alert('这是打开文件夹')
-    //    ImagePicker.openPicker({
-    //        width: 300,
-    //        height: 400,
-    //        cropping: true
-    //    }).then(image => {
-    //        console.log(image.path);
-    //        //alert(this.state.id)
-    //        this.state.imgArr.push({id: this.state.id, visible: null, path: image.path});
-    //        this.setState({//放到这里只是为了渲染页面
-    //            id: this.state.id + 1
-    //        })
-    //    });
-    //}
     openFloder(){
         //选择图片
         var options = {
@@ -411,21 +399,6 @@ export default class DailyDetail extends Component {
                     </TouchableHighlight>
                 )
             }
-        }
-    }
-    show_edit(){
-        let  {params}=this.props.navigation.state;
-        //是否显示编辑
-        var daily_type=this.state.dailyInfo.daily_type;
-        var create_id=this.state.dailyInfo.create_id;
-        var user_id= this.state.user_id;
-        var start_time=this.state.dailyInfo.start_time;
-        var moment=this.state.datetime;
-        if(moment<start_time && user_id==create_id){
-            return(<TouchableOpacity style={[com.pdtb10,]}
-                                     onPress={() =>{ this.setState({show:!this.state.show});this.goPage_Edit()}}>
-                <Text style={{color:'#333'}}>编辑</Text>
-            </TouchableOpacity>)
         }
     }
     render() {
@@ -675,7 +648,7 @@ export default class DailyDetail extends Component {
             <View style={[com.flex,com.bgcf5]}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*nav*/}
-                <View style={[com.row,com.aic,com.jcsb,com.bbwc,com.pdt10l5,com.bgcfff]}>
+                <View style={[com.row,com.aic,com.jcsb,com.bbwc,com.pdt10l15,com.bgcfff]}>
                     <TouchableHighlight
                         onPress={()=>this.back()}
                         underlayColor="#ffffff"
@@ -687,9 +660,11 @@ export default class DailyDetail extends Component {
                         </View>
                     </TouchableHighlight>
                     <Text>{this.state.dailyInfo.typeName}详情</Text>
-                    <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
-                        <Image source={require('../imgs/slh.png')}/>
-                    </TouchableOpacity>
+                    {this.state.datetime <this.state.dailyInfo.start_time && params.user_id==this.state.dailyInfo.create_id?
+                        <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
+                            <Image source={require('../imgs/slh.png')}/>
+                        </TouchableOpacity>:<View></View>
+                    }
                 </View>
                 <ScrollView style={[com.flex,com.bgcf5]}>
                     <View style={[com.row,com.bgcfff,com.jcsb,com.pdt5l15,com.btweb,com.mgt5]}>
@@ -859,7 +834,6 @@ export default class DailyDetail extends Component {
                                      onPress={() => { this.setState({show:!this.state.show});this.goPage_Edit()}}>
                                      <Text style={{color:'#333'}}>编辑</Text>
                                      </TouchableOpacity>
-                                    {this.show_edit()}
                                     {/*<TouchableOpacity style={[com.pdtb10,]}
                                                       onPress={() => { this.setState({show:!this.state.show});this.goPage_Share()}}>
                                         <Text style={{color:'#333'}}>分享</Text>

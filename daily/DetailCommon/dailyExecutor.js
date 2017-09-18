@@ -42,10 +42,13 @@ export default class DailyExecutor extends Component {
     }
     //跳转到人员详情页面
     goPagUserDetail(id,company_id){
-        alert(company_id);
-        //this.props.navigation.navigate('UserDetail',{user_id:id,company_id:company_id})
+        let {params} = this.props.navigation.state;
+        this.props.navigation.navigate('UserMsg',{
+            accept_id:id,//要查看的下属员工ID
+            company_id:params.company_id,//公司的ID
+            user_id:params.user_id//当前登录者的ID
+        })
     }
-
     //搜索人员信息
     _searchExecutor(title,name=""){
         let {params} = this.props.navigation.state;
