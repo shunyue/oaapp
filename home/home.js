@@ -1,3 +1,6 @@
+/*
+* 首页主页面
+* */
 import React, { Component } from 'react';
 import { AppRegistry,
     ListView,
@@ -739,12 +742,12 @@ export default class Home extends Component {
                         </View>
                         <View style={styles.flexRow}>
                             <TouchableHighlight
-                                onPress={()=>this.mustreach()}
+                                onPress={()=>this.product()}
                                 underlayColor="#f5f5f5"
-                                >
+                            >
                                 <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/bd32.png')}/>
-                                    <Text>必达</Text>
+                                    <Image  source={require('../imgs/cp32.png')}/>
+                                    <Text>产品</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
@@ -778,46 +781,6 @@ export default class Home extends Component {
                                 </View>
                             </TouchableHighlight>
                         </View>
-                        <View style={styles.flexRow}>
-                            <TouchableHighlight
-
-                                onPress={()=>this.project()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/xm32.png')}/>
-                                    <Text>项目</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.product()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/cp32.png')}/>
-                                    <Text>产品</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.priceList()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image
-                                        source={require('../imgs/jgb32.png')}/>
-                                    <Text>价格表</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.priceList()}
-                                underlayColor="#f5f5f5">
-                                <View style={styles.flexRow_width}>
-                                    <Image
-                                        source={require('../imgs/jgb32.png')}/>
-                                    <Text>价格表</Text>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
                     </View>
 
 
@@ -847,23 +810,8 @@ export default class Home extends Component {
 
 
                     </View>
-                    <View style={[styles.threeDIVCON]}>
-                        {/*重点关注*/}
-                        {/*头部*/}
-                        <View style={[styles.row]}>
-                            <Text
-                                style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>重点关注</Text>
-                        </View>
-                        {/*内容*/}
-                        <View style={[styles.threeTwoCenter]}>
-                            <View style={[styles.row]}>
-                                <Image source={require('../imgs/gcon16.png')}/>
-                                <Text style={[styles.threeText]}>
-                                    您还没有关注客户的动态
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
+
+
                     <View style={[styles.threeDIVCON]}>
                         {/*待审批*/}
                         {/*头部*/}
@@ -884,8 +832,7 @@ export default class Home extends Component {
 
                 </ScrollView>
 
-            </
-                View >
+            </View >
 
         )
             ;
