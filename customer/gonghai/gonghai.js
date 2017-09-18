@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal'
 import Header from '../../common/header';
+import Loading from '../../common/loading';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 import config from '../../common/config';
@@ -34,6 +35,7 @@ export default class app extends Component {
             type: 1,
             classify: [],
             customerData: [],
+            visible: true
         };
     }
 
@@ -98,7 +100,8 @@ export default class app extends Component {
             if(result.status == 1) {
 
                 this.setState({
-                    customerData: result.data.customerData
+                    customerData: result.data.customerData,
+                    visible: false
                 })
             }
         }).catch((error)=>{
@@ -112,6 +115,9 @@ export default class app extends Component {
         this.props.navigation.navigate('GongHaiDetail',{customer:data,user_id: params.user_id,company_id: params.company_id});
     }
     render() {
+        if(this.state.visible) {
+            return <Loading/>
+        }
 
 
         var customerList = [];

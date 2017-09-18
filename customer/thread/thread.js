@@ -24,6 +24,7 @@ import Header from '../../common/header';
 import config from '../../common/config';
 import toast from '../../common/toast';
 import request from '../../common/request';
+import Loading from '../../common/loading';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 export default class app extends Component {
@@ -35,7 +36,8 @@ export default class app extends Component {
             type: 1,
             messageVisible:'名称排序',
             isModalVisible: false,//下拉模型
-            classify: []
+            classify: [],
+            visible: true
         };
     }
 
@@ -73,7 +75,8 @@ export default class app extends Component {
             if (result.status == 1) {
 
                 this.setState({
-                    threadData: result.data
+                    threadData: result.data,
+                    visible: false
                 })
             }
         }).catch((error) => {
@@ -105,6 +108,9 @@ export default class app extends Component {
 
 
     render() {
+        if(this.state.visible) {
+            return <Loading/>
+        }
 
         var threadList = [];
         var threadData = this.state.threadData;
