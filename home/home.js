@@ -73,7 +73,6 @@ export default class Home extends Component {
                 })
                 this.getNet();//最新业绩
                 this.getNet1();//业绩对比
-                this.getNet2();//目标达成
                 this.requestData();  //周飞飞  添加获取目标达成数据的方法
                 //获取日程
                 this.searchDaily(data.user_id,data.company_id);
@@ -197,9 +196,8 @@ export default class Home extends Component {
 
     }
 
-    getNet2(){
 
-    }
+
     /*查找我的今日日程*/
     searchDaily(user_id,company_id){
         let time=moment(new Date()).format('YYYY-MM-DD');
@@ -279,71 +277,41 @@ export default class Home extends Component {
     op() {
         this.props.navigation.navigate('Report',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //设置
     set() {
         this.props.navigation.navigate('Set',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
-    //商机
-    business() {
-        //this.props.navigation.navigate('Business'),
-        this.props.navigation.navigate('BusinessTest',{user_id:this.state.user_id,company_id:this.state.company_id})
-    }
-
-    //理单
-    sheet() {
-        this.props.navigation.navigate('Sheet',{user_id:this.state.user_id,company_id:this.state.company_id})
-    }
-
     //合同
     contract() {
         this.props.navigation.navigate('Contract',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //订单
     order() {
         this.props.navigation.navigate('Order',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //目标
     aim() {
         this.props.navigation.navigate('Aim',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //审批
     approval() {
        this.props.navigation.navigate('Approval',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //日志
     log() {
         this.props.navigation.navigate('Log',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
-    //必达
-    mustreach() {
-        this.props.navigation.navigate('Mustreach',{user_id:this.state.user_id,company_id:this.state.company_id})
-    }
-
     //公告
     notice() {
         this.props.navigation.navigate('Notice',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //考勤
     attendance() {
         this.props.navigation.navigate('Attendance',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
-
     //线路拜访
     lineVisit() {
         this.props.navigation.navigate('LineVisit',{user_id:this.state.user_id,company_id:this.state.company_id})
-    }
-
-    //项目
-    project() {
-        this.props.navigation.navigate('Project',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
     //产品
@@ -351,21 +319,14 @@ export default class Home extends Component {
         this.props.navigation.navigate('Product',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
 
-    //价格表
-    priceList() {
-        this.props.navigation.navigate('PriceList',{user_id:this.state.user_id,company_id:this.state.company_id})
-    }
-
    //最新业绩展开
     newer_performance(){
         this.props.navigation.navigate('newer_performance',{user_id:this.state.user_id,company_id:this.state.company_id})
-
     }
 
     //业绩对比展开
     performance_constrast(){
         this.props.navigation.navigate('performance_constrast',{user_id:this.state.user_id,company_id:this.state.company_id})
-
     }
 
 
