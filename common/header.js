@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 40,
         width: 80,
-        paddingLeft:10
+        paddingLeft:12
     },
     navText: {
         fontWeight: 'normal',
