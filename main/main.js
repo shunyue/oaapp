@@ -73,7 +73,7 @@ import SearchThread from '../customer/thread/searchThread'
 import Thread from '../customer/thread/thread';
 import ThreadDetail from '../customer/thread/threadDetail'
 import threadClassify from '../customer/thread/threadClassify';
-
+import FollowContent from '../customer/thread/followContent';
 
 
 //沟通
@@ -452,6 +452,7 @@ const app = StackNavigator({
     FollowRecord:{screen:FollowRecord,navigationOptions:{header:null}},
     threadClassify: {screen:threadClassify,navigationOptions:{header:null}},
     GongHaiDetail: {screen: GongHaiDetail,navigationOptions:{header:null}},
+    FollowContent: {screen: FollowContent,navigationOptions:{header: null}},
 
     //沟通
     Organization:{screen:Organization,navigationOptions: {header: null}},

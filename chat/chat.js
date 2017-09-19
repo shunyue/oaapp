@@ -124,7 +124,7 @@ export default class Chat extends Component {
         var _that = this;
         AsyncStorage.getAllKeys(function(err,keys){
             let list = [];
-            for (var i in keys) {
+            for (var i=0;i<keys.length;i++) {
                 if(keys[i]!= 'user' ){
                     list.push(
                         keys[i]
@@ -138,10 +138,16 @@ export default class Chat extends Component {
                 for(var i in result){
                     arr.push(JSON.parse(result[i][1]));
                 }
-                _that.setState({
-                    historyChat: null
-                });
+                if(arr.length) {
+                    _that.setState({
+                        historyChat: arr
+                    });
+                }else {
+                    _that.setState({
+                        historyChat: null
+                    });
 
+                }
             });
         })
     }
@@ -161,7 +167,6 @@ export default class Chat extends Component {
             from_chat_id: this.state.chatId,
             to_user: this.state.user_id
         }).then((res) => {
-                            alert(JSON.stringify(res.data))
             this._getChatRecord();
         }).catch((error)=> {
             toast.bottom('网络连接失败，请检查网络后重试');
@@ -440,7 +445,7 @@ export default class Chat extends Component {
                     </View>
                     <View  tabLabel='消息'>
                         <ScrollView>
-                            <TouchableHighlight underlayColor={'transparent'} onPress={()=>{navigate('ChatSearch')}}>
+                            <TouchableHighlight underlayColor={'transparent'} onPress={()=>{this.goPage_UserSearch()}}>
                                 <View style={[styles.search,styles.margin,styles.flex_row]}>
                                     <Image style={{width:15,height:15,marginRight:7}} source={require('../imgs/customer/search.png')}/>
                                     <Text>搜索</Text>
