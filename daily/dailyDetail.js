@@ -388,7 +388,7 @@ export default class DailyDetail extends Component {
                         onPress={()=>this.goDetailCustomer(customer)}
                         underlayColor="#fff"
                         >
-                        <View style={[com.row,com.jcsb,com.aic,com.pdt10l15,com.bbweb,com.bgcfff,]}>
+                        <View style={[com.row,com.jcsb,com.aic,com.pdt10l15,com.bbweb,com.bgcfff]}>
                             <Text>客户</Text>
                             <View style={[com.row,com.aic]}>
                                 <Text>{this.state.dailyInfo.customerName}</Text>

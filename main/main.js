@@ -153,11 +153,10 @@ import DailyCustomer from '../daily/DetailCommon/dailyCustomer';//日程-日程�
 import DailyExecutor from '../daily/DetailCommon/dailyExecutor';//日程-日程执行人详情页面
 import DailyReport from '../daily/dailyReport/dailyReport';//日程-日程报告页面
 import VisitPosition from '../daily/dailyReport/visitPosition';//日程-日程客户详情页面
-
+import MyDailyClassify from '../daily/dailyContent/mydailyclassify';//日程-筛选日程
 
 
 //彭黎明
-
 //首页-审批
 import Approval from '../home/process/approval';
 //审批页面-nav-筛选审批
@@ -515,7 +514,7 @@ const app = StackNavigator({
     DailyCustomer:{screen:DailyCustomer,navigationOptions: {header: null}},
     DailyExecutor:{screen:DailyExecutor,navigationOptions: {header: null}},
     DailyReport:{screen:DailyReport,navigationOptions: {header: null}},
-
+    MyDailyClassify:{screen:MyDailyClassify,navigationOptions: {header: null}},
 
 
 
