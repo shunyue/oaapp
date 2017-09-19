@@ -14,6 +14,7 @@ import { AppRegistry,
     AsyncStorage,
     Dimensions,
     Platform,
+    DeviceEventEmitter
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -66,6 +67,14 @@ export default class Home extends Component {
     }
     componentDidMount() {
         this.syncImmediate();
+
+        this.subscription = DeviceEventEmitter.addListener('com_user_id',(value) => {
+           if(value){
+               this.searchDaily(value['user_id'],value['company_id']); //获取日程
+               this.daishenpi(value['user_id']);//待审批
+           }
+        })
+
         AsyncStorage.getItem('user')
             .then((res) => {
                 var data = JSON.parse(res);
