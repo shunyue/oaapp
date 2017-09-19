@@ -27,7 +27,7 @@ export default class Chat extends Component {
                     </TouchableOpacity>
         }else if(this.props.rightText) {
             return <TouchableOpacity {...this.props}>
-                        <View style={styles.navContent}>
+                        <View style={[styles.navContent,{justifyContent:'flex-end',paddingLeft:0,paddingRight:15}]}>
                             <Text style={styles.navText}>{this.props.rightText}</Text>
                         </View>
                     </TouchableOpacity>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 40,
         width: 80,
-        paddingLeft:10
+        paddingLeft:12
     },
     navText: {
         fontWeight: 'normal',

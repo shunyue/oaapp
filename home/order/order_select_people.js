@@ -316,8 +316,8 @@ const styles = StyleSheet.create({
     },
 
     btnStyle: {
-        width: 70,
-        height:30,
+        width: 60,
+        height: 24,
         backgroundColor: '#e4393c',
         alignItems: 'center',
         justifyContent:'center',

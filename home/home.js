@@ -642,7 +642,7 @@ export default class Home extends Component {
                                                     company_id:this.state.company_id})}}>
                                 <View style={[styles.slide,styles.slideBj]}>
                                     {/*块级导航*/}
-                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
+                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center',marginBottom:20}]}>
                                         <View style={{width:80}}>
                                             <View style={{width:55,paddingTop:5,paddingBottom:5,alignItems:'center', backgroundColor: '#FF7C7C',}}>
                                                 <Text style={[styles.bestMark2]}>目标达成</Text>
@@ -686,25 +686,6 @@ export default class Home extends Component {
                         <View style={{backgroundColor:'#fff',marginTop:10,paddingTop:10,paddingBottom:10}}>
                             <View style={styles.flexRow}>
                                 <TouchableHighlight
-                                    onPress={()=>this.business()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/sj32.png')}/>
-                                        <Text>商机</Text>
-                                    </View>
-
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={()=>this.sheet()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/ld32.png')}/>
-                                        <Text>理单</Text>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
                                     onPress={()=>this.contract()}
                                     underlayColor="#f5f5f5"
                                 >
@@ -720,6 +701,15 @@ export default class Home extends Component {
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/dd32.png')}/>
                                         <Text>订单</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={()=>this.approval()}
+                                    underlayColor="#f5f5f5"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
+                                        <Text>审批</Text>
                                     </View>
                                 </TouchableHighlight>
                             </View>
@@ -741,15 +731,6 @@ export default class Home extends Component {
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>
                                         <Text>目标</Text>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={()=>this.approval()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
-                                        <Text>审批</Text>
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight
@@ -791,16 +772,6 @@ export default class Home extends Component {
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
                                         <Text>考勤</Text>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-
-                                    onPress={()=>this.lineVisit()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/xlbf32.png')}/>
-                                        <Text>线路拜访</Text>
                                     </View>
                                 </TouchableHighlight>
                             </View>
@@ -1044,7 +1015,8 @@ const styles = StyleSheet.create({
     flexRow:{
         flexDirection:'row',
         height:70,
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'space-around'
     },
     flexRow_Img:{
         width:30,
