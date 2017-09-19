@@ -169,7 +169,7 @@ export default class approve_detail extends Component {
     }
     //转交
     pass_on_to(){
-        this.props.navigation.navigate('pass_on_to',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id,example_id: this.props.navigation.state.params.example_id})
+        this.props.navigation.navigate('pass_on_to',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id,example_id: this.props.navigation.state.params.example_id,approve_type:2})
     }
 
 

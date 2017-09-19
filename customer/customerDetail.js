@@ -201,8 +201,10 @@ export default class app extends Component {
         }
     }
     _dailyDetail(id) {
-
         this.props.navigation.navigate('DailyDetail',{user_id: this.state.user_id,company_id: this.state.company_id,daily_id: id})
+    }
+    _followContent(thread_name,user_name,datetime,description) {
+        this.props.navigation.navigate('FollowContent',{thread_name:thread_name,user_name: user_name,datetime: datetime,description: description})
     }
     //获取联系人、跟进人、工作记录、日程计划等数据
     _loadData(type) {
@@ -358,12 +360,13 @@ export default class app extends Component {
         }
         //工作记录
         var dailyData = this.state.dailyData;
+        // alert(JSON.stringify(dailyData))
         var dailyList = [];
         for(var i in dailyData) {
             if(dailyData[i].status == 1 || dailyData[i].daily_type == 5) {
 
                 dailyList.push(
-                    <TouchableHighlight underlayColor={'#eee'} style={{marginTop:10}} onPress={this._dailyDetail.bind(this, dailyData[i].id)} key={i}>
+                    <TouchableHighlight underlayColor={'#eee'} style={{marginTop:10}} onPress={ dailyData[i].daily_type == 5? this._followContent.bind(this,dailyData[i].title,dailyData[i].executor_name,dailyData[i].start_time,dailyData[i].description):this._dailyDetail.bind(this,dailyData[i].id,dailyData[i].daily_type)} key={i}>
                         <View style={[styles.place,styles.borderTop,styles.borderBottom,{backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
                             <View style={[styles.place2,{height:25}]}>
                                 <Text style={{fontSize:14}}>{dailyData[i].title?dailyData[i].title: dailyData[i].customer_name}</Text>
@@ -392,7 +395,7 @@ export default class app extends Component {
             var plant = [];
             for( var j in dailyPlant[i]){
                 plant.push(
-                    <TouchableHighlight underlayColor={'#e5e5e5'} onPress={this._dailyDetail.bind(this, dailyPlant[i][j].daily_type,dailyPlant[i][j].title?dailyPlant[i][j].title: dailyPlant[i][j].customer_name,dailyPlant[i][j].customer_name,dailyPlant[i][j].executor_name, dailyPlant[i][j].position, dailyPlant[i][j].start_time)} key={j}>
+                    <TouchableHighlight underlayColor={'#e5e5e5'}  onPress={this._dailyDetail.bind(this, dailyPlant[i][j].id,null)} key={j}>
                         <View style={[styles.place2,styles.borderBottom,{height:58,paddingLeft:15,backgroundColor:'#fff',paddingRight:15,}]}>
                             <View style={[styles.place2]}>
                                 <Text style={{fontSize:14}}>{dailyPlant[i][j].time}</Text>

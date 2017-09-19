@@ -321,11 +321,12 @@ const styles = StyleSheet.create({
     },
 
     btnStyle: {
-        width: 70,
-        padding: 2,
+        width: 60,
+        height: 24,
         backgroundColor: '#e4393c',
         alignItems: 'center',
-        borderRadius: 2
+        justifyContent:'center',
+        borderRadius: 3
     },
     btnText: {
         color: '#fff'

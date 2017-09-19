@@ -345,12 +345,12 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     btnStyle: {
-        width: 70,
-        padding: 2,
+        width: 60,
+        height: 24,
         backgroundColor: '#e4393c',
         alignItems: 'center',
-        borderRadius: 2,
-        justifyContent: 'flex-end',
+        justifyContent:'center',
+        borderRadius: 3
     },
     btnText: {
         color: '#fff'

@@ -849,9 +849,7 @@ export default class app extends Component {
                             </View>
                         </TouchableHighlight>
                         <Text style={{fontSize:17,color:'#fff'}}>{state.params.title}</Text>
-                        <TouchableHighlight underlayColor={'transparent'} style={[styles.goRight,styles.go]} onPress={()=>{navigate('ChatMessageSet',{title:state.params.title})}}>
-                            <Image  style={[{width:24,height:24, tintColor:'#fff'}]}source={require('../imgs/chat/set.png')}/>
-                        </TouchableHighlight>
+                      
                     </View>
                     <ScrollableTabView
                         initialPage = {0}

@@ -23,7 +23,7 @@ import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
 import CheckBox from 'react-native-check-box';
-
+import Header from '../common/header';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 
@@ -199,15 +199,9 @@ export default class AttendanceOperationAdd extends Component {
 
         return(
             <View style={[styles.container]}>
-                <View style={styles.header}>
-                    <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <View style={{ flexDirection :'row',alignItems:'center',justifyContent:'center'}}>
-                            <Image  style={styles.back_icon} source={require('../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={styles.formHeader}>选择白名单</Text>
-                </View>
+                <Header navigation = {this.props.navigation}
+                        title = "选择白名单"
+                        onPress={()=>this.OpBack()}/>
                 <View style={styles.search_bj}>
                     <View style={styles.search_border}>
                         <Image style={styles.subNav_img} source={require('../imgs/customer/search.png')}/>
@@ -249,41 +243,6 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: '#eee',
-    },
-    header: {
-        height: 40,
-        flexDirection :'row',
-        alignItems:'center',
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor:'#bbb',
-        justifyContent:'center',
-
-    },
-    go:{
-        position:'absolute',
-        top:8
-    },
-    goback:{
-        left:15,
-        flexDirection :'row',
-    },
-    goRight:{
-        right:15
-    },
-    back_icon:{
-        width:10,
-        height:17,
-        marginTop: 1
-    },
-    back_text:{
-        color:'#e15151',
-        fontSize: 16,
-        marginLeft:6
-    },
-    formHeader:{
-        fontSize:16,
-        color:'#333'
     },
     search_bj:{
         backgroundColor:'#ddd',
@@ -371,11 +330,12 @@ const styles = StyleSheet.create({
     },
 
     btnStyle: {
-        width: 70,
-        padding: 2,
+        width: 60,
+        height: 24,
         backgroundColor: '#e4393c',
         alignItems: 'center',
-        borderRadius: 2
+        justifyContent:'center',
+        borderRadius: 3
     },
     btnText: {
         color: '#fff'

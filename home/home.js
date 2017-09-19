@@ -14,12 +14,14 @@ import { AppRegistry,
     AsyncStorage,
     Dimensions,
     Platform,
+    DeviceEventEmitter
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
 import PieChart from 'react-native-pie-chart';
 const horizontalMargin = 15;
 const sliderWidth = Dimensions.get('window').width;
+const Height = Dimensions.get('window').height;
 const slideWidth = sliderWidth*0.85;
 const itemWidth = slideWidth;
 const itemHeight = 170;
@@ -65,6 +67,13 @@ export default class Home extends Component {
     }
     componentDidMount() {
         this.syncImmediate();
+
+        this.subscription = DeviceEventEmitter.addListener('com_user_id',(value) => {
+           if(value){
+               this.daishenpi(value['user_id']);//待审批
+           }
+        })
+
         AsyncStorage.getItem('user')
             .then((res) => {
                 var data = JSON.parse(res);
@@ -72,9 +81,9 @@ export default class Home extends Component {
                     user_id: data.user_id,
                     company_id: data.company_id,
                 })
-                this.getNet();//最新业绩
-                this.getNet1();//业绩对比
-                this.requestData();//周飞飞  添加获取目标达成数据的方法
+                this.getNet(data.user_id,data.company_id);//最新业绩
+                this.getNet1(data.user_id,data.company_id);//业绩对比
+                this.requestData(data.company_id);//周飞飞  添加获取目标达成数据的方法
                 this.searchDaily(data.user_id,data.company_id); //获取日程
                 this.daishenpi(data.user_id);//待审批
             })
@@ -82,10 +91,10 @@ export default class Home extends Component {
     }
 //获取目标达成中的数据
     //周飞飞
-    requestData(){
+    requestData(e){
         var url=config.api.base + config.api.achievement;
         request.post(url,{
-            company_id:this.state.company_id,
+            company_id:e,
         }).then((responseJson) => {
             this.setState({
                 yearMonth:responseJson.data.yearMonth,
@@ -142,11 +151,11 @@ export default class Home extends Component {
 
 
     //最新业绩
-    getNet(){
+    getNet(e,g){
         var url = config.api.base + config.api.newer_performance;
         request.post(url,{
-            company_id: this.state.company_id,//公司id
-            user_id:this.state.user_id,//登录者id
+            company_id: g,//公司id
+            user_id:e,//登录者id
         }).then((responseText) => {
            // alert(JSON.stringify (responseText))
             if(responseText.sing==1){
@@ -171,11 +180,12 @@ export default class Home extends Component {
 
     }
 
-    getNet1(){
+    //业绩对比
+    getNet1(e,g){
         var url = config.api.base + config.api.performance_contrast;
         request.post(url,{
-            company_id: this.state.company_id,//公司id
-            user_id:this.state.user_id,//登录者id
+            company_id: g,//公司id
+            user_id:e,//登录者id
         }).then((responseText) => {
             //alert(JSON.stringify (responseText))
             if(responseText.sing==1){
@@ -260,8 +270,31 @@ export default class Home extends Component {
              toast.bottom('网络连接失败，请检查网络后重试');
          })
      }
-
     //获取待审批的信息
+
+
+    //审批详情
+    approve_detail(e){
+        var url = config.api.base + config.api.judge_approve_type;
+        request.post(url,{
+            example_id:e,
+        }).then((responseText) => {
+            //表单
+            if(responseText==1){
+                this.props.navigation.navigate('form_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
+                //合同
+            }else if(responseText==2){
+                this.props.navigation.navigate('contract_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
+                //合同回款
+            }else if(responseText==3){
+                this.props.navigation.navigate('return_money_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
+            }
+        })
+    }
+
+    //审批详情
+
+
 
     on_press(inder){
         if(inder==0){
@@ -367,7 +400,6 @@ export default class Home extends Component {
                 dailylist.push(
                     <View style={[]} key={i}>
                         <TouchableHighlight
-                            style={[]}
                             onPress={
                                 this.dailyDetail.bind(this,daily[i].id)
                             }
@@ -386,7 +418,7 @@ export default class Home extends Component {
                                             <Text style={[com.cb4]}>{daily[i].executorName}</Text>
                                         </View>
                                     </View>
-                                    <View style={[]}>
+                                    <View>
                                         <Text style={[com.c62]}>{this.getStatusName(daily[i].status,daily[i].start_time)}</Text>
                                     </View>
                                 </View>
@@ -411,26 +443,46 @@ export default class Home extends Component {
         //今日日程
 
         //待审批
-        //    if(this.state.process_list!=undefined){
-        //         var process_info=[];
-        //        if(this.state.process_list.length==0){
-        //            process_info.push(
-        //                <View style={[styles.threeTwoCenter]}>
-        //                    <View style={[styles.row]}>
-        //                        <Image source={require('../imgs/gcon16.png')}/>
-        //                        <Text style={[styles.threeText]}>
-        //                            您没有待审批的内容
-        //                        </Text>
-        //                    </View>
-        //                </View>
-        //            )
-        //        }else{
-        //
-        //        }
-        //
-        //    }
+            if(this.state.process_list!=undefined){
+                 var process_info=[];
+                if(this.state.process_list.length==0){
+                    process_info.push(
+                        <View style={[styles.threeTwoCenter]}>
+                            <View style={[styles.row]}>
+                                <Image source={require('../imgs/gcon16.png')}/>
+                                <Text style={[styles.threeText]}>
+                                    您没有待审批的内容
+                                </Text>
+                            </View>
+                        </View>
+                    )
+                }else{
+                    for(var i in this.state.process_list){
+                        process_info.push(
+                            <View key={i}>
 
+                                <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.process_list[i]['example_id'])}>
+                                <View style={[styles.rowCom1,{justifyContent:'space-between'}]}>
+                                    <View style={{ flexDirection: 'row',alignItems:'center'}}>
+                                        <Image style={styles.flexRow_Img} source={{uri:this.state.process_list[i]['icon']}}/>
+                                        <View style={{marginLeft:10}}>
+                                            <Text style={[{color: '#333',fontSize:12}]}>{this.state.process_list[i]['whosthing']}</Text>
+                                            <Text style={[{color: '#e4393c',fontSize:10}]}>等待我审批</Text>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <Text style={{fontSize:10}}>{this.state.process_list[i]['time']}</Text>
+                                    </View>
+                                </View>
+                                </TouchableHighlight>
+
+                            </View>
+                        )
+                    }
+                }
+            }
         //待审批
+
         return (
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
@@ -626,7 +678,7 @@ export default class Home extends Component {
                                                     company_id:this.state.company_id})}}>
                                 <View style={[styles.slide,styles.slideBj]}>
                                     {/*块级导航*/}
-                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
+                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center',marginBottom:15}]}>
                                         <View style={{width:80}}>
                                             <View style={{width:55,paddingTop:5,paddingBottom:5,alignItems:'center', backgroundColor: '#FF7C7C',}}>
                                                 <Text style={[styles.bestMark2]}>目标达成</Text>
@@ -637,7 +689,7 @@ export default class Home extends Component {
                                             <Text style={[styles.rowConCommonSize,{fontSize:12}]}>单位：万元</Text>
                                         </View>
                                     </View>
-                                    <View style={[{justifyContent:'center',alignItems:'center',marginTop:10},Platform.OS === 'ios'?{height: 100}:null]}>
+                                    <View style={[{justifyContent:'center',alignItems:'center'},Platform.OS === 'ios'?{height: 95}:null]}>
                                         <PieChart
                                             chart_wh={chart_wh}
                                             series={series}
@@ -647,13 +699,10 @@ export default class Home extends Component {
                                             coverFill={'#FFF'}
                                         />
 
-                                        <View style={{position:'absolute',top:61,transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
+                                        <View style={{position:'absolute',top:Platform.OS==='ios'?42:61,transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
                                             <Image style={{width:55,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
                                         </View>
-                                        <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
-                                            <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
-                                        </View>
-                                        <View style={{position:'absolute',width:140,top:75,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                                        <View style={{position:'absolute',width:140,top:Platform.OS==='ios'?50:65,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
                                             <Text>0 </Text>
                                             <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
                                             <Text>1</Text>
@@ -665,163 +714,123 @@ export default class Home extends Component {
 
                         </Carousel>
                     </View>
-
-                    {/*中间图标导航模块*/}
-                    <View style={{backgroundColor:'#fff',marginTop:10,paddingTop:10,paddingBottom:10}}>
-                        <View style={styles.flexRow}>
-                            <TouchableHighlight
-                                onPress={()=>this.business()}
-                                underlayColor="#f5f5f5"
+                    <View style={{  backgroundColor: '#EEEFF4'}}>
+                        {/*中间图标导航模块*/}
+                        <View style={{backgroundColor:'#fff',marginTop:10,paddingTop:10,paddingBottom:10}}>
+                            <View style={styles.flexRow}>
+                                <TouchableHighlight
+                                    onPress={()=>this.product()}
+                                     underlayColor="transparent"
                                 >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/sj32.png')}/>
-                                    <Text>商机</Text>
-                                </View>
-
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.sheet()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/ld32.png')}/>
-                                    <Text>理单</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.contract()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/ht32.png')}/>
-                                    <Text>合同</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.order()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/dd32.png')}/>
-                                    <Text>订单</Text>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={styles.flexRow}>
-                            <TouchableHighlight
-                                onPress={()=>this.op()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/bb32i.png')}/>
-                                    <Text>报表</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-
-                                onPress={()=>this.aim()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>
-                                    <Text>目标</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.approval()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
-                                    <Text>审批</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-
-                                onPress={()=>this.log()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/rz32.png')}/>
-                                    <Text>日志</Text>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={styles.flexRow}>
-                            <TouchableHighlight
-                                onPress={()=>this.product()}
-                                underlayColor="#f5f5f5"
-                            >
-                                <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/cp32.png')}/>
-                                    <Text>产品</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-
-                                onPress={()=>this.notice()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/gg32.png')}/>
-                                    <Text>公告</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-
-                                onPress={()=>this.attendance()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
-                                    <Text>考勤</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-
-                                onPress={()=>this.lineVisit()}
-                                underlayColor="#f5f5f5"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/xlbf32.png')}/>
-                                    <Text>线路拜访</Text>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-
-
-                    {/*今日日程*/}
-                    <View style={[styles.threeDIVCON]}>
-                        <View style={[styles.threeSpaceBetween,styles.row]}>
-                            <Text
-                                style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
-
-                        </View>
-                        <ScrollView>
-                        {dailylist}
-                        </ScrollView>
-                    </View>
-
-                    {/*待审批*/}
-                    <View style={[styles.threeDIVCON]}>
-                        <View style={[styles.row]}>
-                            <Text
-                                style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
-                        </View>
-                        <View>
-                            <View style={[styles.rowCom1,{justifyContent:'space-between'}]}>
-                                <View style={{ flexDirection: 'row',alignItems:'center'}}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/xlbf32.png')}/>
-                                    <View style={{marginLeft:10}}>
-                                        <Text style={[{color: '#333',fontSize:14}]}>删掉就GV山东矿机了</Text>
-                                        <Text style={[{color: '#e4393c',fontSize:12}]}>如果居然问卷</Text>
+                                    <View style={styles.flexRow_width}>
+                                        <Image  source={require('../imgs/cp32.png')}/>
+                                        <Text>产品</Text>
                                     </View>
-                                </View>
-                                <View>
-                                    <Text style={{fontSize:10}}>偶尔安排规划肉片</Text>
-                                </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={()=>this.order()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/dd32.png')}/>
+                                        <Text>订单</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={()=>this.approval()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
+                                        <Text>审批</Text>
+                                    </View>
+                                </TouchableHighlight>
                             </View>
+                            <View style={styles.flexRow}>
+                                <TouchableHighlight
+
+                                    onPress={()=>this.attendance()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
+                                        <Text>考勤</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+
+                                    onPress={()=>this.aim()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>
+                                        <Text>目标</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+
+                                    onPress={()=>this.log()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/rz32.png')}/>
+                                        <Text>日志</Text>
+                                    </View>
+                                </TouchableHighlight>
+                            </View>
+                            <View style={styles.flexRow}>
+                                <TouchableHighlight
+                                    onPress={()=>this.contract()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/ht32.png')}/>
+                                        <Text>合同</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+
+                                    onPress={()=>this.notice()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/gg32.png')}/>
+                                        <Text>公告</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={()=>this.op()}
+                                     underlayColor="transparent"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/bb32i.png')}/>
+                                        <Text>报表</Text>
+                                    </View>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                        {/*今日日程*/}
+                        <View style={[styles.threeDIVCON]}>
+                            <View style={[styles.threeSpaceBetween,styles.row]}>
+                                <Text
+                                    style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
+
+                            </View>
+                            <View style={{ borderTopWidth:1,borderColor:'#F1F2F3',}}>
+                                {dailylist}
+                            </View>
+
+                        </View>
+                        {/*待审批*/}
+                        <View style={[styles.threeDIVCON]}>
+                            <View style={[styles.row]}>
+                                <Text
+                                    style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
+                            </View>
+                            <View style={{ borderTopWidth:1,borderColor:'#F1F2F3',}}>
+                                {process_info}
+                            </View>
+
                         </View>
                     </View>
                 </ScrollView>
@@ -869,8 +878,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     childContent: {//子容器页面级
-        flex: 1,
-
+        height:Height-145,
         //justifyContent: 'space-between',
     },
 
@@ -966,7 +974,7 @@ const styles = StyleSheet.create({
     //公共部分
     //height,marginTop/bottom,bgcolor
     threeDIVCON: {
-        height: 100,
+        minHeight: 100,
         marginTop: 15,
         marginBottom: 5,
         backgroundColor: '#fff',
@@ -1002,7 +1010,6 @@ const styles = StyleSheet.create({
         paddingLeft:15,
         paddingRight:15,
         backgroundColor:'#fff',
-        borderTopWidth:1,
         borderBottomWidth:1,
         borderColor:'#F1F2F3',
         flexDirection: 'row',
@@ -1041,7 +1048,8 @@ const styles = StyleSheet.create({
     flexRow:{
         flexDirection:'row',
         height:70,
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'space-around'
     },
     flexRow_Img:{
         width:30,

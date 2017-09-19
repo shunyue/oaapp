@@ -59,14 +59,14 @@ export default class PositionInput extends Component {
                 <View style={[styles.childContent,{marginTop:5,borderColor: '#F0F0F0', borderWidth: 1,backgroundColor:'#fff'}]} >
                     {(params.canshu.position=='' || params.canshu.position==null)?
                         (<TextInput
-                            style={{height: 40,marginLeft:10 ,backgroundColor:'#fff'}}
+                            style={{height: 40,marginLeft:15 ,backgroundColor:'#fff'}}
                             onChangeText={(posiiton) => this.setState({posiiton})}
                             placeholder='职位'
                             underlineColorAndroid="transparent"
                             value={this.state.posiiton}
                             autoFocus={true}
                             />):(<TextInput
-                        style={{height: 40, marginLeft:10 ,backgroundColor:'#fff'}}
+                        style={{height: 40, marginLeft:15 ,backgroundColor:'#fff'}}
                         onChangeText={(posiiton) => this.setState({posiiton})}
                         placeholder={params.canshu.position}
                         underlineColorAndroid="transparent"

@@ -309,10 +309,11 @@ export default class app extends Component {
                                 <View style={styles.model}>
                                     <Text style={styles.model_border}></Text>
                                 </View>
+                                <View  style={styles.icon_san}>
+                                    <Image style={styles.icon_2} source={require('../imgs/customer/background_san.png')}/>
+                                </View>
                                 <View style={styles.model_up}>
-                                    <View  style={styles.icon_san}>
-                                        <Image style={styles.icon_2} source={require('../imgs/customer/background_san.png')}/>
-                                    </View>
+
                                     <TouchableOpacity style={styles.model_up_in} onPress={() => {this.setState({modalVisible: !this.state.modalVisible});this.goPage_add_xiansuo()}}>
                                         <Image style={styles.icon_} source={require('../imgs/customer/add_xiansuo.png')}/>
                                         <Text style={styles.text_color}> 新增线索</Text>
@@ -340,7 +341,7 @@ export default class app extends Component {
                         <TouchableWithoutFeedback onPress={() => {this.setState({isModalVisible: !this.state.isModalVisible})}}>
                             <View style={{flex:1}}>
                                 <View style={{width:screenW,height:Platform.OS==='ios'?(screenH-269):(screenH-274),opacity:0.4,backgroundColor:'#000',top:Platform.OS==='ios'?210:190,position:'absolute'}}></View>
-                                <View style={[{backgroundColor:'#fff',height:120, position: 'absolute',top:Platform.OS==='ios'?207:170}]}>
+                                <View style={[{backgroundColor:'#fff',height:120, position: 'absolute',top:Platform.OS==='ios'?190:170}]}>
                                     <TouchableHighlight underlayColor={'#eee'} style={styles.xinxiiala} onPress={()=>{this.selectMessage(1)}}>
                                         <Text>名称排序</Text>
                                     </TouchableHighlight>
@@ -446,7 +447,7 @@ const styles = StyleSheet.create({
         height:90,
         position: 'absolute',
         right:3,
-        top:48,
+        top:Platform.OS==='ios'?68:48,
         backgroundColor:'#000',
         opacity:0.6,
         borderRadius:6
@@ -461,11 +462,11 @@ const styles = StyleSheet.create({
         height:90,
         position: 'absolute',
         right:3,
-        top:48,
+        top:Platform.OS==='ios'?68:48,
         borderRadius:6
     },
     model_up_in:{
-        padding:10,
+        padding:12,
         flexDirection:'row',
         justifyContent:'center',
         borderRadius:6
@@ -490,8 +491,8 @@ const styles = StyleSheet.create({
         width:25,
         height:14,
         position: 'absolute',
-        right:4,
-        top:-11,
+        right:12,
+        top:Platform.OS==='ios'?57:37,
 
     },
     addCustomer:{

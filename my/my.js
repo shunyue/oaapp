@@ -1,3 +1,4 @@
+
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -137,31 +138,12 @@ export default class My extends Component {
                     <View style={[styles.border_top,styles.border_bottom,{backgroundColor:'#fff',marginTop:10,paddingTop:10,paddingBottom:10}]}>
                         <View style={[styles.flexRow,{ height:70}]}>
                             <TouchableHighlight
-                                onPress={()=>this.business()}
+                                onPress={()=>this.product()}
                                 underlayColor="transparent"
-                                >
+                            >
                                 <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/sj32.png')}/>
-                                    <Text>商机</Text>
-                                </View>
-
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.sheet()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/ld32.png')}/>
-                                    <Text>理单</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.contract()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/ht32.png')}/>
-                                    <Text>合同</Text>
+                                    <Image  source={require('../imgs/cp32.png')}/>
+                                    <Text>产品</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
@@ -173,15 +155,25 @@ export default class My extends Component {
                                     <Text>订单</Text>
                                 </View>
                             </TouchableHighlight>
+                            <TouchableHighlight
+                                onPress={()=>this.approval()}
+                                underlayColor="transparent"
+                            >
+                                <View style={styles.flexRow_width}>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
+                                    <Text>审批</Text>
+                                </View>
+                            </TouchableHighlight>
                         </View>
                         <View style={[styles.flexRow,{ height:70}]}>
                             <TouchableHighlight
-                                onPress={()=>this.op()}
+
+                                onPress={()=>this.attendance()}
                                 underlayColor="transparent"
-                                >
+                            >
                                 <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/bb32i.png')}/>
-                                    <Text>报表</Text>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
+                                    <Text>考勤</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
@@ -192,15 +184,6 @@ export default class My extends Component {
                                 <View style={styles.flexRow_width}>
                                     <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>
                                     <Text>目标</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.approval()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
-                                    <Text>审批</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
@@ -216,16 +199,15 @@ export default class My extends Component {
                         </View>
                         <View style={[styles.flexRow,{ height:70}]}>
                             <TouchableHighlight
-                                onPress={()=>this.mustreach()}
+                                onPress={()=>this.contract()}
                                 underlayColor="transparent"
-                                >
+                            >
                                 <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/bd32.png')}/>
-                                    <Text>必达</Text>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/ht32.png')}/>
+                                    <Text>合同</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
-
                                 onPress={()=>this.notice()}
                                 underlayColor="transparent"
                                 >
@@ -235,65 +217,15 @@ export default class My extends Component {
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight
+                                onPress={()=>this.op()}
+                                underlayColor="transparent"
+                            >
+                                <View style={styles.flexRow_width}>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/bb32i.png')}/>
+                                    <Text>报表</Text>
+                                </View>
+                            </TouchableHighlight>
 
-                                onPress={()=>this.attendance()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
-                                    <Text>考勤</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-
-                                onPress={()=>this.lineVisit()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image style={styles.flexRow_Img} source={require('../imgs/xlbf32.png')}/>
-                                    <Text>线路拜访</Text>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={[styles.flexRow,{ height:70}]}>
-                            <TouchableHighlight
-
-                                onPress={()=>this.project()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/xm32.png')}/>
-                                    <Text>项目</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.product()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/cp32.png')}/>
-                                    <Text>产品</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.priceList()}
-                                underlayColor="transparent"
-                                >
-                                <View style={styles.flexRow_width}>
-                                    <Image
-                                        source={require('../imgs/jgb32.png')}/>
-                                    <Text>价格表</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                onPress={()=>this.priceList()}
-                                underlayColor="transparent">
-                                <View style={styles.flexRow_width}>
-                                    <Image
-                                        source={require('../imgs/jgb32.png')}/>
-                                    <Text>价格表</Text>
-                                </View>
-                            </TouchableHighlight>
                         </View>
                     </View>
                     <View style={{marginTop:10,marginBottom:10}}>
@@ -416,6 +348,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         backgroundColor:'#fff',
+        justifyContent:'space-around'
     },
     flexRow_Img:{
         width:30,
@@ -440,3 +373,4 @@ const styles = StyleSheet.create({
         borderColor:'#e8e8e8'
     },
 });
+

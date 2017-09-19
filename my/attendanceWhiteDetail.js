@@ -218,7 +218,7 @@ export default class AttendanceWhiteDetail extends Component {
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor={'transparent'} onPress={()=>{ navigate('AttendanceOperationMinue',{ companyid:this.props.navigation.state.params.companyid});}}>
                         <View style={{flexDirection:'row'}}>
-                            <Image tintColor={'#e15151'} style={{width:20,height:20}} source={require('../imgs/customer/delete.png')}/>
+                            <Image style={{width:20,height:20,tintColor:'#e15151'}} source={require('../imgs/customer/delete.png')}/>
                             <Text style={{color:'#e15151',marginLeft:5}}>删除成员</Text>
                         </View>
                     </TouchableHighlight>
@@ -263,7 +263,6 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:6
     },
     formHeader:{
         fontSize:16,

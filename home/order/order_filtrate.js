@@ -22,7 +22,7 @@ import toast from '../../common/toast';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-
+import Header from '../../common/header';
 export default class app extends Component {
     OpBack() {
         this.props.navigation.goBack(null)
@@ -354,17 +354,9 @@ export default class app extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={{color:'#333',fontSize:16}}>筛选订单</Text>
-                </View>
-
-
-
+                <Header navigation = {this.props.navigation}
+                    title = {"筛选订单"}
+                    />
                 <TouchableHighlight underlayColor={'transparent'} onPress={()=>this.approve_type()}>
                 <View style={[styles.flexRow,styles.paddingLR,styles.borderBottom,{justifyContent:"space-between",height:40}]}>
                     <Text style={{color:'#333'}} >选择客户</Text>

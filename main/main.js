@@ -73,7 +73,7 @@ import SearchThread from '../customer/thread/searchThread'
 import Thread from '../customer/thread/thread';
 import ThreadDetail from '../customer/thread/threadDetail'
 import threadClassify from '../customer/thread/threadClassify';
-
+import FollowContent from '../customer/thread/followContent';
 
 
 //沟通
@@ -373,6 +373,7 @@ const MyApp = TabNavigator({
     tabBarPosition: 'bottom',
     backBehavior: 'none', // 按 back 键是否跳转到第一个 Tab， none 为不跳转
     swipeEnabled: false, // 禁止左右滑动
+    lazy: true, //是否根据需要懒惰呈现标签，而不是提前制作，意思是在app打开的时候将底部标签栏全部加载，默认false,推荐改成true哦。
     tabBarOptions: {
         pressOpacity: 1,
         activeTintColor: '#e91e63',
@@ -451,6 +452,7 @@ const app = StackNavigator({
     FollowRecord:{screen:FollowRecord,navigationOptions:{header:null}},
     threadClassify: {screen:threadClassify,navigationOptions:{header:null}},
     GongHaiDetail: {screen: GongHaiDetail,navigationOptions:{header:null}},
+    FollowContent: {screen: FollowContent,navigationOptions:{header: null}},
 
     //沟通
     Organization:{screen:Organization,navigationOptions: {header: null}},
