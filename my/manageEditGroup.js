@@ -792,11 +792,11 @@ const styles = StyleSheet.create({
         top:8,
     },
     goback:{
-        left:1,
+        left:15,
         flexDirection :'row',
     },
     goRight:{
-        right:20
+        right:15
     },
     back_icon:{
         width:10,
@@ -806,7 +806,6 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:3
     },
     formHeader:{
         fontSize:16,
