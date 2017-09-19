@@ -668,7 +668,7 @@ export default class Home extends Component {
                                                     company_id:this.state.company_id})}}>
                                 <View style={[styles.slide,styles.slideBj]}>
                                     {/*块级导航*/}
-                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center',marginBottom:20}]}>
+                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center',marginBottom:15}]}>
                                         <View style={{width:80}}>
                                             <View style={{width:55,paddingTop:5,paddingBottom:5,alignItems:'center', backgroundColor: '#FF7C7C',}}>
                                                 <Text style={[styles.bestMark2]}>目标达成</Text>
@@ -679,7 +679,7 @@ export default class Home extends Component {
                                             <Text style={[styles.rowConCommonSize,{fontSize:12}]}>单位：万元</Text>
                                         </View>
                                     </View>
-                                    <View style={[{justifyContent:'center',alignItems:'center',marginTop:10},Platform.OS === 'ios'?{height: 100}:null]}>
+                                    <View style={[{justifyContent:'center',alignItems:'center'},Platform.OS === 'ios'?{height: 95}:null]}>
                                         <PieChart
                                             chart_wh={chart_wh}
                                             series={series}
@@ -689,13 +689,10 @@ export default class Home extends Component {
                                             coverFill={'#FFF'}
                                         />
 
-                                        <View style={{position:'absolute',top:61,transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
+                                        <View style={{position:'absolute',top:Platform.OS==='ios'?42:61,transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
                                             <Image style={{width:55,height:10,tintColor:'#aaa'}}  source={require('../imgs/pointer.png')}/>
                                         </View>
-                                        <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
-                                            <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
-                                        </View>
-                                        <View style={{position:'absolute',width:140,top:75,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                                        <View style={{position:'absolute',width:140,top:Platform.OS==='ios'?50:65,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
                                             <Text>0 </Text>
                                             <Text style={{color:'#333',marginTop:15}}>{reach}</Text>
                                             <Text>1</Text>
