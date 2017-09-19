@@ -368,9 +368,11 @@ export default class order extends Component {
                 <View>
                     <Modal
                         backdropOpacity={0}
+                        transparent={true}
                         animationIn={'slideInDown'}
                         animationOut={'slideOutUp'}
-                        isVisible={this.state.isModalVisible}
+                        visible={this.state.isModalVisible}
+                        onRequestClose={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
                         >
                         <TouchableWithoutFeedback onPress={() => {this.setState({isModalVisible: !this.state.isModalVisible});this.setState({arrow:!this.state.arrow});}}>
                             <View style={{flex:1}}>
