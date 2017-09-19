@@ -477,7 +477,7 @@ export default class DailyReport extends Component {
             <View style={[com.flex,com.bgcf5]}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*nav*/}
-                <View style={[com.row,com.aic,com.jcsb,com.pdt5l15,com.bbwc,com.bgcfff]}>
+                <View style={[com.row,com.aic,com.jcsb,com.bbwc,com.pdt10l15,com.bgcfff]}>
                     <TouchableHighlight
                         onPress={()=>this.back()}
                         underlayColor="#ffffff"

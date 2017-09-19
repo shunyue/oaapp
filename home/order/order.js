@@ -17,8 +17,7 @@ import {
 } from 'react-native';
 
 import Modal from 'react-native-modal';
-
-
+import Header from '../../common/header';
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
@@ -83,7 +82,7 @@ export default class order extends Component {
         }else if(this.state.arrow==true){
             return(
                 <View style={{marginTop:3}}>
-                    <Image style={{width:12,height:12}} tintColor={'#e15151'} source={require('../../imgs/customer/arrowD.png')}/>
+                    <Image style={{width:12,height:12,tintColor:'#e15151'}} source={require('../../imgs/customer/arrowD.png')}/>
                 </View>
             )
         }
@@ -335,22 +334,10 @@ export default class order extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={[styles.fSelf,styles.selfPosCenter]}>{this.state.role_id==1?'我的订单':'全部订单'}</Text>
-
-                </View>
+                <Header navigation = {this.props.navigation}
+                    title = {this.state.role_id==1?'我的订单':'全部订单'}
+                    />
                 <View style={[styles.flex_row,styles.borderBottom,{backgroundColor:'#fff',justifyContent:'center'},styles.padding2]}>
                     <TouchableHighlight style={[styles.subNav_sub,{height:35}]} underlayColor={'transparent'} onPress={()=>{this.setState({arrow:!this.state.arrow});this.setState({isModalVisible: !this.state.isModalVisible});}}>
                         <View style={[styles.flex_row,{backgroundColor:'#fff',justifyContent:'center'},styles.padding2]}>
@@ -387,7 +374,7 @@ export default class order extends Component {
                         >
                         <TouchableWithoutFeedback onPress={() => {this.setState({isModalVisible: !this.state.isModalVisible});this.setState({arrow:!this.state.arrow});}}>
                             <View style={{flex:1}}>
-                                <View style={{width:screenW,height:(screenH-75),opacity:0.4,backgroundColor:'#000',top:76,position:'absolute'}}></View>
+                                <View style={{width:screenW,height:(screenH-75),opacity:0.4,backgroundColor:'#000',top:Platform.OS==='ios'?96:76,position:'absolute'}}></View>
                                 <View style={styles.modelUp}>
                                     <TouchableHighlight underlayColor={'#eee'} onPress={()=>{this.selectMessage(1);this.arrowSub(0) ;this.setState({arrow:!this.state.arrow});this.setState({isModalVisible: !this.state.isModalVisible});this.create_timeby_contract()}}>
                                         <View style={[styles.xinxiiala]}>
@@ -416,51 +403,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#eee'
     },
-    navltys: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: (Platform.OS === 'ios') ? 50 : 30,
-        alignItems: 'center',
-    },
-    navltyszt: {
-        fontSize: 14,
-        fontWeight: 'normal',
-        color: '#e4393c',
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor: '#F8F8F8'
-    },
-
-    nav: {//祖先级-头部导航
-        height: 40,
-        flexDirection: 'row',
-        //justifyContent: 'space-between',
-        //alignItems: 'flex-start',
-        backgroundColor: '#fff',
-        padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#bbb',
-    },
-    navltysImgPos: {//私有级-设置定位
-        position: 'absolute',
-        right: 6,
-    },
-    selfPosCenter: {//私有级-设置居中
-        width: screenW - 88,
-        textAlign: 'center'
-    },
-    sz: {//导航图标
-        width: 30,
-        height: 30
-    },
-    fSelf: {//导航字体相关
-        color: '#000',
-        //height: 30,
-        fontSize: 16
-    },
 //    主题内容
 //    公共行级元素
     common: {
@@ -477,7 +419,7 @@ const styles = StyleSheet.create({
         height:80,
         position: 'absolute',
         left:0,
-        top:76,
+        top:Platform.OS==='ios'?96:76,
         backgroundColor:'#fff'
     },
     xinxiiala:{
