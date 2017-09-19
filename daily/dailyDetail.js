@@ -675,7 +675,7 @@ export default class DailyDetail extends Component {
             <View style={[com.flex,com.bgcf5]}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*nav*/}
-                <View style={[com.row,com.aic,com.jcsb,com.bbwc,com.pdt10l5,com.bgcfff]}>
+                <View style={[com.row,com.aic,com.jcsb,com.bbwc,com.pdt10l5,com.bgcfff,{height: 40}]}>
                     <TouchableHighlight
                         onPress={()=>this.back()}
                         underlayColor="#ffffff"
