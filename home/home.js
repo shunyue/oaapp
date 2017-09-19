@@ -720,7 +720,7 @@ export default class Home extends Component {
                             <View style={styles.flexRow}>
                                 <TouchableHighlight
                                     onPress={()=>this.product()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image  source={require('../imgs/cp32.png')}/>
@@ -729,7 +729,7 @@ export default class Home extends Component {
                                 </TouchableHighlight>
                                 <TouchableHighlight
                                     onPress={()=>this.order()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/dd32.png')}/>
@@ -738,7 +738,7 @@ export default class Home extends Component {
                                 </TouchableHighlight>
                                 <TouchableHighlight
                                     onPress={()=>this.approval()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
@@ -750,7 +750,7 @@ export default class Home extends Component {
                                 <TouchableHighlight
 
                                     onPress={()=>this.attendance()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
@@ -760,7 +760,7 @@ export default class Home extends Component {
                                 <TouchableHighlight
 
                                     onPress={()=>this.aim()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>
@@ -770,7 +770,7 @@ export default class Home extends Component {
                                 <TouchableHighlight
 
                                     onPress={()=>this.log()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/rz32.png')}/>
@@ -781,7 +781,7 @@ export default class Home extends Component {
                             <View style={styles.flexRow}>
                                 <TouchableHighlight
                                     onPress={()=>this.contract()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/ht32.png')}/>
@@ -791,7 +791,7 @@ export default class Home extends Component {
                                 <TouchableHighlight
 
                                     onPress={()=>this.notice()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/gg32.png')}/>
@@ -800,7 +800,7 @@ export default class Home extends Component {
                                 </TouchableHighlight>
                                 <TouchableHighlight
                                     onPress={()=>this.op()}
-                                    underlayColor="#f5f5f5"
+                                     underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/bb32i.png')}/>
