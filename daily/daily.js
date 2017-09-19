@@ -482,7 +482,6 @@ export default class Daily extends Component {
                             </View>
 
                             <TouchableHighlight
-                                style={[]}
                                 onPress={
                                 this.goPage_chooseEmployee.bind(this)}
                                 >
@@ -641,11 +640,8 @@ export default class Daily extends Component {
         )}else{
             return(
                 <View>
-                <View
-                    style={[com.jcc,com.pd10,com.row]}
-                    underlayColor="#fff"
-                    >
-                     <Text style={[com.mgb5]}>我的日程</Text>
+                <View style={{backgroundColor:'#fff',height:40,alignItems:'center',justifyContent:'center'}}>
+                     <Text style={{color:'#333',fontSize:16}}>我的日程</Text>
                 </View>
                     {this._getContent(1)}
             </View>
@@ -690,18 +686,16 @@ export default class Daily extends Component {
                         <Image style={[com.wh24,com.tcr]} source={require('../imgs/bbr32.png')}/>
                     </View>
                 </TouchableHighlight>*/}
-
                 {/*自定义导航栏-定位右边*/}
-                <View style={[com.row,com.posr,{top:8,right:10}]}>
+                <View style={[com.row,com.posr,{ height:40,alignItems:'center',top:Platform.OS==='ios'?20:null,right:15}]}>
                     <TouchableHighlight
-                        style={[com.mgr15]}
                         onPress={()=>{this.setState({change:!this.state.change})}}
                         underlayColor="#f5f5f5"
                         >
-                        <View style={[]}>
+                        <View>
                             {this.state.change==true?(
                                 <Image style={[com.wh24,com.tcr]} source={require('../imgs/cirmenu32.png')}/>
-                            ):(<Image style={[com.wh24,com.tcr]} source={require('../imgs/cal.png')}/>)}
+                            ):(<Image style={[com.wh20,com.tcr]} source={require('../imgs/cal.png')}/>)}
                         </View>
                     </TouchableHighlight>
 
@@ -733,7 +727,7 @@ export default class Daily extends Component {
                         animationType={"fade"}
                         transparent={true}
                         visible={this.state.show}
-                        onRequestClose={() => {alert("Modal has been closed.")}}
+                        onRequestClose={() => {this.setState({show: !this.state.show})}}
                         >
                         <View style={[com.flex,com.pos,com.hh99,com.ww,{backgroundColor:'#fff'}]}>
                             <View style={[com.pdl50,com.pdt70]}>
@@ -818,9 +812,8 @@ export default class Daily extends Component {
 }
 const styles = StyleSheet.create({
     tabar_scroll: {
-        height: 48,
+        height: 40,
         justifyContent: 'center',
-        paddingBottom: 8,
         borderBottomWidth: 1,
         borderColor: '#ccc',
     },

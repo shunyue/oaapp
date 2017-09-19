@@ -493,7 +493,7 @@ export default class SubordinateDailySearch extends Component {
             )
         }
         return (
-            <View style={[]}>
+            <View>
                 <View style={[com.row,com.jcsa,com.pdt5l15,com.bbwc,com.aic,com.bgcfff]}>
                     {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                     <TouchableOpacity style={[com.pos]}
@@ -515,9 +515,10 @@ export default class SubordinateDailySearch extends Component {
                         <View>
                             <Modal
                                 backdropOpacity={0}
+                                transparent={true}
                                 animationIn={'slideInDown'}
                                 animationOut={'slideOutUp'}
-                                isVisible={this.state.isModalVisible}
+                                visible={this.state.isModalVisible}
                                 >
                                 <TouchableWithoutFeedback
                                     onPress={() => this.setState({isModalVisible: !this.state.isModalVisible})}>
