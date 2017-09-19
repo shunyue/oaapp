@@ -73,9 +73,9 @@ export default class Home extends Component {
                     user_id: data.user_id,
                     company_id: data.company_id,
                 })
-                this.getNet();//最新业绩
-                this.getNet1();//业绩对比
-                this.requestData();//周飞飞  添加获取目标达成数据的方法
+                this.getNet(data.user_id,data.company_id);//最新业绩
+                this.getNet1(data.user_id,data.company_id);//业绩对比
+                this.requestData(data.company_id);//周飞飞  添加获取目标达成数据的方法
                 this.searchDaily(data.user_id,data.company_id); //获取日程
                 this.daishenpi(data.user_id);//待审批
             })
@@ -83,10 +83,10 @@ export default class Home extends Component {
     }
 //获取目标达成中的数据
     //周飞飞
-    requestData(){
+    requestData(e){
         var url=config.api.base + config.api.achievement;
         request.post(url,{
-            company_id:this.state.company_id,
+            company_id:e,
         }).then((responseJson) => {
             this.setState({
                 yearMonth:responseJson.data.yearMonth,
@@ -143,11 +143,11 @@ export default class Home extends Component {
 
 
     //最新业绩
-    getNet(){
+    getNet(e,g){
         var url = config.api.base + config.api.newer_performance;
         request.post(url,{
-            company_id: this.state.company_id,//公司id
-            user_id:this.state.user_id,//登录者id
+            company_id: g,//公司id
+            user_id:e,//登录者id
         }).then((responseText) => {
            // alert(JSON.stringify (responseText))
             if(responseText.sing==1){
@@ -172,11 +172,12 @@ export default class Home extends Component {
 
     }
 
-    getNet1(){
+    //业绩对比
+    getNet1(e,g){
         var url = config.api.base + config.api.performance_contrast;
         request.post(url,{
-            company_id: this.state.company_id,//公司id
-            user_id:this.state.user_id,//登录者id
+            company_id: g,//公司id
+            user_id:e,//登录者id
         }).then((responseText) => {
             //alert(JSON.stringify (responseText))
             if(responseText.sing==1){
