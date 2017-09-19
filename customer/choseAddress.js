@@ -129,7 +129,7 @@ export default class app extends Component {
                             underlineColorAndroid="transparent"
                             />
                     </View>
-                    <View style={{marginLeft:10,marginTop:15,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{marginLeft:15,marginTop:15,flexDirection:'row',alignItems:'center'}}>
                         <Text style={{marginRight: 5}}>全国</Text>
                         <Text></Text>
                     </View>

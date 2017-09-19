@@ -18,8 +18,8 @@ import {
     ScrollView,
     } from 'react-native';
 import moment from 'moment';
-import Header from '../../common/header';
 import Picker from 'react-native-picker';
+import Header from '../../common/header';
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 export default class History extends Component {
@@ -59,16 +59,9 @@ export default class History extends Component {
         const {navigate}=this.props.navigation
         return (
             <View style={styles.container}>
-                <View style={[{height:Platform.OS==='ios'?60:40,justifyContent:'space-between'},styles.flex_row,styles.paddingLR]}>
-                    <TouchableOpacity onPress={()=>{this.OpBack()}}>
-                        <View style={[{flexDirection:'row',width:60}]}>
-                            <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                            <Text style={{color:'#e15151'}}>返回</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={{fontSize:16,color:'#333'}}>9月考勤记录</Text>
-                    <View style={{width:60}}></View>
-                </View>
+                <Header navigation = {this.props.navigation}
+                    title = {"9月考勤记录"}
+                    />
                 <View style={[{height:80},styles.flex_row,styles.paddingLR]}>
                     <View style={{marginRight:10}}>
                         <Image  style={{width:40,height:40}} source={require('../../imgs/customer/headPortrait.png')}/>

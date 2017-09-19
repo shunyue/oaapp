@@ -27,7 +27,7 @@ export default class Chat extends Component {
                     </TouchableOpacity>
         }else if(this.props.rightText) {
             return <TouchableOpacity {...this.props}>
-                        <View style={styles.navContent}>
+                        <View style={[styles.navContent,{justifyContent:'flex-end',paddingLeft:0,paddingRight:15}]}>
                             <Text style={styles.navText}>{this.props.rightText}</Text>
                         </View>
                     </TouchableOpacity>
@@ -42,7 +42,7 @@ export default class Chat extends Component {
                 <TouchableOpacity
                     onPress={()=>this._goBack()}>
                     <View style={styles.navContent}>
-                        <Image style={{marginRight: 3}} source={require('../imgs/navxy.png')}/>
+                        <Image source={require('../imgs/navxy.png')}/>
                         <Text style={styles.navText}>返回</Text>
                     </View>
 
@@ -72,11 +72,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 40,
         width: 80,
-        paddingLeft:10
+        paddingLeft:12
     },
     navText: {
-        fontSize: 16,
-        lineHeight: 18,
         fontWeight: 'normal',
         color: '#e4393c',
     },
