@@ -71,14 +71,14 @@ export default class ModifyAddress extends Component {
                 <View style={[styles.childContent,{marginTop:5}]} >
                     {(params.canshu.address=='' || params.canshu.address==null)?
                         (<TextInput
-                            style={{height: 40, borderColor: '#F0F0F0', borderWidth: 1,backgroundColor:'#fff'}}
+                            style={{height: 40, borderColor: '#F0F0F0', borderWidth: 1,backgroundColor:'#fff',paddingLeft:15}}
                             onChangeText={(address) => this.setState({address})}
                             placeholder={'地址'}
                             autoFocus={true}
                             underlineColorAndroid={"transparent"}
                             value={this.state.address}
                             />) : (<TextInput
-                        style={{height: 40, borderColor: '#F0F0F0', borderWidth: 1,backgroundColor:'#fff'}}
+                        style={{height: 40, borderColor: '#F0F0F0', borderWidth: 1,backgroundColor:'#fff',paddingLeft:15}}
                         onChangeText={(address) => this.setState({address})}
                         placeholder={params.canshu.address}
                         underlineColorAndroid={"transparent"}
