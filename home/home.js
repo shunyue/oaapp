@@ -2127,4 +2127,3 @@ const styles = StyleSheet.create({
         alignItems:'center'
     }
 });
->>>>>>> a5889c6a2e2e07cf24a2558e5ae5ccfaa8dd4fef
