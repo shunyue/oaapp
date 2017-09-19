@@ -15,6 +15,7 @@ import {
     TextInput,
     Modal,
     Platform,
+    DeviceEventEmitter
 } from 'react-native';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 const screenW = Dimensions.get('window').width;
@@ -41,10 +42,23 @@ export default class app extends Component {
             load:false,
         };
     }
+
+    //由于日程有修改  日程详情返回到小秘书时要重新刷新页面
     componentDidMount(){
+        this.subscription = DeviceEventEmitter.addListener('DailyInfo',(value) => {
+            this.getNet();//审批
+            this.getNet1();//日程
+            this.getNet2();//审批+日程
+        })
+
         this.getNet();//审批
         this.getNet1();//日程
         this.getNet2();//审批+日程
+    }
+
+    //移除监听
+    componentWillUnmount() {
+        this.subscription.remove();
     }
 
     //审批
@@ -74,7 +88,7 @@ export default class app extends Component {
             company_id: this.props.navigation.state.params.company_id,//公司id
             user_id:this.props.navigation.state.params.user_id,//登录者id
         }).then((responseText) => {
-            //alert(JSON.stringify (responseText.data))
+           // alert(JSON.stringify (responseText.data))
             if(responseText.status==1){
                 this.setState({
                     listview1:responseText.data,
@@ -88,7 +102,6 @@ export default class app extends Component {
 
     //审批+日程
     getNet2(){
-
         var url = config.api.base + config.api.secretary_select_schedule_approve;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
@@ -124,7 +137,6 @@ export default class app extends Component {
 
     //审批中标记已读
     approve_mark_to_yidu(id){
-
         var url = config.api.base + config.api.mark_to_yidu_approve;
         request.post(url,{
             id:id,//process_way表主键ID
@@ -141,20 +153,23 @@ export default class app extends Component {
 
 
     //日程的详情
-    schedule_detail(){
+    schedule_detail(id){
+          this.props.navigation.navigate('DailyDetail',{
 
+              user_id:this.props.navigation.state.params.user_id,
+              company_id:this.props.navigation.state.params.company_id,
+              daily_id:id
+          });
     }
 
     //审批通过
     approve_pass(e){
-
         var url = config.api.base + config.api.approve_agreement;
         request.post(url,{
             example_id: e,//实例id
             user_id: this.props.navigation.state.params.user_id,//用户id
             company_id: this.props.navigation.state.params.company_id,//公司id
         }).then((responseText) => {
-
             if(responseText.sing==1){
                 this.getNet();
                 this.getNet2();
@@ -162,8 +177,6 @@ export default class app extends Component {
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
-
-
     }
 
 
@@ -177,10 +190,6 @@ export default class app extends Component {
 
     //审批拒绝
     approve_refuse(){
-
-
-
-
         var url = config.api.base + config.api.approve_refuse;
         request.post(url,{
             example_id: this.state.example_id_when_refuse,//实例id
@@ -229,17 +238,6 @@ export default class app extends Component {
         })
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     render() {
         const {navigate} = this.props.navigation;
@@ -500,7 +498,7 @@ export default class app extends Component {
                                      <Text style={{fontSize:13,color:'#fff'}}>{this.state.listview1[i]['create_time']}</Text>
                                  </View>
                                  <View style={{backgroundColor:'#fff',padding:10,width:screenW*0.9,borderColor:'#ccc',borderWidth:1,borderRadius:3}}>
-                                     <TouchableHighlight underlayColor={'transparent'} onPress={()=>{navigate('DailyDetail')}}>
+                                     <TouchableHighlight underlayColor={'transparent'} onPress={this.schedule_detail.bind(this,this.state.listview1[i]['id'])}>
                                          <View style={[styles.borderBottom,{paddingBottom:10}]}>
                                              <View style={[styles.place]}>
                                                  <Image  style={{width:15,height:15,marginRight:6}} source={require('../imgs/cal.png')}/>
@@ -577,7 +575,7 @@ export default class app extends Component {
                                     <Text style={{fontSize:13,color:'#fff'}}>{this.state.listview2[i]['alert_time']}</Text>
                                 </View>
                                 <View style={{backgroundColor:'#fff',padding:10,width:screenW*0.9,borderColor:'#ccc',borderWidth:1,borderRadius:3}}>
-                                    <TouchableHighlight underlayColor={'transparent'} onPress={()=>{navigate('DailyDetail')}}>
+                                    <TouchableHighlight underlayColor={'transparent'} onPress={this.schedule_detail.bind(this,this.state.listview2[i]['id'])}>
                                         <View style={[styles.borderBottom,{paddingBottom:10}]}>
                                             <View style={[styles.place]}>
                                                 <Image  style={{width:15,height:15,marginRight:6}} source={require('../imgs/cal.png')}/>

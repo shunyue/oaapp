@@ -411,24 +411,24 @@ export default class Home extends Component {
         //今日日程
 
         //待审批
-            if(this.state.process_list!=undefined){
-                 var process_info=[];
-                if(this.state.process_list.length==0){
-                    process_info.push(
-                        <View style={[styles.threeTwoCenter]}>
-                            <View style={[styles.row]}>
-                                <Image source={require('../imgs/gcon16.png')}/>
-                                <Text style={[styles.threeText]}>
-                                    您没有待审批的内容
-                                </Text>
-                            </View>
-                        </View>
-                    )
-                }else{
-
-                }
-
-            }
+        //    if(this.state.process_list!=undefined){
+        //         var process_info=[];
+        //        if(this.state.process_list.length==0){
+        //            process_info.push(
+        //                <View style={[styles.threeTwoCenter]}>
+        //                    <View style={[styles.row]}>
+        //                        <Image source={require('../imgs/gcon16.png')}/>
+        //                        <Text style={[styles.threeText]}>
+        //                            您没有待审批的内容
+        //                        </Text>
+        //                    </View>
+        //                </View>
+        //            )
+        //        }else{
+        //
+        //        }
+        //
+        //    }
 
         //待审批
         return (
@@ -796,7 +796,7 @@ export default class Home extends Component {
                         <View style={[styles.threeSpaceBetween,styles.row]}>
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
-                           
+
                         </View>
                         <ScrollView>
                         {dailylist}
@@ -809,12 +809,18 @@ export default class Home extends Component {
                             <Text
                                 style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
                         </View>
-                        <View style={[styles.threeTwoCenter]}>
-                            <View style={[styles.row]}>
-                                <Image source={require('../imgs/gcon16.png')}/>
-                                <Text style={[styles.threeText]}>
-                                    您没有待审批的内容
-                                </Text>
+                        <View>
+                            <View style={[styles.rowCom1,{justifyContent:'space-between'}]}>
+                                <View style={{ flexDirection: 'row',alignItems:'center'}}>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/xlbf32.png')}/>
+                                    <View style={{marginLeft:10}}>
+                                        <Text style={[{color: '#333',fontSize:14}]}>删掉就GV山东矿机了</Text>
+                                        <Text style={[{color: '#e4393c',fontSize:12}]}>如果居然问卷</Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <Text style={{fontSize:10}}>偶尔安排规划肉片</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -870,6 +876,8 @@ const styles = StyleSheet.create({
 
     row: {//行级布局
         flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight: 15,marginBottom:10
     },
     rowCon: {//行级元素左浮动
         flexDirection: 'row',
@@ -962,15 +970,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 5,
         backgroundColor: '#fff',
-        paddingLeft: 15,
-        paddingRight: 15,
         paddingTop: 8,
-    },
-    threeTwoCenter: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-
     },
     threeSpaceBetween: {
         justifyContent: 'space-between',//一行平均分布
@@ -996,6 +996,17 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#D0D0D0',
         marginLeft: 5
+    },
+    rowCom1: {//祖级-行
+        height:40,
+        paddingLeft:15,
+        paddingRight:15,
+        backgroundColor:'#fff',
+        borderTopWidth:1,
+        borderBottomWidth:1,
+        borderColor:'#F1F2F3',
+        flexDirection: 'row',
+        alignItems:'center'
     },
 
 
