@@ -317,10 +317,11 @@ const styles = StyleSheet.create({
 
     btnStyle: {
         width: 70,
-        padding: 2,
+        height:30,
         backgroundColor: '#e4393c',
         alignItems: 'center',
-        borderRadius: 2
+        justifyContent:'center',
+        borderRadius: 3
     },
     btnText: {
         color: '#fff'
