@@ -381,7 +381,7 @@ export default class My extends Component {
 const styles = StyleSheet.create({
     ancestorCon: {//祖先级容器
         flex: 1,
-        backgroundColor: '#F0F1F2',
+        backgroundColor: '#F8F8F8',
     },
     childContent: {//子容器页面级
         flex: 1
