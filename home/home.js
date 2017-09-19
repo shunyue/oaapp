@@ -1,6 +1,4 @@
-/*
-* 首页主页面
-* */
+
 import React, { Component } from 'react';
 import { AppRegistry,
     ListView,
@@ -65,10 +63,6 @@ export default class Home extends Component {
         };
     }
     componentDidMount() {
-        this.subscription = DeviceEventEmitter.addListener('com_user_id',(value) => {
-
-        })
-
         this.syncImmediate();
         AsyncStorage.getItem('user')
             .then((res) => {
@@ -250,7 +244,7 @@ export default class Home extends Component {
      daishenpi(e){
          var url = config.api.base + config.api.select_approve_attime;
          request.post(url,{
-             user_id:e,//人员id
+             user_id:e,//公司id
          }).then((responseText) => {
              if(responseText.sing==1){
                  this.setState({
@@ -267,36 +261,6 @@ export default class Home extends Component {
      }
 
     //获取待审批的信息
-
-    //审批详情
-    //判断是 表单  合同 还是合同回款  g是msg值 当时等于我审批时 页面出现 同意还是拒绝
-    approve_detail(e){
-        var url = config.api.base + config.api.judge_approve_type;
-        request.post(url,{
-            example_id:e,
-        }).then((responseText) => {
-            //表单
-            if(responseText==1){
-                this.props.navigation.navigate('form_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
-                //合同
-            }else if(responseText==2){
-                this.props.navigation.navigate('contract_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
-                //合同回款
-            }else if(responseText==3){
-                this.props.navigation.navigate('return_money_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
-            }
-
-        })
-    }
-
-    //审批详情
-
-
-
-
-
-
-
 
     on_press(inder){
         if(inder==0){
@@ -462,8 +426,6 @@ export default class Home extends Component {
                     for(var i in this.state.process_list){
                         process_info.push(
                             <View key={i}>
-                                <View>
-                                    <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.process_list[i]['example_id'])}>
                                 <View style={[styles.rowCom1,{justifyContent:'space-between'}]}>
                                     <View style={{ flexDirection: 'row',alignItems:'center'}}>
                                         <Image style={styles.flexRow_Img} source={{uri:this.state.process_list[i]['icon']}}/>
@@ -475,8 +437,6 @@ export default class Home extends Component {
                                     <View>
                                         <Text style={{fontSize:10}}>{this.state.process_list[i]['time']}</Text>
                                     </View>
-                                </View>
-                                    </TouchableHighlight>
                                 </View>
                             </View>
                         )
@@ -680,7 +640,7 @@ export default class Home extends Component {
                                                     company_id:this.state.company_id})}}>
                                 <View style={[styles.slide,styles.slideBj]}>
                                     {/*块级导航*/}
-                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center'}]}>
+                                    <View style={[styles.rowCon,{justifyContent:'space-between',marginTop:10,height:30,alignItems:'center',marginBottom:20}]}>
                                         <View style={{width:80}}>
                                             <View style={{width:55,paddingTop:5,paddingBottom:5,alignItems:'center', backgroundColor: '#FF7C7C',}}>
                                                 <Text style={[styles.bestMark2]}>目标达成</Text>
@@ -724,25 +684,6 @@ export default class Home extends Component {
                         <View style={{backgroundColor:'#fff',marginTop:10,paddingTop:10,paddingBottom:10}}>
                             <View style={styles.flexRow}>
                                 <TouchableHighlight
-                                    onPress={()=>this.business()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/sj32.png')}/>
-                                        <Text>商机</Text>
-                                    </View>
-
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={()=>this.sheet()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/ld32.png')}/>
-                                        <Text>理单</Text>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
                                     onPress={()=>this.contract()}
                                     underlayColor="#f5f5f5"
                                 >
@@ -758,6 +699,15 @@ export default class Home extends Component {
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/dd32.png')}/>
                                         <Text>订单</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={()=>this.approval()}
+                                    underlayColor="#f5f5f5"
+                                >
+                                    <View style={styles.flexRow_width}>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
+                                        <Text>审批</Text>
                                     </View>
                                 </TouchableHighlight>
                             </View>
@@ -779,15 +729,6 @@ export default class Home extends Component {
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/mb32.png')}/>
                                         <Text>目标</Text>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={()=>this.approval()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/gz32.png')}/>
-                                        <Text>审批</Text>
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight
@@ -829,16 +770,6 @@ export default class Home extends Component {
                                     <View style={styles.flexRow_width}>
                                         <Image style={styles.flexRow_Img} source={require('../imgs/kq32.png')}/>
                                         <Text>考勤</Text>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-
-                                    onPress={()=>this.lineVisit()}
-                                    underlayColor="#f5f5f5"
-                                >
-                                    <View style={styles.flexRow_width}>
-                                        <Image style={styles.flexRow_Img} source={require('../imgs/xlbf32.png')}/>
-                                        <Text>线路拜访</Text>
                                     </View>
                                 </TouchableHighlight>
                             </View>
@@ -1082,7 +1013,8 @@ const styles = StyleSheet.create({
     flexRow:{
         flexDirection:'row',
         height:70,
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'space-around'
     },
     flexRow_Img:{
         width:30,
