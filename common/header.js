@@ -27,7 +27,7 @@ export default class Chat extends Component {
                     </TouchableOpacity>
         }else if(this.props.rightText) {
             return <TouchableOpacity {...this.props}>
-                        <View style={styles.navContent}>
+                        <View style={[styles.navContent,{width: 50}]}>
                             <Text style={styles.navText}>{this.props.rightText}</Text>
                         </View>
                     </TouchableOpacity>
