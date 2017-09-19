@@ -1,4 +1,6 @@
-//转交审批人  多选做出单选 效果
+/*
+* 转交审批人  多选做出单选 效果
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -82,7 +84,19 @@ export default class select_customer    extends Component {
         }).then((result)=> {
            // alert(JSON.stringify(result));
              if(result.sing==1){
-                 this.props.navigation.navigate('Approval',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id})
+                 //this.props.navigation.navigate('Approval',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id})
+                 var com_user_id=new Array()
+                 com_user_id['company_id']=this.props.navigation.state.params.company_id;
+                 com_user_id['user_id']= this.props.navigation.state.params.user_id;
+                 DeviceEventEmitter.emit('com_user_id',com_user_id);
+                 if(this.props.navigation.state.params.approve_type==1){
+                     this.props.navigation.goBack('form_approve');
+                 }else if(this.props.navigation.state.params.approve_type==2){
+                     this.props.navigation.goBack('contract_approve');
+                 }else if(this.props.navigation.state.params.approve_type==3){
+                     this.props.navigation.goBack('return_money_approve');
+                 }
+
              }
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');

@@ -1,4 +1,6 @@
-//表单审批
+/*
+* 表单审批
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -116,14 +118,13 @@ export default class form_approve extends Component {
             company_id: this.props.navigation.state.params.company_id,//公司id
             approve_idea:this.state.approve_idea//审批意见
         }).then((responseText) => {
-             alert(JSON.stringify(responseText));
+            // alert(JSON.stringify(responseText));
 
             if(responseText.sing==1){
                 var com_user_id=new Array()
                 com_user_id['company_id']=this.props.navigation.state.params.company_id;
                 com_user_id['user_id']= this.props.navigation.state.params.user_id;
                 DeviceEventEmitter.emit('com_user_id',com_user_id);
-
                 this.props.navigation.goBack(null);
             }
         }).catch((error)=>{
@@ -140,14 +141,12 @@ export default class form_approve extends Component {
             company_id: this.props.navigation.state.params.company_id,//公司id
             approve_idea:this.state.approve_idea//审批意见
         }).then((responseText) => {
-            alert(JSON.stringify(responseText));
-
+           // alert(JSON.stringify(responseText));
             if(responseText.sing==1){
                 var com_user_id=new Array()
                 com_user_id['company_id']=this.props.navigation.state.params.company_id;
                 com_user_id['user_id']= this.props.navigation.state.params.user_id;
                 DeviceEventEmitter.emit('com_user_id',com_user_id);
-
                 this.props.navigation.goBack(null);
             }
         }).catch((error)=>{
@@ -156,7 +155,7 @@ export default class form_approve extends Component {
     }
     //转交
     pass_on_to(){
-        this.props.navigation.navigate('pass_on_to',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id,example_id: this.props.navigation.state.params.example_id})
+        this.props.navigation.navigate('pass_on_to',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id,example_id: this.props.navigation.state.params.example_id,approve_type:1})
     }
 
 
