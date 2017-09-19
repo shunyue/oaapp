@@ -65,6 +65,10 @@ export default class Home extends Component {
         };
     }
     componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener('com_user_id',(value) => {
+
+        })
+
         this.syncImmediate();
         AsyncStorage.getItem('user')
             .then((res) => {
@@ -246,7 +250,7 @@ export default class Home extends Component {
      daishenpi(e){
          var url = config.api.base + config.api.select_approve_attime;
          request.post(url,{
-             user_id:e,//公司id
+             user_id:e,//人员id
          }).then((responseText) => {
              if(responseText.sing==1){
                  this.setState({
@@ -263,6 +267,36 @@ export default class Home extends Component {
      }
 
     //获取待审批的信息
+
+    //审批详情
+    //判断是 表单  合同 还是合同回款  g是msg值 当时等于我审批时 页面出现 同意还是拒绝
+    approve_detail(e){
+        var url = config.api.base + config.api.judge_approve_type;
+        request.post(url,{
+            example_id:e,
+        }).then((responseText) => {
+            //表单
+            if(responseText==1){
+                this.props.navigation.navigate('form_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
+                //合同
+            }else if(responseText==2){
+                this.props.navigation.navigate('contract_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
+                //合同回款
+            }else if(responseText==3){
+                this.props.navigation.navigate('return_money_approve',{example_id:e,user_id:this.state.user_id,company_id:this.state.company_id,approve_condition:'等待我审批'});
+            }
+
+        })
+    }
+
+    //审批详情
+
+
+
+
+
+
+
 
     on_press(inder){
         if(inder==0){
@@ -428,6 +462,8 @@ export default class Home extends Component {
                     for(var i in this.state.process_list){
                         process_info.push(
                             <View key={i}>
+                                <View>
+                                    <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.process_list[i]['example_id'])}>
                                 <View style={[styles.rowCom1,{justifyContent:'space-between'}]}>
                                     <View style={{ flexDirection: 'row',alignItems:'center'}}>
                                         <Image style={styles.flexRow_Img} source={{uri:this.state.process_list[i]['icon']}}/>
@@ -439,6 +475,8 @@ export default class Home extends Component {
                                     <View>
                                         <Text style={{fontSize:10}}>{this.state.process_list[i]['time']}</Text>
                                     </View>
+                                </View>
+                                    </TouchableHighlight>
                                 </View>
                             </View>
                         )
