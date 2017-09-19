@@ -73,7 +73,7 @@ export default class Home extends Component {
                this.daishenpi(value['user_id']);//待审批
            }
         })
-        
+
         AsyncStorage.getItem('user')
             .then((res) => {
                 var data = JSON.parse(res);
