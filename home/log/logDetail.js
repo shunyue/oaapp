@@ -384,16 +384,15 @@ export default class Log extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*导航栏*/}
                 <View style={[styles.navCon]}>
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={styles.navltys}
                         onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
                         >
                         <View style={styles.navltys}>
                             <Image source={require('../../imgs/navxy.png')}/>
                             <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.fSelf}>{logname}</Text>
                    <View style={styles.navltys}></View>
                 </View>
@@ -508,7 +507,7 @@ export default class Log extends Component {
                         onPress={this.getNextLog.bind(this,this.state.key)}
                         underlayColor="#f5f5f5"
                         >
-                        <View style={[com.pdt15,com.bckfff,com.btwc,com.pdb5,com.aic,com.jcc]}>
+                        <View style={[com.pdt15,com.pdb5,com.aic,com.jcc]}>
                             <Image style={[com.wh16,com.mgr5,com.tcr]} source={require('../../imgs/updirect.png')}/>
                             <Text style={[com.cr]}>下一封</Text>
                         </View>
@@ -634,7 +633,7 @@ export default class Log extends Component {
 const styles = StyleSheet.create({
     navltys: {
         //flex: 1,
-        width: 50,
+        width: 60,
         flexDirection: 'row',
         //justifyContent: 'space-between',
         //height: (Platform.OS === 'ios') ? 50 : 30,
@@ -662,7 +661,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
-        paddingLeft:10
+        paddingLeft:15,
+        paddingRight:15
     },
     sz: {//导航图标
         width: 30,
