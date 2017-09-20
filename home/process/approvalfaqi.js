@@ -1,3 +1,8 @@
+/*
+*
+* 发起审批 选择表单发起
+* */
+
 import React, { Component } from 'react';
 import {
     AppRegistry,

@@ -38,7 +38,7 @@ export default class faqi_people  extends Component {
     }
 
     componentDidMount() {
-        var url = config.api.base + config.api.order_select_costom;
+        var url = config.api.base + config.api.form_select_dp;
         const {params} = this.props.navigation.state;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,
@@ -196,7 +196,7 @@ export default class faqi_people  extends Component {
         return (
             <View style={styles.container}>
                 <Header navigation = {this.props.navigation}
-                        title = "请选择客户"/>
+                        title = "请选择部门"/>
                 <View style={styles.centerContent}>
                     <View style={styles.searchContainer}>
                         <Image style={styles.searchImg}
