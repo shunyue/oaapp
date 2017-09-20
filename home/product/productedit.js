@@ -104,7 +104,7 @@ export default class Productedit extends Component {
        // this.props.navigation.navigate('ProductDetail',{id:this.props.navigation.state.params.id,company_id:this.props.navigation.state.params.company_id});
     }
     typelist() {
-        this.props.navigation.navigate('Producttypelist');
+        this.props.navigation.navigate('Producttypelist',{company_id:this.props.navigation.state.params.company_id});
     }
 
 
