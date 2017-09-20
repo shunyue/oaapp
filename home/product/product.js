@@ -18,7 +18,7 @@ import {
     DeviceEventEmitter,
     TouchableOpacity,
 } from 'react-native';
-
+import Header from '../../common/header';
 import Modal from 'react-native-modal'
 import config from '../../common/config';
 import request from '../../common/request';
@@ -117,30 +117,10 @@ export default class Product extends Component {
         return (
 
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>产品列表</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.newBulidBusiness()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image style={[styles.navltysImg]} source={require('../../imgs/navtx.png')}/>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="产品列表"
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/navtx.png')}
+                        onPress={()=>this.newBulidBusiness()}/>
                 {/*内容主题*/}
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
@@ -178,7 +158,7 @@ export default class Product extends Component {
                                     </View>
                                     <View style={[styles.comRight]}>
                                         <Text style={[styles.elefontCom]}>{rowData.type_name}</Text>
-                                          <Text style={[styles.elefontCom1]}>{rowData.product_status==1?'已启用':'未启用'}</Text>
+                                        <Text style={[styles.elefontCom1]}>{rowData.product_status==1?'已启用':'未启用'}</Text>
                                     </View>
 
 
@@ -205,28 +185,10 @@ export default class Product extends Component {
 
                 <View style={styles.body}>
                     {/*导航栏*/}
-                    <View style={styles.nav}>
-                        <TouchableHighlight
-                            onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image source={require('../../imgs/navxy.png')}/>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                            </View>
-
-                        </TouchableHighlight>
-                        <Text style={styles.fSelf}>产品列表</Text>
-                        <TouchableHighlight
-                            onPress={()=>this.newBulidBusiness()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image style={[styles.navltysImg]} source={require('../../imgs/navtx.png')}/>
-                            </View>
-
-                        </TouchableHighlight>
-                    </View>
+                    <Header title="产品列表"
+                            navigation={this.props.navigation}
+                            source={require('../../imgs/navtx.png')}
+                            onPress={()=>this.newBulidBusiness()}/>
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
@@ -272,77 +234,33 @@ export default class Product extends Component {
 
 const styles = StyleSheet.create({
     //nav
-    navltys: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: (Platform.OS === 'ios') ? 50 : 30,
-        alignItems: 'center',
-    },
-    navltyszt: {
-        fontSize: 14,
-        fontWeight: 'normal',
-        color: '#e4393c',
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor: '#F8F8F8'
-    },
     body: {//祖先级容器
         flex: 1,
         backgroundColor: '#f8f8f8'
     },
-    nav: {//头部导航
-        height: 40,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        backgroundColor: '#fff',
-        padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#bbb',
-    },
-    sz: {//导航图标
-        width: 30,
-        height: 30
-    },
-    fSelf: {//导航字体相关
-        color: '#000',
-        //height: 30,
-        fontSize: 16
-    },
-    navltysImg: {
-        width: 24,
-        height: 24,
-    },
 //    主题内容
     childContent: {//子容器页面级
         flex: 1,
-        paddingTop: 5,
-        paddingBottom: 5,
         backgroundColor: '#F8F8F8',
     },
 
-    //页签切换
-    ancestorCon: {//祖先级
-        //flex: 1,
-    },
     divTit: {//祖级--区域-主题内容title部分
         flexDirection: 'row',
         //justifyContent: 'space-around',
-        height: 30,
-        paddingTop: 5,
-        marginBottom: 10,
-        paddingBottom: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
+        height: 32,
+        paddingLeft: 15,
+        paddingRight: 15,
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderColor: '#e3e3e3',
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:5,
+        marginBottom:5
     },
     eleCon: {//父级-块
-        width: screenW * 0.9,
+        width: screenW ,
+        height: 32,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -359,15 +277,9 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
 
-    //内容模块
-    divCom: {//祖先级-区域
-        flex:1,
-    },
     rowCom: {//祖级-行
         paddingLeft:15,
         paddingRight:15,
-        paddingTop:15,
-        paddingBottom:15,
         backgroundColor:'#fff',
         borderTopWidth:1,
         borderBottomWidth:1,
@@ -376,8 +288,9 @@ const styles = StyleSheet.create({
 
     eleTopCom: {//父级-块
         flexDirection: 'row',
+        height:50,
+        alignItems:'center',
         justifyContent: 'space-between',
-        marginBottom:5
     },
     comLeft:{//次父级-次级块
 
@@ -393,7 +306,7 @@ const styles = StyleSheet.create({
     elefontCom1:{//子级-E
         fontSize:10,
         color:'#969696',
-        marginTop:10,
+        marginTop:5,
     },
 
 

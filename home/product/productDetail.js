@@ -24,7 +24,7 @@ import com from '../../public/css/css-com';
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
+import Header from '../../common/header';
 
 export default class ProductDetail extends Component {
 
@@ -138,27 +138,10 @@ export default class ProductDetail extends Component {
   render() {
     return (
       <View style={styles.body}>
-          {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-        {/*导航栏*/}
-        <View style={styles.nav}>
-          <TouchableHighlight
-            onPress={()=>this.back()}
-            underlayColor="#d5d5d5"
-          >
-            <View style={styles.navltys}>
-              <Image source={require('../../imgs/navxy.png')}/>
-              <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-            </View>
-
-          </TouchableHighlight>
-          <Text style={styles.fSelf}>产品详情</Text>
-          <TouchableOpacity style={wds.icon_touch2} onPress={() => {{this.setState({show: !this.state.show})}}}>
-            <View style={styles.navltys}>
-              <Image style={[styles.navltysImg]} source={require('../../imgs/product/slh32.png')}/>
-            </View>
-
-          </TouchableOpacity>
-        </View>
+          <Header title="产品详情"
+                  navigation={this.props.navigation}
+                  source={require('../../imgs/product/slh32.png')}
+                  onPress={() => {{this.setState({show: !this.state.show})}}}/>
         {/*内容主题*/}
         <ScrollView style={styles.childContent}>
           <View style={[styles.ancestorCon]}>

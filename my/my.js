@@ -138,7 +138,7 @@ export default class My extends Component {
                                 underlayColor="transparent"
                             >
                                 <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/cp32.png')}/>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/cp32.png')}/>
                                     <Text>产品</Text>
                                 </View>
                             </TouchableHighlight>
@@ -347,9 +347,9 @@ const styles = StyleSheet.create({
         justifyContent:'space-around'
     },
     flexRow_Img:{
-        width:30,
-        height:30,
-        marginBottom:2
+        width:34,
+        height:34,
+        marginBottom:5
     },
     flexRow_width:{
         width:screenW*0.25,
