@@ -24,7 +24,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Modal from 'react-native-modal'  //下拉
-
+import Header from '../../common/header';
 export default class Approval extends Component {
 
     constructor(props) {
@@ -224,30 +224,10 @@ export default class Approval extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableOpacity
-                        onPress={()=>this.back()}
-                    >
-                        {/**/}
-                        <View style={[styles.navltys,{marginLeft:5}]}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableOpacity>
-                    <Text style={styles.fSelf}>审批</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.newBulidApproval()}
-                        underlayColor={"transparent"}
-                    >
-                        <View style={[styles.navltys,{marginRight:5}]}>
-                            <Image style={{width:20,height:20}} source={require('../../imgs/navld16.png')}/>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="审批"
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/navld16.png')}
+                        onPress={()=>this.newBulidApproval()}/>
                 {/*内容主题*/}
                 <ScrollView style={[styles.childContent,{marginBottom:30}]}>
 
@@ -284,7 +264,8 @@ export default class Approval extends Component {
                         backdropOpacity={0}
                         animationIn={'slideInDown'}
                         animationOut={'slideOutUp'}
-                        isVisible={this.state.isModalVisible}
+                        transparent={true}
+                        visible={this.state.isModalVisible}
                     >
                             <View style={{flex:1}}>
                                 <TouchableOpacity style={{width:screenW,height:(screenH-140),opacity:0.4,backgroundColor:'#000',top:75,position:'absolute'}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
