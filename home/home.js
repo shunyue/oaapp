@@ -386,6 +386,7 @@ export default class Home extends Component {
 
 
     render() {
+
         const chart_wh = 130
         var reach =Number(this.state.result)
         const series = [reach, 1-reach]
