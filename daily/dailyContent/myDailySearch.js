@@ -33,7 +33,6 @@ export default class MyDailySearch extends Component {
         super(props);
         this.state = {
             isModalVisible: false,
-            isModalVisibleTwo: false,
             status_: 4,
             _status: 10,
             show: false,
@@ -43,7 +42,6 @@ export default class MyDailySearch extends Component {
             tab: 1,
             chooseStaff: 1,
             daily:[],
-            status:5,
             daily_type:[],
             checkBoxData:[],
             checkedData: [],
@@ -52,17 +50,29 @@ export default class MyDailySearch extends Component {
         };
     }
     componentDidMount() {
-        this.searchDaily(1,5);
+        this.searchDaily(1,this.state.status_order,null);
+        //从日程详情页返回的监听
         this.dailyListener= DeviceEventEmitter.addListener('dailyInfo', (a)=> {
             this.setState({
                 load: true,
             })
-            this.searchDaily(1,5);
+            this.searchDaily(1,this.state.status_order,null);
         });
+        //筛选
+        this.classifyListener=DeviceEventEmitter.addListener('MyDailyClassify',(c)=>{
+            this.setState({
+                load: true,
+                status_order:c.status_order,
+                classify:c.classify,
+                selected:c.selected
+            })
+            this.searchDaily(2,c.status_order,c.classify);
+        })
     }
     componentWillUnmount() {
         // 移除监听
         this.dailyListener.remove();
+        this.classifyListener.remove();
     }
 
     _checkBokClick(id) {
@@ -71,6 +81,7 @@ export default class MyDailySearch extends Component {
     //不限日程类型
     _selectAll() {
         this.refs['item0'].onClick();
+        alert(this.refs['item1'].state.isChecked)
         if(this.refs['item1'].state.isChecked==true){
             this.refs['item1'].onClick();
         }
@@ -85,8 +96,23 @@ export default class MyDailySearch extends Component {
         }
     }
     //根据日程状态查询日程
-    searchDaily(title,status){
+    searchDaily(title,status_order,classify=[]){
         var url=config.api.base+config.api.searchMyDailyByCondition;
+        if(status_order==1){//全部状态
+            var status=[1,2,3,4];
+        }else if(status_order==2){//无进展
+            var status=[1];
+        }else if(status_order==3){//有进展
+            var status=[2];
+        }else if(status_order==4){//未结束
+            var status=[1,2];
+        }else if(status_order==5){//已结束
+            var status=[3];
+        }else if(status_order==6){//已撤回
+            var status=[4];
+        }else{
+            var status=[1,2,3,4];
+        }
         if(title==1){//按照日程状态查询
             this.setState({
                 isModalVisible: false,
@@ -94,51 +120,18 @@ export default class MyDailySearch extends Component {
             });
             var condition={
                 user_id:this.props.user_id,
-                title: title,
                 status:status
             }
         }
-        if(title==2){//按照日程类型查询
-            this.setState({
-                isModalVisibleTwo: false,
-                load:true
-            }) ;
-            var status=[];
-            if(this.state.status_order==1){//全部状态
-                var status=[1,2,3];
-            }else if(this.state.status_order==2){//无进展
-                var status=[1];
-            }else if(this.state.status_order==3){//有进展
-                var status=[2];
-            }else if(this.state.status_order==4){//未结束
-                var status=[1,2];
-            }else if(this.state.status_order==5){//已结束
-                var status=[3];
-            }else if(this.state.status_order==6){//易撤回
-                var status=[4];
-            }else{
-                var status=[1,2,3];
-            }
+        if(title==2){//筛选
             var daily_type=[];
-            if(this.refs['item0'].state.isChecked==true){
-                daily_type=[1,2,3,4];
-            }else{
-                if(this.refs['item1'].state.isChecked==true){
-                    daily_type.push(1) ;
-                }
-                if(this.refs['item2'].state.isChecked==true){
-                    daily_type.push(2) ;
-                }
-                if(this.refs['item3'].state.isChecked==true){
-                    daily_type.push(3) ;
-                }
-                if(this.refs['item4'].state.isChecked==true){
-                    daily_type.push(4) ;
+            for(var i in classify) {
+                if(classify[i]) {
+                    daily_type.push(i-(-1))
                 }
             }
             var condition={
                 user_id:this.props.user_id,
-                title: title,
                 daily_type:daily_type,
                 status:status
             }
@@ -178,24 +171,6 @@ export default class MyDailySearch extends Component {
             return(<Text style={[com.cbe,com.fs10]}>已结束</Text>)
         }
     }
-    //重置按钮
-    _reset(){
-        if(this.refs['item0'].state.isChecked==true){
-            this.refs['item0'].onClick();
-        }
-        if(this.refs['item1'].state.isChecked==true){
-            this.refs['item1'].onClick();
-        }
-        if(this.refs['item2'].state.isChecked==true){
-            this.refs['item2'].onClick();
-        }
-        if(this.refs['item3'].state.isChecked==true){
-            this.refs['item3'].onClick();
-        }
-        if(this.refs['item4'].state.isChecked==true){
-            this.refs['item4'].onClick();
-        }
-    }
     //显示状态名称
     show_StatusName(){
         var  status=this.state.status_order;
@@ -229,6 +204,14 @@ export default class MyDailySearch extends Component {
                 </View>
             )
         }
+    }
+    goPageClassify(){
+        this.props.navigation.navigate('MyDailyClassify', {
+            classify: this.state.classify,
+            status_order:this.state.status_order,
+            selected:this.state.selected
+        });
+
     }
     render() {
         if(this.state.load){
@@ -290,8 +273,10 @@ export default class MyDailySearch extends Component {
                                       onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}>
                         {this.show_StatusName()}
                     </TouchableOpacity>
+                    {/*                    <TouchableOpacity style={[com.pos]}
+                                      onPress={() => { this.setState({isModalVisibleTwo: !this.state.isModalVisibleTwo})}}>*/}
                     <TouchableOpacity style={[com.pos]}
-                                      onPress={() => { this.setState({isModalVisibleTwo: !this.state.isModalVisibleTwo})}}>
+                                      onPress={() => {this.goPageClassify()}}>
                         <View style={[com.row,com.pdlr15,com.aic]}>
                             <Text>筛选</Text>
                             <Image style={[com.wh16,com.tcbe,com.mgl5]} source={require('../../imgs/jtxx.png')}/>
@@ -322,7 +307,7 @@ export default class MyDailySearch extends Component {
                                                     <View style={[{width:screenW}]}>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,6);this.setState({status_order:1})}}
+                                                            onPress={() => {this.searchDaily(1,1);this.setState({status_order:1})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
@@ -331,7 +316,7 @@ export default class MyDailySearch extends Component {
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,1);this.setState({status_order:2})}}
+                                                            onPress={() => {this.searchDaily(1,2);this.setState({status_order:2})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
@@ -340,7 +325,7 @@ export default class MyDailySearch extends Component {
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,2);this.setState({status_order:3})}}
+                                                            onPress={() => {this.searchDaily(1,3);this.setState({status_order:3})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
@@ -349,7 +334,7 @@ export default class MyDailySearch extends Component {
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,5);this.setState({status_order:4})}}
+                                                            onPress={() => {this.searchDaily(1,4);this.setState({status_order:4})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
@@ -358,7 +343,7 @@ export default class MyDailySearch extends Component {
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,3);this.setState({status_order:5})}}
+                                                            onPress={() => {this.searchDaily(1,5);this.setState({status_order:5})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
@@ -367,7 +352,7 @@ export default class MyDailySearch extends Component {
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,4);this.setState({status_order:6})}}
+                                                            onPress={() => {this.searchDaily(1,6);this.setState({status_order:6})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
@@ -422,8 +407,8 @@ export default class MyDailySearch extends Component {
                                                                                 style={[com.flex,com.pdt5l20,com.pdl30,{}]}
                                                                                 onClick={()=>{}}
                                                                                 isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
+                                                                              //  checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
+                                                                              //  unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
                                                                                 />
                                                                         </View>
 
@@ -445,8 +430,8 @@ export default class MyDailySearch extends Component {
                                                                                 style={[com.flex,com.pdt5l20,com.pdl30,{}]}
                                                                                 onClick={()=>{}}
                                                                                 isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
+                                                                              // checkedImage={<Image source={require('../../imgs/customer/selectnone.png')}/>}
+                                                                             //  unCheckedImage={<Image source={require('../../imgs/customer/selected.png')}/>}
                                                                                 />
                                                                         </View>
 

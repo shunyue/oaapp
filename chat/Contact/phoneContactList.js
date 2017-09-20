@@ -47,14 +47,23 @@ export default class PhoneContactList extends Component {
             if(err === 'denied'){
                toast.bottom('没有权限获取通讯录');
                 return false;
-            } else if(contacts.length==0 || contacts==null){
+            } else if(contacts==null){
                 this.setState({
                     contactInfo:[],
                 })
             } else {
                 this.checkcontactInfo(contacts)
             }
+
         })
+
+        // Contacts.getAll((err, contacts) => {
+        //     if(err === 'denied'){
+        //         // error
+        //     } else {
+        //         this.checkcontactInfo(contacts)
+        //     }
+        // })
     }
     //对获取到的数据进行处理
     checkcontactInfo(contacts){

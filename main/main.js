@@ -153,11 +153,10 @@ import DailyCustomer from '../daily/DetailCommon/dailyCustomer';//日程-日程�
 import DailyExecutor from '../daily/DetailCommon/dailyExecutor';//日程-日程执行人详情页面
 import DailyReport from '../daily/dailyReport/dailyReport';//日程-日程报告页面
 import VisitPosition from '../daily/dailyReport/visitPosition';//日程-日程客户详情页面
-
+import MyDailyClassify from '../daily/dailyContent/mydailyclassify';//日程-筛选日程
 
 
 //彭黎明
-
 //首页-审批
 import Approval from '../home/process/approval';
 //审批页面-nav-筛选审批
@@ -374,6 +373,7 @@ const MyApp = TabNavigator({
     tabBarPosition: 'bottom',
     backBehavior: 'none', // 按 back 键是否跳转到第一个 Tab， none 为不跳转
     swipeEnabled: false, // 禁止左右滑动
+    lazy: true, //是否根据需要懒惰呈现标签，而不是提前制作，意思是在app打开的时候将底部标签栏全部加载，默认false,推荐改成true哦。
     tabBarOptions: {
         pressOpacity: 1,
         activeTintColor: '#e91e63',
@@ -516,7 +516,7 @@ const app = StackNavigator({
     DailyCustomer:{screen:DailyCustomer,navigationOptions: {header: null}},
     DailyExecutor:{screen:DailyExecutor,navigationOptions: {header: null}},
     DailyReport:{screen:DailyReport,navigationOptions: {header: null}},
-
+    MyDailyClassify:{screen:MyDailyClassify,navigationOptions: {header: null}},
 
 
 
