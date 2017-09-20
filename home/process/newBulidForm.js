@@ -64,6 +64,12 @@ export default class app extends Component {
         this.props.navigation.navigate('Formiconlist')
     };
 
+    //选择部门
+    select_dp(){
+        this.props.navigation.navigate('select_dp',{company_id:this.props.navigation.state.params.company_id});
+    }
+
+
     //表单字段编辑
     formfieldedit(id){
         this.props.navigation.navigate('Formfieldedit',{field_type:id})
@@ -130,6 +136,9 @@ export default class app extends Component {
         }
         return false;
     }
+
+
+
     //保存表单
     save(){
         if(this.state.form_name==''){
@@ -279,7 +288,7 @@ export default class app extends Component {
                     </View>
 
                     <TouchableHighlight
-                        onPress={()=>this.formiconlist()}
+                        onPress={()=>this.select_dp()}
                         underlayColor="#d5d5d5"
                     >
                     <View style={[styles.module_name,styles.module_]}>
@@ -290,7 +299,9 @@ export default class app extends Component {
                             placeholder ={this.state.form_fanwei}
                             placeholderTextColor={"#aaaaaa"}
                             underlineColorAndroid="transparent"
+                            editable={false}
                         />
+                        <Image style={styles.imgStyle} style={{width:12,height:12}} source={require('../../imgs/customer/arrow_r.png')}/>
                     </View>
                     </TouchableHighlight>
 
