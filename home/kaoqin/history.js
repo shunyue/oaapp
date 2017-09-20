@@ -270,18 +270,18 @@ export default class History extends Component {
                 </ScrollView>
                 <View style={[styles.border_top,styles.flex_row,{justifyContent:'space-between',paddingLeft:Width*0.15,paddingRight:Width*0.15,height:50}]}>
                     <View style={{alignItems:'center',justifyContent:'center'}}>
-                        <Image  style={{width:18,height:18,tintColor:'#e15151'}} source={require('../../imgs/customer/arrow_l.png')}/>
+                        <Image  style={{width:18,height:18,marginBottom:5,tintColor:'#e15151'}} source={require('../../imgs/customer/arrow_l.png')}/>
                         <Text style={{fontSize:12,color:'#e15151'}}>上一月</Text>
                     </View>
                     <TouchableHighlight onPress={this._showYearPicker.bind(this)}>
                         <View style={{alignItems:'center',justifyContent:'center'}}>
-                            <Image  style={{width:18,height:18,tintColor:'#e15151'}} source={require('../../imgs/cal.png')}/>
+                            <Image  style={{width:18,height:18,marginBottom:5,tintColor:'#e15151'}} source={require('../../imgs/cal.png')}/>
                             <Text style={{fontSize:12,color:'#e15151'}}>选择月份</Text>
                         </View>
 
                     </TouchableHighlight>
                     <View style={{alignItems:'center',justifyContent:'center'}}>
-                        <Image  style={{width:18,height:18,tintColor:'#e15151'}} source={require('../../imgs/customer/arrow_rr.png')}/>
+                        <Image  style={{width:18,height:18,marginBottom:5,tintColor:'#e15151'}} source={require('../../imgs/customer/arrow_rr.png')}/>
                         <Text style={{fontSize:12,color:'#e15151'}}>下一月</Text>
                     </View>
                 </View>
