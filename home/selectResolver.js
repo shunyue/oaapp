@@ -23,6 +23,7 @@ import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
+import Header from '../common/header';
 const screenH =Dimensions.get('window').height;
 const screenW = Dimensions.get('window').width;
 
@@ -99,16 +100,9 @@ export default class SelectResolver extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.back()}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:17}}>选择被分解目标</Text>
-                </View>
+                <Header title="选择被分解目标"
+                        navigation={this.props.navigation}
+                       />
                 <ScrollView  keyboardShouldPersistTaps={'always'}>
                     {dataList[0]&&<View style={styles.contentContainer}>
 

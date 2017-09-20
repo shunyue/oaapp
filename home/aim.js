@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
-        paddingLeft:15,
+        paddingLeft:12,
         paddingRight:15
     },
     sz: {//导航图标

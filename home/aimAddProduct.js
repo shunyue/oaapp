@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:6
     },
     place:{
         flexDirection:'row',
@@ -226,10 +225,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     btnStyle: {
-        width: 70,
-        padding: 2,
+        width: 64,
+        height:24,
         backgroundColor: '#e4393c',
         alignItems: 'center',
+        justifyContent:'center',
         borderRadius: 2
     },
     btnText: {
