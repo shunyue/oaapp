@@ -849,7 +849,7 @@ export default class app extends Component {
                             </View>
                         </TouchableHighlight>
                         <Text style={{fontSize:17,color:'#fff'}}>{state.params.title}</Text>
-                      
+
                     </View>
                     <ScrollableTabView
                         initialPage = {0}

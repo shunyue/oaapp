@@ -1,3 +1,6 @@
+/*
+* 登录页
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -45,7 +48,7 @@ export default class Login extends Component {
                 // 设置极光推送的别名
                 JPushModule.setAlias(result.data.user_id, (map) => {
                     if (map.errorCode === 0) {
-                        console.log("set alias succeed");
+                        console.log("set alias succeed ");
                     } else {
                         console.log("set alias failed, errorCode: " + map.errorCode);
                     }

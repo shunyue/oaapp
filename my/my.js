@@ -1,10 +1,6 @@
-
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
+/*
+* 我的主页面
+* */
 import React, { Component } from 'react';
 import {
     StackNavigator,
@@ -110,7 +106,7 @@ export default class My extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={{height:40,backgroundColor:'#fff',borderBottomWidth:1,borderColor:"#ccc",flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingRight:15}}>
                     <View style={{width:26,height:26}}>
-                        <Image style={{width:25,height:25.5,tintColor:'#e15151'}} source={require('../imgs/bb.png')}/>
+                        { /* <Image style={{width:25,height:25.5,tintColor:'#e15151'}} source={require('../imgs/bb.png')}/>*/}
                     </View>
                     <View>
                         <Text style={{color:'#333',fontSize:16}}>我的</Text>
