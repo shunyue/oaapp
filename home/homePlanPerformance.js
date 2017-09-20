@@ -23,6 +23,7 @@ import moment from 'moment';
 import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
+import Header from '../common/header';
 const screenW = Dimensions.get('window').width;
 export default class HomePlanPerformance extends Component {
     OpBack() {
@@ -230,7 +231,7 @@ export default class HomePlanPerformance extends Component {
             return (
                 <View>
                     <View  style={{height:160,justifyContent:'center',alignItems:'center',backgroundColor: '#fff',marginBottom:10,}}>
-                        <View style={{justifyContent:'center',alignItems:'center',marginTop:50}}>
+                        <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
                             <PieChart
                                 chart_wh={chart_wh}
                                 series={series}
@@ -241,10 +242,7 @@ export default class HomePlanPerformance extends Component {
                                 />
 
                             <View style={{position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg}]}}>
-                                <Image style={{width:66,height:12}} tintColor={'#aaa'} source={require('../imgs/pointer.png')}/>
-                            </View>
-                            <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg}]}}>
-                                <Text style={reach?{fontSize:12}:{display:'none'}}>{reach}</Text>
+                                <Image style={{width:66,height:12,tintColor:'#aaa'}} source={require('../imgs/pointer.png')}/>
                             </View>
                             <View style={{position:'absolute',width:140,top:70,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
                                 <View style={{width:30,alignItems:'flex-start'}}>
@@ -296,7 +294,7 @@ export default class HomePlanPerformance extends Component {
             return(
                 <View>
                     <View  style={{height:160,justifyContent:'center',alignItems:'center',backgroundColor: '#fff',marginBottom:10,}}>
-                        <View style={{justifyContent:'center',alignItems:'center',marginTop:50}}>
+                        <View style={{justifyContent:'center',alignItems:'center',marginTop:10}}>
                             <PieChart
                                 chart_wh={chart_wh}
                                 series={series2}
@@ -307,10 +305,7 @@ export default class HomePlanPerformance extends Component {
                                 />
 
                             <View style={{position:'absolute',transform:[{translate:[0,-0.5,0]},{rotateZ:deg2}]}}>
-                                <Image style={{width:66,height:12}} tintColor={'#aaa'} source={require('../imgs/pointer.png')}/>
-                            </View>
-                            <View style={{width:195,height:14,position:'absolute',transform:[{translate:[0,-2,0]},{rotateZ:deg2}]}}>
-                                <Text style={reach2?{fontSize:12}:{display:'none'}}>{complete}</Text>
+                                <Image style={{width:66,height:12,tintColor:'#aaa'}} source={require('../imgs/pointer.png')}/>
                             </View>
                             <View style={{position:'absolute',width:140,top:70,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
                                 <View style={{width:30,alignItems:'flex-start'}}>
@@ -364,21 +359,12 @@ export default class HomePlanPerformance extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <TouchableWithoutFeedback onPress={()=>this._hide()}>
                     <View style={styles.ancestorCon}>
-                        <View style={[styles.container,{justifyContent:'space-between',paddingLeft:15,paddingRight:15}]}>
-                            <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this.OpBack();this._hide()}}>
-                                <View style={{flexDirection:'row'}}>
-                                    <Image  style={styles.back_icon} source={require('../imgs/customer/back.png')}/>
-                                    <Text style={styles.back_text}>返回</Text>
-                                </View>
-                            </TouchableHighlight>
-                            <Text style={{color:'#333',fontSize:17}}>销售业绩排行</Text>
-                            <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this._showYearPicker()}}>
-                                <Text style={[styles.back_text,{textAlign:'right'}]}>筛选</Text>
-                            </TouchableHighlight>
-                        </View>
+                        <Header title="销售业绩排行"
+                                navigation={this.props.navigation}
+                                rightText="筛选"
+                                onPress={()=>{this._showYearPicker()}}/>
                         <View  style={{height:60,backgroundColor: '#fff',justifyContent:'center',}}>
                             <View style={[{height:30,flexDirection:"row",justifyContent:'space-between'},styles.padding]}>
                                 <View style={{width:80}}>
@@ -405,46 +391,6 @@ const styles = StyleSheet.create({
     ancestorCon:{
         flex: 1,
         backgroundColor: '#eee',
-    },
-    container: {
-        height: 40,
-        flexDirection :'row',
-        alignItems:'center',
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor:'#bbb',
-        justifyContent:'center',
-
-    },
-    go:{
-        position:'absolute',
-        top:8
-    },
-    goback:{
-        left:15,
-        flexDirection :'row',
-    },
-    goRight:{
-        right:15
-    },
-    tabar_scroll:{
-        height:44,
-        justifyContent:'center',
-        borderColor:'#fff'
-    },
-    back_icon:{
-        width:10,
-        height:17,
-        marginTop: 3
-    },
-    back_text:{
-        color:'#e15151',
-        fontSize: 16,
-        marginLeft:6
-    },
-    add:{
-        width:22,
-        height:22,
     },
     place:{
         flexDirection:'row',
