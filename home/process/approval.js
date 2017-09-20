@@ -234,10 +234,10 @@ export default class Approval extends Component {
 
                         <TouchableHighlight
                             onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
-                            underlayColor="#d5d5d5"
+                            underlayColor="transparent"
                         >
 
-                                <View style={[styles.rowCom,styles.rowCom_]}>
+                                <View style={[styles.rowCom,styles.rowCom_,{height:35}]}>
                                     <Text style={[styles.eleFontCon]}>我的审批</Text>
                                     <Image style={{width:15,height:15}} source={require('../../imgs/customer/arrowU.png')}/>
                                 </View>
@@ -266,9 +266,10 @@ export default class Approval extends Component {
                         animationOut={'slideOutUp'}
                         transparent={true}
                         visible={this.state.isModalVisible}
+                        onRequestClose={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
                     >
-                            <View style={{flex:1}}>
-                                <TouchableOpacity style={{width:screenW,height:(screenH-140),opacity:0.4,backgroundColor:'#000',top:75,position:'absolute'}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
+                            <TouchableOpacity style={{flex:1}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
+                                <TouchableOpacity style={{width:screenW,height:Platform.OS==='ios'?(screenH-90):(screenH-70),opacity:0.4,backgroundColor:'#000',top:Platform.OS==='ios'?95:75,position:'absolute'}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
                                 </TouchableOpacity>
                                 <View style={styles.model_up}>
                                     {/* 下拉框 内容*/}
@@ -316,7 +317,7 @@ export default class Approval extends Component {
 
 
                                 </View>
-                            </View>
+                            </TouchableOpacity>
 
                     </Modal>
                 </View>
@@ -385,8 +386,7 @@ const styles = StyleSheet.create({
         width:screenW,
         height:140,
         position: 'absolute',
-        left:0,
-        top:75,
+        top:Platform.OS==='ios'?95:75,
         backgroundColor:'#fff'
     },
 

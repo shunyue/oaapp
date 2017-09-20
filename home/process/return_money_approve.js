@@ -21,7 +21,7 @@ const screenW = Dimensions.get('window').width;
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
+import Header from '../../common/header';
 export default class return_money_approve extends Component {
 
     constructor(props) {
@@ -246,33 +246,24 @@ export default class return_money_approve extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                <View style={styles.container}>
-                    <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:16}}>{this.state.example_people_name}的合同回款</Text>
-                </View>
-
-
-                <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
-                    <Image  style={{width:40,height:40,marginRight:5,borderRadius:25}}  source={{uri:this.state.avatar}}/>
-                    <View>
-                        <Text style={{color:'#333'}}>{this.state.example_people_name}</Text>
-                        <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
-                    </View>
-                </View>
-                <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
-
-
-                    <Image source={{uri:this.state.approve_img}}  style={{width: 100, height: 100}} tintColor={'#37915f'}/>
-                </View>
+                <Header title={this.state.example_people_name+'的合同回款'}
+                        navigation={this.props.navigation}
+                        />
 
                 <ScrollView>
 
+                    <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
+                        <Image  style={{width:40,height:40,marginRight:5,borderRadius:25}}  source={{uri:this.state.avatar}}/>
+                        <View>
+                            <Text style={{color:'#333'}}>{this.state.example_people_name}</Text>
+                            <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
+                        </View>
+                    </View>
+                    <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
 
+
+                        <Image source={{uri:this.state.approve_img}}  style={{width: 100, height: 100}} tintColor={'#37915f'}/>
+                    </View>
                     <View style={[styles.divRowCom,{justifyContent: 'flex-start'}]}>
                         <Text style={[styles.divFontCom,{width: 150}]}>客户名称</Text>
                         <Text style={[styles.divFontCom]}>{this.state.customer_name}</Text>
