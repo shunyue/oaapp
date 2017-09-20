@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:6
+        marginLeft:1
     },
     add:{
         width:22,
