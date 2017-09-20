@@ -162,7 +162,7 @@ export default class app extends Component {
          if(img_field_num.length>1){
              return toast.center('照片字段只能有一个');
          };
-        
+
         var url = config.api.base + config.api.addform;
         request.post(url,{
             name: this.state.form_name,//表单名称
