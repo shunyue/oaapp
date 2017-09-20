@@ -25,6 +25,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import moment from 'moment';
+import Header from '../../common/header';
 export default class PersonalLog extends Component {
     back() {
         this.props.navigation.goBack(null);
@@ -233,30 +234,11 @@ export default class PersonalLog extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={[styles.navCon,com.aic]}>
-                    <TouchableHighlight
-                        style={styles.navltys}
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                        >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>{params.userName}的日志</Text>
-                    <TouchableHighlight
-                        style={styles.navltys}
-                        onPress={()=>this.employeeInfo()}
-                        underlayColor="#f5f5f5"
-                        >
-                        <View style={[com.jcc,styles.navltys]}>
-                            <Image  style={[com.wh24]}  source={require('../../imgs/personal.png')}/>
-                        </View>
-                    </TouchableHighlight>
-                </View>
+                <Header title={params.userName+"的日志"}
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/personal.png')}
+                        onPress={()=>this.employeeInfo()}/>
+                
                 <ScrollView
                     style={[com.pdl15,com.pdr15]}>
                     {showToday==0?( <View style={[com.pdlr15]}>

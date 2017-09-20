@@ -21,7 +21,7 @@ export default class Chat extends Component {
                         <View style={[{width:80,alignItems:'flex-end'}]}>
                             <Image
                                 {...this.props}
-                                style={styles.rightImg}
+                                style={[styles.rightImg,{tintColor:'#e15151'}]}
                                 />
                         </View>
                     </TouchableOpacity>

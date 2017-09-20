@@ -25,6 +25,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import moment from 'moment';
+import Header from '../../common/header';
 export default class Log extends Component {
     back() {
         this.props.navigation.goBack(null);
@@ -291,61 +292,33 @@ export default class Log extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={[styles.navCon,com.aic]}>
-                    <TouchableHighlight
-                        style={styles.navltys}
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                        >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>工作日志</Text>
-                    {this.state.subordinate!=null && this.state.subordinate.length!=0?(
-                        <TouchableHighlight
-                            style={styles.navltys}
-                            onPress={()=>this.SubordinateLog()}
-                            underlayColor="#f5f5f5"
-                            >
-                            <View style={[com.jcc,styles.navltys]}>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>部门</Text>
-                            </View>
-                        </TouchableHighlight>
-                    ):( <TouchableHighlight
-                        style={styles.navltys}
-                        underlayColor="#f5f5f5"
-                        >
-                        <View style={[com.jcc,styles.navltys]}>
-                        </View>
-                    </TouchableHighlight>)}
-
-
-                </View>
+                <Header title="工作日志"
+                        navigation={this.props.navigation}
+                        rightText={this.state.subordinate!=null && this.state.subordinate.length!=0?"部门":null}
+                        onPress={()=>{this.state.subordinate!=null && this.state.subordinate.length!=0?this.SubordinateLog():null}}/>
                 {/*内容主题*/}
-                <TouchableOpacity onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}>
-                    <View style={[com.row,com.jcsb,com.aic,com.pdt10l15,com.bckfff,com.bbwc]}>
+                <TouchableHighlight underlayColor={'transparent'} onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}>
+                    <View style={{height:40,backgroundColor:'#fff',flexDirection:'row',alignItems:'center',paddingLeft:15,paddingRight:15,justifyContent:'space-between',borderColor:'#ccc',borderBottomWidth:1}}>
                         <Text>{titlename}</Text>
                         <Image style={[com.wh16]} source={require('../../imgs/jtxx.png')}/>
                     </View>
-                </TouchableOpacity>
+                </TouchableHighlight>
                 {/*页面级-下拉框*/}
                 <View>
                     <Modal
+                        backdropOpacity={0}
                         animationIn={'slideInDown'}
                         animationOut={'slideOutUp'}
-                        isVisible={this.state.isModalVisible}
+                        transparent={true}
+                        visible={this.state.isModalVisible}
                         >
                         <TouchableWithoutFeedback
                             onPress={()=>this.setState({isModalVisible: !this.state.isModalVisible})}
                             >
                             <View style={{flex:1}}>
-                                <View style={styles.model}></View>
-                                <View style={styles.model_up}>
-                                    <View style={[com.bckfff,com.mgt75]}>
+                                <View style={{width:screenW,height:Platform.OS==='ios'?(screenH-100):(screenH-80),opacity:0.4,backgroundColor:'#000',top:Platform.OS==='ios'?100:80,position:'absolute'}}></View>
+                                <View style={[{backgroundColor:'#fff',height:120, position: 'absolute',top:Platform.OS==='ios'?100:80}]}>
+                                    <View>
                                         {/*页面级-下拉框内容*/}
                                         <View style={[com.pdt5,com.pdb5,com.row,]}>
                                             <View style={[{width:screenW}]}>
@@ -445,7 +418,7 @@ export default class Log extends Component {
                         animationType={"fade"}
                         transparent={true}
                         visible={this.state.show}
-                        onRequestClose={() => {alert("Modal has been closed.")}}
+                        onRequestClose={() => {this.setVisibleModal(!this.state.show)}}
                         >
                         <View style={{width:screenW,height:screenH*0.9,backgroundColor:'#555',opacity:0.6}}>
                             <TouchableOpacity style={{flex:1,height:screenH}} onPress={() => {
@@ -559,6 +532,5 @@ const styles = StyleSheet.create({
     common: {
         flex: 1,
     },
-
 
 });

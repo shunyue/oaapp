@@ -24,6 +24,7 @@ import toast from '../../common/toast';
 import Loading from '../../common/loading';
 import moment from 'moment';
 //import DateTimePicker from 'react-native-modal-datetime-picker';
+import Header from '../../common/header';
 import Picker from 'react-native-picker';
 export default class SubordinateLog extends Component {
     constructor(props) {
@@ -230,33 +231,13 @@ export default class SubordinateLog extends Component {
         }
         return (
             <View style={[com.flex]}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <TouchableWithoutFeedback onPress={()=>{this._hide()}}>
                     <View style={[com.flex]}>
                         {/*导航栏*/}
-                        <View style={[com.row,com.jcsb,com.pdlr5,com.bgcfff,com.bbwcc,com.aic,com.h35,]}>
-                            <TouchableHighlight
-                                style={{width:60,alignItems:'center',}}
-                                onPress={()=>this.back()}
-                                underlayColor="#f3f3f3"
-                                >
-                                <View style={[com.row,]}>
-                                    <Image source={require('../../imgs/navxy.png')}/>
-                                    <Text style={[com.mgr15,com.cr]}>返回</Text>
-                                    {/*  <Text style={[com.cr]}>关闭</Text>*/}
-                                </View>
-                            </TouchableHighlight>
-                            <Text>{this.state.title}</Text>
-                            <TouchableHighlight
-                                style={{width:60,alignItems:'center'}}
-                                onPress={this._showDatePicker.bind(this)}
-                                underlayColor="#f3f3f3"
-                                >
-                                <View style={[com.jcfe,]}>
-                                    <Image style={[com.wh20,com.tcr]} source={require('../../imgs/iconsj.png')}/>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
+                        <Header title={this.state.title}
+                                navigation={this.props.navigation}
+                                source={require('../../imgs/iconsj.png')}
+                                onPress={this._showDatePicker.bind(this)}/>
                         {/*    <DateTimePicker
                          isVisible={this.state.isPickerVisible}
                          onConfirm={(e)=>{this._handlePicked(e)}}

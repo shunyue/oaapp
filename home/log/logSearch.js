@@ -122,7 +122,7 @@ export default class LogSearch extends Component {
                 </View>
                 {/*内容主题*/}
                 {this.state.search == "" ? (
-                    <View style={[com.aic,com.hh9]}>
+                    <View style={[com.aic,com.hh9,{marginTop:50}]}>
                         <View style={[com.row,com.mgb15]}>
                             <Text style={[com.cbe,com.ft5]}>______</Text>
                             <Text style={[com.cbe,com.mglr10]}>搜索内容</Text>
