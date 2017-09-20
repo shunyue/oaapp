@@ -277,6 +277,11 @@ export default class app extends Component {
                             underlineColorAndroid="transparent"
                         />
                     </View>
+
+                    <TouchableHighlight
+                        onPress={()=>this.formiconlist()}
+                        underlayColor="#d5d5d5"
+                    >
                     <View style={[styles.module_name,styles.module_]}>
                         <Text style={{marginRight:15}}>使用范围</Text>
                         <TextInput
@@ -287,6 +292,7 @@ export default class app extends Component {
                             underlineColorAndroid="transparent"
                         />
                     </View>
+                    </TouchableHighlight>
 
                     <View style={[styles.module_handle,styles.module_]}>
                         <Text style={{marginRight:10}}>删除</Text>
