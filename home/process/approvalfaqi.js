@@ -2,7 +2,6 @@
 *
 * 发起审批 选择表单发起
 * */
-
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -19,17 +18,11 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity,
 } from 'react-native';
-
-
-
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
 const screenW = Dimensions.get('window').width;
 export default class Approvalfaqi extends Component {
-
-
 
     //查询所有表单
     constructor(props) {
@@ -39,7 +32,6 @@ export default class Approvalfaqi extends Component {
             dataSource: ds,
             load:false,
             isModalVisible: false//下拉选择分类
-
         };
     }
 
@@ -48,7 +40,6 @@ export default class Approvalfaqi extends Component {
         this.setState({isModalVisible: visible});
     }
 
-
     //耗时操作放在这里面
     componentDidMount(){
         this.getNet();
@@ -56,20 +47,20 @@ export default class Approvalfaqi extends Component {
 
     getNet(){
         var url = config.api.base + config.api.selectform;
-        request.get(url)
-            .then((responseText)=>{
-                //Alert.alert(JSON. stringify(responseText));
+        request.post(url,{
+            company_id: this.props.navigation.state.params.company_id,//公司id
+            user_id:this.props.navigation.state.params.user_id,//登录者id
+        }).then((responseText) => {
+            if(responseText.sing==1){
                 this.setState({
                     load: true,
-                    dataSource: this.state.dataSource.cloneWithRows(responseText),
-                                })
-
-            }).catch((error)=>{
+                    dataSource: this.state.dataSource.cloneWithRows(responseText.data),
+                })
+            }
+        }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
-        }).done();
+        })
     }
-
-
 
 
     back() {
@@ -123,9 +114,6 @@ export default class Approvalfaqi extends Component {
 
                         {/*内容主题*/}
                         <View style={[styles.divCom]}>
-
-
-
 
                             <ListView
                                 enableEmptySections={true}

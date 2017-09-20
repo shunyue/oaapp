@@ -60,9 +60,6 @@ export default class Approval extends Component {
 
     //自己发起 待审批 和 待我审批
     getNet(){
-
-
-
         var url = config.api.base + config.api.select_approve;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
@@ -75,7 +72,6 @@ export default class Approval extends Component {
                     listview:responseText.data,
                 })
             }
-
 
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
