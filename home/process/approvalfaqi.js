@@ -1,3 +1,8 @@
+/*
+*
+* 发起审批 选择表单发起
+* */
+
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -73,7 +78,7 @@ export default class Approvalfaqi extends Component {
 
     //添加模板
     newBulidForm() {
-        this.props.navigation.navigate('NewBulidForm')
+        this.props.navigation.navigate('NewBulidForm',{company_id:this.props.navigation.state.params.company_id})
     }
 
 

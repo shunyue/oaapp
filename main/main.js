@@ -1,3 +1,7 @@
+/*
+* 底部菜单和导航
+*
+* */
 import React, { Component } from 'react';
 import { AppRegistry,
     ListView,
@@ -15,9 +19,7 @@ import Chat from '../chat/chat';
 import Customer from '../customer/customer';
 import Daily from '../daily/daily';
 import My from '../my/my';
-
 import Page from '../home/page';
-
 import KaoQin from '../home/kaoqin/kaoqin';
 import KaoQinHistory from '../home/kaoqin/kaoqianHistory';
 import History from '../home/kaoqin/history';
@@ -44,8 +46,6 @@ import Search from '../my/departManager/search'
 import HomePlanPerformance from '../home/homePlanPerformance';
 
 //客户
-
-
 import GongHai from '../customer/gonghai/gonghai';
 import SearchGonghai from '../customer/gonghai/searchGonghai';
 import GongHaiDetail from '../customer/gonghai/gonghaiDetail';
@@ -53,7 +53,6 @@ import addThread from '../customer/thread/addThread';
 import AddCustomer from '../customer/addCustomer';
 import AddContacts from '../customer/addContacts';
 import ChoseAddress from '../customer/choseAddress';
-
 import FollowRecord from '../customer/followRecord';
 import AddDaily from '../customer/daily/addDaily';
 import DailyDescribe from '../customer/daily/dailyDescribe';
@@ -61,20 +60,17 @@ import ChooseContacts from '../customer/chooseContacts';
 import Classify from '../customer/classify';
 import CustomerDetail from '../customer/customerDetail';
 import CustomerSearch from '../customer/customerSearch';
-
 import FollowPeople from '../customer/flollowPeople'
 import UserMsg from '../customer/userMsg'
 import Form from '../customer/forms';
 import Remind from '../customer/daily/remind';
 import SearchCustomer from '../customer/searchCustomer';
-
 //线索
 import SearchThread from '../customer/thread/searchThread'
 import Thread from '../customer/thread/thread';
 import ThreadDetail from '../customer/thread/threadDetail'
 import threadClassify from '../customer/thread/threadClassify';
 import FollowContent from '../customer/thread/followContent';
-
 
 //沟通
 import Organization from '../chat/organization';
@@ -91,14 +87,9 @@ import ChatSetting from '../chat/chatSetting';
 import ChatGroup from '../chat/chatGroup';
 import ApplyNotice from '../chat/applyNotice';
 import RequestPeople from '../chat/requestPeople';
-
 import ChatMessage from '../chat/chatMessage'
 
-
-
-
 //邱志娟
-
 //首页-公告
 import Notice from '../home/notice/notice';
 //公告-nav-发公告
@@ -109,8 +100,6 @@ import NoticeDetail from '../home/notice/noticeDetail';
 import SendNoticeNextStep from '../home/notice/sendNoticeNextStep';
 //预览公告
 import NoticePreview from '../home/notice/noticePreview';
-
-
 
 //日志
 import Log from '../home/log/log';
@@ -128,7 +117,6 @@ import LogSearch from '../home/log/logSearch';
 import PersonalLog from '../home/log/personalLog';
 import SubordinateLog  from '../home/log/subordinateLog';
 import SubordinateLogDetail from '../home/log/subordinateLogDetail';
-
 
 //日程
 //日程新建拜访,任务,会议,培训
@@ -203,6 +191,8 @@ import approve_filtrate_approvetype from '../home/process/approve_filtrate_appro
 import faqi_people from '../home/process/faqi_people';
 //审批筛选 query后的页面
 import approve_query from '../home/process/approve_query';
+//新增表单 选择可以发起的部门
+import select_dp from '../home/process/select_dp';
 //合同  选择客户
 import select_customer from '../home/contract/select_customer';
 //合同  选择客户联系人
@@ -240,7 +230,6 @@ import checkbox_select from '../home/process/checkbox_select';
 //表单 多选框跳转 预览
 import checkbox_select_yulan from '../home/process/checkbox_select_yulan';
 
-
 //周飞飞
 //首页-目标
 import Aim from '../home/aim';
@@ -269,7 +258,6 @@ import PositionInput from  '../my/Info/positionInput';//添加职位名称
 import ModifyTel from  '../my/Info/modifyTel';//修改手机号
 import ModifyEmail from  '../my/Info/modifyEmail';//修改邮箱
 import ModifyAddress from  '../my/Info/modifyAddress';//修改地址
-
 //考勤管理     周飞飞
 import AttendanceManage from '../my/attendanceManage';//考勤管理总页面
 import AttendanceWhiteDetail from '../my/attendanceWhiteDetail';//考勤白名单
@@ -282,7 +270,6 @@ import ChooseDepart from '../my/chooseDepart';   //  新建分组中根据部门
 import ChooseStaffs from '../my/chooseStaffs';   //  新建分组中根据员工选择使用范围   (考勤管理的新建分组中的根据员工选择）
 //员工定位管理    周飞飞
 import OrientationManage from '../my/orientationManage';
-
 //个人设置        周飞飞
 import Mine from  '../my/mine';  //个人设置总页面
 import AccountSafe from  '../my/accountsafe';//账号与安全
@@ -425,9 +412,7 @@ const app = StackNavigator({
 
 
     //客户
-
     GongHai: {screen:GongHai,navigationOptions: {header: null}},
-
     addThread: {screen:addThread,navigationOptions: {header: null}},
     AddCustomer: {screen:AddCustomer,navigationOptions: {header: null}},
     AddContacts: {screen:AddContacts,navigationOptions:{header:null}},
@@ -473,18 +458,12 @@ const app = StackNavigator({
 
 
     //邱志娟
-
-
     //公告
-
     Notice: {screen: Notice, navigationOptions: {header: null}},
     NoticeDetail: {screen: NoticeDetail, navigationOptions: {header: null}},
     SendNoticeNextStep: {screen: SendNoticeNextStep, navigationOptions: {header: null}},
     SendNotice: {screen: SendNotice, navigationOptions: {header: null}},
-
     NoticePreview: {screen: NoticePreview, navigationOptions: {header: null}},
-
-
     //日志
     Log: {screen: Log, navigationOptions: {header: null}},
     LogTodyReport: {screen: LogTodyReport, navigationOptions: {header: null}},
@@ -495,7 +474,6 @@ const app = StackNavigator({
     PersonalLog:{screen: PersonalLog, navigationOptions: {header: null}},
     SubordinateLog:{screen:SubordinateLog, navigationOptions: {header: null}},
     SubordinateLogDetail:{screen:SubordinateLogDetail, navigationOptions: {header: null}},
-
     //日程
     //日程页面
     AddVisit: {screen: AddVisit, navigationOptions: {header: null}},
@@ -517,9 +495,6 @@ const app = StackNavigator({
     DailyExecutor:{screen:DailyExecutor,navigationOptions: {header: null}},
     DailyReport:{screen:DailyReport,navigationOptions: {header: null}},
     MyDailyClassify:{screen:MyDailyClassify,navigationOptions: {header: null}},
-
-
-
 
 
     //彭黎明
@@ -564,6 +539,7 @@ const app = StackNavigator({
     performance_constrast: {screen: performance_constrast,navigationOptions: {header: null}},
     checkbox_select: {screen: checkbox_select,navigationOptions: {header: null}},
     checkbox_select_yulan: {screen: checkbox_select_yulan,navigationOptions: {header: null}},
+    select_dp: {screen: select_dp,navigationOptions: {header: null}},
 
 
     //周飞飞

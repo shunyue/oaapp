@@ -1,4 +1,6 @@
-//审批首页
+/*
+* 审批首页
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,

@@ -150,6 +150,8 @@ module.exports = {
         contract_returnmoney_approve: 'oa/index.php?c=FormInterface&a=contract_returnmoney_approve',
         //根据合同id 查 合同的创作者
         create_idby_contract_id: 'oa/index.php?c=ContractInterface&a=create_idby_contract_id',
+        //新增表单中选择部门
+        form_select_dp: 'oa/index.php?c=FormInterface&a=form_select_dp',
 
 
         //同意审批
