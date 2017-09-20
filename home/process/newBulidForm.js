@@ -37,7 +37,8 @@ export default class app extends Component {
             form_name:'', //表单名称
             form_icon:'http://118.178.241.223/oa/icon_shenpi/ling.png', //表单图标
             form_dec:'',  //表单描述
-            form_fanwei:'',//表单使用范围
+            form_fanwei_id:'',//表单使用范围 部门id
+            form_fanwei_name:'',//表单使用范围 部门名称
             form_field:[],//表单字段
             sing_array:[],//字段标识
             sing_array_new:[]
@@ -63,23 +64,19 @@ export default class app extends Component {
     formiconlist() {
         this.props.navigation.navigate('Formiconlist')
     };
-
     //选择部门
     select_dp(){
-        this.props.navigation.navigate('select_dp',{company_id:this.props.navigation.state.params.company_id});
+        this.props.navigation.navigate('select_dp',{company_id:this.props.navigation.state.params.company_id,selected_dp:this.state.form_fanwei_id});
     }
-
 
     //表单字段编辑
     formfieldedit(id){
         this.props.navigation.navigate('Formfieldedit',{field_type:id})
     };
-
     //设置栏位显示
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
-
     //接收监听返回的字段名 字段类型 是否必填
     componentDidMount() {
         this.subscription = DeviceEventEmitter.addListener('field_info',(value) => {
@@ -115,6 +112,20 @@ export default class app extends Component {
                 form_icon:value,
             });
         })
+
+        //接收部门
+        this.subscription = DeviceEventEmitter.addListener('dp',(value) => {
+            var dp_id=[];
+            var dp_name=[];
+            for(var i in value ){
+                dp_id.push(value[i].id);
+                dp_name.push(value[i].depart_name);
+            }
+            this.setState({
+                form_fanwei_id:dp_id.join(","),
+                form_fanwei_name:dp_name.join(","),
+            });
+        })
     }
     componentWillUnmount() {
         this.subscription.remove();
@@ -136,8 +147,6 @@ export default class app extends Component {
         }
         return false;
     }
-
-
 
     //保存表单
     save(){
@@ -174,10 +183,11 @@ export default class app extends Component {
 
         var url = config.api.base + config.api.addform;
         request.post(url,{
+            company_id:this.props.navigation.state.params.company_id,
             name: this.state.form_name,//表单名称
             icon: this.state.form_icon,//表单图标
             dec: this.state.form_dec,//表单描述
-            fanwei: this.state.form_fanwei,//表单范围
+            fanwei: this.state.form_fanwei_id,//表单范围
             field: form_field_array,//表单字段
         }).then((responseJson) => {
             if(responseJson.sing==0){
@@ -295,8 +305,7 @@ export default class app extends Component {
                         <Text style={{marginRight:15}}>使用范围</Text>
                         <TextInput
                             style={styles.input_text}
-                            onChangeText={(form_fanwei) => this.setState({form_fanwei})}
-                            placeholder ={this.state.form_fanwei}
+                            placeholder ={this.state.form_fanwei_name}
                             placeholderTextColor={"#aaaaaa"}
                             underlineColorAndroid="transparent"
                             editable={false}

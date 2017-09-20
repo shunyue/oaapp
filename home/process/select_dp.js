@@ -23,8 +23,8 @@ import config from '../../common/config';
 import toast from '../../common/toast';
 import request from '../../common/request';
 import CheckBox from 'react-native-check-box'
-
 const ScreenW = Dimensions.get('window').width;
+
 export default class faqi_people  extends Component {
     constructor(props) {
         super(props);
@@ -32,20 +32,15 @@ export default class faqi_people  extends Component {
         this.state = {
             checkBoxData: [],
             checkedData: [],
-
             select_all: 'http://118.178.241.223/oa/icon_shenpi/select.png',
         }
     }
-
     componentDidMount() {
         var url = config.api.base + config.api.form_select_dp;
         const {params} = this.props.navigation.state;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,
-            user_id: this.props.navigation.state.params.user_id,
         }).then((result)=> {
-
-           // alert(JSON.stringify(result));
             if(result.sing == 1) {
                 this.setState({
                     userData: result.data
@@ -60,8 +55,6 @@ export default class faqi_people  extends Component {
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         });
-
-
     }
 
     initCheckBoxData(checkbox){
@@ -70,19 +63,11 @@ export default class faqi_people  extends Component {
         }
     }
 
-
     //判断是否 多选框选中
     contains(arr,id) {
-        //var i = arr.length;
-        //while (i --) {
-        //    if(arr[i].id === id) {
-        //        return true;
-        //    }
-        //}
-        //return false;
-
-        for(var i in arr ){
-            if(arr[i].id==id){
+        var arr1=arr.split(",");
+        for(var i in arr1 ){
+            if(arr1[i]==id){
                 return true;
             }
         }
@@ -93,26 +78,20 @@ export default class faqi_people  extends Component {
 
     //确定
     _confirm() {
-
         for (var i = 0; i < this.state.checkBoxData.length; i++) {
             if(this.state.checkBoxData[i]!=null && this.state.checkBoxData[i].state.isChecked == true){
                 this.state.checkedData.push(this.state.checkBoxData[i].props.value);
             }
         }
-
-
        // alert(JSON.stringify(this.state.checkedData))
-       // console.log(this.state.checkedData);
-        DeviceEventEmitter.emit('custom', this.state.checkedData);
+        DeviceEventEmitter.emit('dp', this.state.checkedData);
         this.props.navigation.goBack(null);
     }
-
 
     //id 是 选择值 在选项数组中的排序
     _pressUser(id) {
         this.state.checkBoxData[id].onClick()
     }
-
 
     //全选
     select_all(){
@@ -137,20 +116,16 @@ export default class faqi_people  extends Component {
 
     render() {
 
-
         var userData = this.state.userData;
-
         var k=-1;
         var userList = [];
         var isChecked = false;
 
         for(var i in userData) {
-
-
             var user = [];
             for(var j in userData[i]) {
                 k+=1;
-                var data = this.props.navigation.state.params.selected_custom;
+                var data = this.props.navigation.state.params.selected_dp;
                 if(this.contains(data,userData[i][j].id)) {
                     isChecked = true;
                 }else{
@@ -172,17 +147,14 @@ export default class faqi_people  extends Component {
                                     unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
                                 />
 
-                                <Text>{userData[i][j].cus_name}</Text>
+                                <Text>{userData[i][j].depart_name}</Text>
                             </View>
                         </View>
                     </TouchableHighlight>
                 );
             }
-
             userList.push(
-
                 <View key={i}>
-
                     <View style={styles.departLevel}>
                         <Text style={styles.departText}>{userData[i][0].first_char}</Text>
                     </View>
@@ -192,12 +164,11 @@ export default class faqi_people  extends Component {
         }
 
 
-
         return (
             <View style={styles.container}>
                 <Header navigation = {this.props.navigation}
                         title = "请选择部门"/>
-                <View style={styles.centerContent}>
+                {/* <View style={styles.centerContent}>
                     <View style={styles.searchContainer}>
                         <Image style={styles.searchImg}
                                source={require('../../imgs/search.png')}/>
@@ -208,7 +179,7 @@ export default class faqi_people  extends Component {
                             style={styles.inputStyle}
                         />
                     </View>
-                </View>
+                </View>*/}
                 <ScrollView>
 
                     <TouchableHighlight key={j}
@@ -220,9 +191,6 @@ export default class faqi_people  extends Component {
                     <Text>全选</Text>
                     </View>
                     </TouchableHighlight>
-
-
-
                     {userList}
                 </ScrollView>
                 <View style={styles.bottomContent}>
