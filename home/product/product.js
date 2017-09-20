@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
 
     eleTopCom: {//父级-块
         flexDirection: 'row',
-        height:40,
+        height:50,
         alignItems:'center',
         justifyContent: 'space-between',
     },
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     elefontCom1:{//子级-E
         fontSize:10,
         color:'#969696',
-        marginTop:3,
+        marginTop:5,
     },
 
 

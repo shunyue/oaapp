@@ -25,7 +25,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import CustomPicker from '../../common/customPicker';
-
+import Header from '../../common/header';
 export default class newBulidProduct extends Component {
 
 
@@ -118,29 +118,10 @@ export default class newBulidProduct extends Component {
     render() {
         return (
             <View style={styles.body}>
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>新增产品</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.addproduct()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  onPress={this.addproduct.bind(this)} style={styles.navFont}>确定</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="新增产品"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={this.addproduct.bind(this)}/>
                 {/*内容主题*/}
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
@@ -236,7 +217,7 @@ export default class newBulidProduct extends Component {
 
 
 
-                            <View style={[styles.divRowSelf,styles.divRowSelfBottomBorder]}>
+                            <View style={[styles.divRowSelf,styles.divRowSelfBottomBorder,{height:60}]}>
                                 <Text style={[styles.divFontCom]}>产品描述</Text>
                                 <TextInput
                                     style={styles.inputStyle}
@@ -420,10 +401,11 @@ const styles = StyleSheet.create({
         borderBottomColor:'#E9E9E9',
     },
     inputStyle: {
-        width:screenW*0.6,
+        width:screenW*0.7,
         fontSize:12,
-        color:"#eee",
+        color:"#333",
         marginLeft:screenW*0.05,
+        height:30,
     },
 
     imgStyle: {

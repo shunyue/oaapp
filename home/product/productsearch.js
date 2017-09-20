@@ -160,6 +160,7 @@ export default class app extends Component {
 
             return (
                 <View style={styles.container}>
+                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                     <View style={styles.search_bj}>
                         <TouchableOpacity onPress={()=>this.OpBack()}>
                             <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     },
     input_text:{
         width:screenW*0.59,
-        height:24,
+        height:30,
         padding:0
     },
 
