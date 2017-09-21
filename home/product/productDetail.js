@@ -177,28 +177,24 @@ export default class ProductDetail extends Component {
             animationType={"fade"}
             transparent={true}
             visible={this.state.show}
-            onRequestClose={() => {alert("Modal has been closed.")}}
+            onRequestClose={() => {this.setVisibleModal(!this.state.show)}}
           >
-            <View style={[{width:screenW,height:screenH*0.76,backgroundColor:'#555',opacity:0.6},]}>
-              <TouchableOpacity style={{flex:1,height:screenH}} onPress={() => {
-  this.setVisibleModal(!this.state.show)
-}}></TouchableOpacity>
+            <View style={{flex:1,height:screenH,backgroundColor:'#555',opacity:0.6}}>
+              <TouchableOpacity style={{flex:1,height:screenH,backgroundColor:'#555',opacity:0.6}} onPress={() => {this.setVisibleModal(!this.state.show)}}></TouchableOpacity>
             </View>
-            <View style={[wds.addCustomer,com.ROW,com.JCC]}>
-              <View style={wds.addCustomer_card}>
-                <TouchableOpacity style={[com.PD10]}
+            <View style={{height:150,backgroundColor:'#fff',alignItems:'center'}}>
+                <TouchableOpacity style={{height:50,alignItems:'center',justifyContent:'center'}}
                                   onPress={() => { this.setVisibleModal(!this.state.show);this.edit_product()}}>
-                  <Text style={{color:'#333'}}>编辑产品</Text>
+                    <Text style={{color:'#333'}}>编辑产品</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[com.PD10]}
+                <TouchableOpacity style={{height:50,alignItems:'center',justifyContent:'center'}}
                                   onPress={() => { this.setVisibleModal(!this.state.show);this.del_product()}}>
-                  <Text style={{color:'#333'}}>删除产品</Text>
+                    <Text style={{color:'#333'}}>删除产品</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[com.PD10,com.AIC]}
+                <TouchableOpacity style={{height:50,alignItems:'center',justifyContent:'center'}}
                                   onPress={() => { this.setVisibleModal(!this.state.show)}}>
-                  <Text style={{color:'#555'}}>取消</Text>
+                    <Text style={{color:'#555'}}>取消</Text>
                 </TouchableOpacity>
-              </View>
             </View>
           </Modal>
         </View>
@@ -318,12 +314,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 5
-  },
-  comLeft: {//次父级-次级块
-
-  },
-  comRight: {//次父级-次级块
-
   },
   elefontCom: {//子级-E
     fontSize: 10,

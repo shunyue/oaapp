@@ -21,7 +21,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import CustomPicker from '../../common/customPicker';
-
+import Header from '../../common/header';
 export default class Productedit extends Component {
 
     constructor(props) {
@@ -151,30 +151,10 @@ export default class Productedit extends Component {
 
         return (
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>编辑产品</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.addproduct()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  onPress={this.addproduct.bind(this)} style={styles.navFont}>确定</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="编辑产品"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={()=>this.addproduct()}/>
                 {/*内容主题*/}
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
@@ -224,16 +204,18 @@ export default class Productedit extends Component {
                             >
                             <View style={[styles.divRowCom,styles.divRowSelfBottomBorder]}>
                                 <Text style={[styles.divFontCom]}>产品分类</Text>
-                                <TextInput
-                                    style={styles.inputStyle}
-                                    underlineColorAndroid={'transparent'}
-                                    editable={false}
+                                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:screenW*0.7}}>
+                                    <TextInput
+                                        style={styles.inputStyle}
+                                        underlineColorAndroid={'transparent'}
+                                        editable={false}
 
-                                    onChangeText={(type) => this.setState({type})}
-                                    placeholder="请选择产品分类"
-                                    value={this.state.type_text}
-                                />
-                                <Text>></Text>
+                                        onChangeText={(type) => this.setState({type})}
+                                        placeholder="请选择产品分类"
+                                        value={this.state.type_text}
+                                    />
+                                    <Image  style={{width:15,height:15,tintColor:'#666'}} source={require('../../imgs/customer/arrow_r.png')}/>
+                                </View>
                             </View>
                             </TouchableHighlight>
 
@@ -415,13 +397,12 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'#F3F3F3',
         height: 40,
-        flex:1,
         flexDirection:'row',
-        justifyContent:'space-between',
         alignItems: 'center'
     },
     divFontCom:{//子级-E
         color:'#939393',
+        width:screenW*0.2
     },
     divRowSelf:{//私有级
         paddingLeft:15,
@@ -441,6 +422,6 @@ const styles = StyleSheet.create({
     },
     inputStyle: {
         height: 40,
-        width:280
+        width:screenW*0.6
     }
 });

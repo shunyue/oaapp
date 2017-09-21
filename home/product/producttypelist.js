@@ -146,7 +146,7 @@ export default class Producttypelist extends Component {
 
                                     <View style={[styles.comRight]}>
 
-                                       <RadioGroup onSelect = {(index, value) => this.onSelect(index, value)}>
+                                       <RadioGroup color={'#aaa'} activeColor={'#e15151'} onSelect = {(index, value) => this.onSelect(index, value)}>
                                            {list}
                                       </RadioGroup>
 
@@ -192,34 +192,16 @@ export default class Producttypelist extends Component {
 
                 <View style={styles.body}>
                     {/*导航栏*/}
-                    <View style={styles.nav}>
-                        <TouchableHighlight
-                            onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image source={require('../../imgs/navxy.png')}/>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                            </View>
-
-                        </TouchableHighlight>
-                        <Text style={styles.fSelf}>选择分类</Text>
-                        <TouchableHighlight
-                            onPress={()=>this.typeadd()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image style={[styles.navltysImg]} source={require('../../imgs/navtx.png')}/>
-                            </View>
-
-                        </TouchableHighlight>
-                    </View>
+                    <Header title="选择分类"
+                            navigation={this.props.navigation}
+                            source={require('../../imgs/navtx.png')}
+                            onPress={()=>this.typeadd()}/>
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
 
 
-                            <View style={[styles.divCom]}>
+                            <View style={[styles.divCom1]}>
 
                                 <Text>暂无数据</Text>
                             </View>
@@ -324,6 +306,12 @@ const styles = StyleSheet.create({
     //内容模块
     divCom: {//祖先级-区域
         flex:1,
+    },
+    divCom1: {//祖先级-区域
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:50
     },
     rowCom: {//祖级-行
         paddingLeft:15,
