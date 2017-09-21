@@ -16,6 +16,7 @@ import {
     TouchableHighlight,
     TouchableOpacity,
     DeviceEventEmitter,
+    Platform,
     } from 'react-native';
 
 import Picker from 'react-native-picker';
@@ -295,7 +296,7 @@ export default class app extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-
+                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
                     <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=> this.props.navigation.goBack(null)}>
                         <Text style={styles.back_text}>取消</Text>
@@ -422,7 +423,8 @@ const styles = StyleSheet.create({
         marginLeft:6
     },
     formHeader:{
-        fontSize:16
+        fontSize:16,
+        color:'#333'
     },
     customerName:{
         width:screenW,

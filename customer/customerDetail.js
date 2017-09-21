@@ -605,7 +605,7 @@ export default class app extends Component {
                                     <TouchableHighlight underlayColor={'#fff'}
                                                    onPress={() => { navigate('AddDaily', {title: '拜访',customer :params.customer,user_id: params.user_id,company_id: params.company_id});this.setState({richeng:!this.state.richeng})}}>
                                         <View style={{width:screenW*0.24,alignItems:'center',}}>
-                                            <Image style={{width:40,height:40}}
+                                            <Image style={{width:40,height:40,marginBottom:10}}
                                                    source={require('../imgs/icon_shenpi/icon_1.png' )}/>
                                             <Text>新增拜访</Text>
                                         </View>
@@ -613,7 +613,7 @@ export default class app extends Component {
                                     <TouchableHighlight underlayColor={'#fff'}
                                                onPress={() => {  navigate('AddDaily', {title: '任务',customer :params.customer,user_id: params.user_id,company_id: params.company_id});this.setState({richeng:!this.state.richeng})}}>
                                        <View style={{width:screenW*0.25,alignItems:'center',}}>
-                                           <Image style={{width:40,height:40}}
+                                           <Image style={{width:40,height:40,marginBottom:10}}
                                                   source={require('../imgs/icon_shenpi/icon_2.png' )}/>
                                            <Text>新增任务</Text>
                                        </View>
@@ -621,7 +621,7 @@ export default class app extends Component {
                                     <TouchableHighlight underlayColor={'#fff'}
                                                onPress={() => {  navigate('AddDaily', {title: '会议',customer :params.customer,user_id: params.user_id,company_id: params.company_id});this.setState({richeng:!this.state.richeng})}}>
                                         <View style={{width:screenW*0.25,alignItems:'center',}}>
-                                            <Image style={{width:40,height:40}}
+                                            <Image style={{width:40,height:40,marginBottom:10}}
                                                    source={require('../imgs/icon_shenpi/icon_3.png' )}/>
                                             <Text>新增会议</Text>
                                         </View>
@@ -629,7 +629,7 @@ export default class app extends Component {
                                     <TouchableHighlight underlayColor={'#fff'}
                                                         onPress={() => {  navigate('AddDaily', {title: '培训',customer :params.customer,user_id: params.user_id,company_id: params.company_id});this.setState({richeng:!this.state.richeng})}}>
                                         <View style={{width:screenW*0.25,alignItems:'center',}}>
-                                            <Image style={{width:40,height:40}}
+                                            <Image style={{width:40,height:40,marginBottom:10}}
                                                    source={require('../imgs/icon_shenpi/icon_4.png' )}/>
                                             <Text>新增培训</Text>
                                         </View>
