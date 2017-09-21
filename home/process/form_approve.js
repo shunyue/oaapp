@@ -17,7 +17,7 @@ import {
     DeviceEventEmitter,
     Platform,
 } from 'react-native';
-
+import Header from '../../common/header';
 const screenH = Dimensions.get('window').height;
 const screenW = Dimensions.get('window').width;
 import config from '../../common/config';
@@ -246,16 +246,10 @@ export default class form_approve extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:16}}>{this.state.example_people_name}的{this.state.example_form_name}</Text>
-                </View>
+                <Header title={this.state.example_people_name+'的'+this.state.example_form_name}
+                        navigation={this.props.navigation}
+                       />
+
                 <ScrollView>
                     <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
                         <Image  style={{width:40,height:40,marginRight:5,borderRadius:25}}  source={{uri:this.state.avatar}}/>
@@ -265,7 +259,7 @@ export default class form_approve extends Component {
                         </View>
                     </View>
                     <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
-                        <Image source={{uri:this.state.approve_img}}  style={{width: 80, height: 80}} tintColor={'#37915f'}/>
+                        <Image source={{uri:this.state.approve_img}}  style={{width: 80,height:80,tintColor:'#37915f'}} />
                     </View>
                     {formlist}
 

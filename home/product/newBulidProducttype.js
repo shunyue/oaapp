@@ -15,7 +15,7 @@ import {
     DeviceEventEmitter,
     Picker,
 } from 'react-native';
-
+import Header from '../../common/header';
 
 const screenW = Dimensions.get('window').width;
 import config from '../../common/config';
@@ -70,30 +70,10 @@ export default class newBulidProducttype extends Component {
     render() {
         return (
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>新增类型</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.addproduct()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  onPress={this.addproducttype.bind(this)} style={styles.navFont}>确定</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="新增类型"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={this.addproducttype.bind(this)}/>
                 {/*内容主题*/}
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>

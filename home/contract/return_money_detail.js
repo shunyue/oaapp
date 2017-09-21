@@ -24,7 +24,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import Modal from 'react-native-modal'
-
+import Header from '../../common/header';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 
@@ -156,16 +156,16 @@ export default class return_money_detail extends Component {
             <Image  style={{width:22,height:22,margin:2}} source={require('../../imgs/customer/backMoney.png')}/>
         </View>
             <View>
-            <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',width:screenW*0.88,paddingTop:4,paddingBottom:10}}>
-        <Text style={{color:'#333'}}>回款记录</Text>
+            <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',width:screenW*0.88,paddingTop:4,paddingBottom:10,paddingRight:screenW*0.06}}>
+            <Text style={{color:'#333'}}>回款记录</Text>
             <Text style={{color:'#333'}}>{this.state.return_money_data[i]['time']}</Text>
             </View>
-            <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',width:screenW*0.88,paddingBottom:10}}>
-        <Text style={{color:'#333'}}>预计金额</Text>
+            <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',width:screenW*0.88,paddingBottom:10,paddingRight:screenW*0.06}}>
+            <Text style={{color:'#333'}}>预计金额</Text>
             <Text style={{color:'#333'}}>{this.state.return_money_data[i]['return_price']}元</Text>
             </View>
 
-            <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',width:screenW*0.88,}}>
+            <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',width:screenW*0.88,paddingLeft:screenW*0.06,paddingRight:screenW*0.06}}>
         <Text style={{color:'#333'}}>回款审核</Text>
             <Text style={{color:'#333'}}>{approve_status}</Text>
             </View>
@@ -189,25 +189,12 @@ export default class return_money_detail extends Component {
         const {state} = this.props.navigation;
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>回款</Text>
-
-                    {this.state.display_new_return_money?
-                    <TouchableOpacity style={[styles.goRight,styles.go]} onPress={() => { this.setState({modalVisible: !this.state.modalVisible})}}>
-                        <Image style={{width:20,height:20,marginTop:2}} source={require('../../imgs/customer/add.png')}/>
-                    </TouchableOpacity>:null}
-
-
-
-                </View>
-
+                <Header title="回款"
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/navtx.png')}
+                        onPress={() => { this.setState({modalVisible: !this.state.modalVisible})}}/>
                 <ScrollView>
-                <View style={{width:screenW,height:screenH*0.2,backgroundColor:'#fff',marginTop:8,marginBottom:8,justifyContent:'center',alignItems:'center'}}>
+                <View style={{width:screenW,height:screenH*0.15,backgroundColor:'#fff',marginTop:8,justifyContent:'center',alignItems:'center'}}>
                     <Text>回款合计(元)</Text>
                     <Text style={{fontSize:20,color:'#e15151',marginTop:10}}>{this.state.return_total_price }</Text>
                 </View>
@@ -216,7 +203,7 @@ export default class return_money_detail extends Component {
                         <Text style={{color:'#333'}}>合同：{this.state.contract_name}</Text>
                         <Text></Text>
                     </View>
-                    <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',borderTopWidth:1,padding:10}}>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',borderColor:'#d5d5d5',borderTopWidth:1,height:30,alignItems:'center',paddingLeft:15,paddingRight:15}}>
                         <Text style={{color:'#333'}}>总计划</Text>
                         <Text style={{color:'#333'}}>{this.state.contract_jine}</Text>
                     </View>
@@ -235,7 +222,7 @@ export default class return_money_detail extends Component {
                         animationType={"fade"}
                         transparent={true}
                         visible={this.state.modalVisible}
-                        onRequestClose={() => {alert("Modal has been closed.")}}
+                        onRequestClose={() => {this.setState({modalVisible: !this.state.modalVisible})}}
                     >
                         <TouchableWithoutFeedback
                             onPress = {()=>this.setState({modalVisible: !this.state.modalVisible})}
@@ -250,11 +237,13 @@ export default class return_money_detail extends Component {
                                         <Image style={styles.icon_2} source={require('../../imgs/customer/background_san.png')}/>
                                     </View>
 
-                                    <TouchableOpacity style={[styles.model_up_in]} onPress={() => {this.setState({modalVisible: !this.state.modalVisible});this.new_return_money()}}>
+                                    <TouchableHighlight underlayColor={'transparent'}  onPress={() => {this.setState({modalVisible: !this.state.modalVisible});this.new_return_money()}}>
+                                        <View style={[styles.model_up_in]}>
+                                            <Image style={styles.icon_1} source={require('../../imgs/customer/add_business.png')}/>
+                                            <Text style={styles.text_color}> 新建回款记录</Text>
 
-                                        <Image style={styles.icon_1} source={require('../../imgs/customer/add_business.png')}/>
-                                        <Text style={styles.text_color}> 新建回款记录</Text>
-                                    </TouchableOpacity>
+                                        </View>
+                                    </TouchableHighlight>
 
 
                                 </View>
@@ -277,50 +266,15 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#e6e6e6',
     },
-    container: {
-        height: 40,
-        flexDirection :'row',
-        alignItems:'center',
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor:'#bbb',
-        justifyContent:'center',
-    },
-    /*头部*/
-    go:{
-        position:'absolute',
-        top:8
-    },
-    goback:{
-        left:20,
-        flexDirection :'row',
-    },
-    goRight:{
-        right:20
-    },
-    back_icon:{
-        width:10,
-        height:17,
-        marginTop: 3
-    },
-    back_text:{
-        color:'#e15151',
-        fontSize: 16,
-        marginLeft:6
-    },
-    formHeader:{
-        fontSize:16,
-        color:'#333'
-    },
     model:{
         width:130,
         height:40,
         position: 'absolute',
-        right:screenW*0.09,
-        top:screenH*0.1,
+        right:10,
+        top:Platform.OS==='ios'?70:60,
         backgroundColor:'#000',
         opacity:0.6,
-        borderRadius:6,
+        borderRadius:3,
     },
     model_border:{
         borderBottomWidth: 1,
@@ -329,15 +283,16 @@ const styles = StyleSheet.create({
     },
     model_up:{
         width:130,
-        height:90,
+        height:80,
         position: 'absolute',
-        right:screenW*0.09,
-        top:screenH*0.1,
+        right:10,
+        top:Platform.OS==='ios'?70:60,
     },
     model_up_in:{
-        padding:10,
+        height:40,
         flexDirection:'row',
         justifyContent:'center',
+        alignItems:'center',
     },
     text_color:{
         color:'#fff',

@@ -21,7 +21,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
-
+import Header from '../../common/header';
 
 export default class Producttypelist extends Component {
 
@@ -126,30 +126,10 @@ export default class Producttypelist extends Component {
             return (
 
                 <View style={styles.body}>
-                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                    {/*导航栏*/}
-                    <View style={styles.nav}>
-                        <TouchableHighlight
-                            onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image source={require('../../imgs/navxy.png')}/>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                            </View>
-
-                        </TouchableHighlight>
-                        <Text style={styles.fSelf}>选择分类</Text>
-                        <TouchableHighlight
-                            onPress={()=>this.typeadd()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Text>添加分类 </Text>
-                            </View>
-
-                        </TouchableHighlight>
-                    </View>
+                    <Header title="选择分类"
+                            navigation={this.props.navigation}
+                            rightText="添加分类"
+                            onPress={()=>this.typeadd()}/>
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>

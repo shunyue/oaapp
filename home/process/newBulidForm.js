@@ -1,7 +1,6 @@
 /*
 * 新建表单模板
 * */
-
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -38,21 +37,19 @@ export default class app extends Component {
             form_name:'', //表单名称
             form_icon:'http://118.178.241.223/oa/icon_shenpi/ling.png', //表单图标
             form_dec:'',  //表单描述
-            form_fanwei:'',//表单使用范围
+            form_fanwei_id:'',//表单使用范围 部门id
+            form_fanwei_name:'',//表单使用范围 部门名称
             form_field:[],//表单字段
-
             sing_array:[],//字段标识
             sing_array_new:[]
         };
     }
-
 
     OpBack() {
         this.props.navigation.goBack(null)
     }
     //预览
     goPage_yulan() {
-
         var form_field_array=[];
         for(var i in this.state.sing_array_new){
             for(var j in this.state.form_field){
@@ -61,25 +58,25 @@ export default class app extends Component {
                 }
             }
         }
-
         this.props.navigation.navigate('Formyulan',{form_field:form_field_array})
     };
     //表单图标
     formiconlist() {
         this.props.navigation.navigate('Formiconlist')
     };
+    //选择部门
+    select_dp(){
+        this.props.navigation.navigate('select_dp',{company_id:this.props.navigation.state.params.company_id,selected_dp:this.state.form_fanwei_id});
+    }
 
     //表单字段编辑
     formfieldedit(id){
         this.props.navigation.navigate('Formfieldedit',{field_type:id})
     };
-
     //设置栏位显示
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
-
-
     //接收监听返回的字段名 字段类型 是否必填
     componentDidMount() {
         this.subscription = DeviceEventEmitter.addListener('field_info',(value) => {
@@ -91,31 +88,24 @@ export default class app extends Component {
             var option3=value['option3'];
             var option4=value['option4'];
             var option5=value['option5'];
-
             //给表单字段赋值 二维数组添加一组数据
             //第一次添加 sing=1
             if(this.state.form_field.length==0){
                 this.state.form_field.push({sing:1,field_name: field_name,field_type:field_type,bitian:bitian,option1:option1,option2:option2,option3:option3,option4:option4,option5:option5});
-
                 this.state.sing_array_new.push(1);
             }else{
                 //第一次后 sing值最大的加1 赋值
-
                 for(var i in  this.state.form_field){
                     this.state.sing_array.push(this.state.form_field[i]['sing']);
                 }
-
                 var sing_max= Math.max.apply(null, this.state.sing_array)-(-1);
                 this.state.form_field.push({sing:sing_max,field_name: field_name,field_type:field_type,bitian:bitian,option1:option1,option2:option2,option3:option3,option4:option4,option5:option5});
                 this.state.sing_array_new.push(sing_max);
             }
             //必须有  重新渲染页面
             this.setState({
-
             });
-
         })
-
         //接收图标
         this.subscription = DeviceEventEmitter.addListener('formicon',(value) => {
             this.setState({
@@ -123,13 +113,24 @@ export default class app extends Component {
             });
         })
 
-
+        //接收部门
+        this.subscription = DeviceEventEmitter.addListener('dp',(value) => {
+            var dp_id=[];
+            var dp_name=[];
+            for(var i in value ){
+                dp_id.push(value[i].id);
+                dp_name.push(value[i].depart_name);
+            }
+            this.setState({
+                form_fanwei_id:dp_id.join(","),
+                form_fanwei_name:dp_name.join(","),
+            });
+        })
     }
     componentWillUnmount() {
         this.subscription.remove();
         this.subscription.remove();
     }
-
 
     //删除字符
     del_field(e){
@@ -137,8 +138,6 @@ export default class app extends Component {
         this.setState({
         });
     }
-
-
     //判断字段是否有效
     if_isset(e){
         for(var i  in this.state.sing_array_new){
@@ -151,7 +150,6 @@ export default class app extends Component {
 
     //保存表单
     save(){
-
         if(this.state.form_name==''){
             return toast.center('表单名称不能为空');
         }
@@ -164,7 +162,6 @@ export default class app extends Component {
         if(this.state.sing_array_new==''){
             return toast.center('表单字段不能为空');
         }
-
         var form_field_array=[];
         for(var i in this.state.sing_array_new){
             for(var j in this.state.form_field){
@@ -173,21 +170,26 @@ export default class app extends Component {
                 }
             }
         }
-
-        // alert(JSON.stringify(form_field_array));
+        //照片字段只能保留一个
+        var img_field_num=[]
+        for(var i in form_field_array){
+            if(form_field_array[i].field_type=='照片'){
+                img_field_num.push(form_field_array[i])
+            }
+        }
+         if(img_field_num.length>1){
+             return toast.center('照片字段只能有一个');
+         };
 
         var url = config.api.base + config.api.addform;
         request.post(url,{
+            company_id:this.props.navigation.state.params.company_id,
             name: this.state.form_name,//表单名称
             icon: this.state.form_icon,//表单图标
             dec: this.state.form_dec,//表单描述
-            fanwei: this.state.form_fanwei,//表单范围
+            fanwei: this.state.form_fanwei_id,//表单范围
             field: form_field_array,//表单字段
-
         }).then((responseJson) => {
-
-            // alert(JSON.stringify(responseJson));
-
             if(responseJson.sing==0){
                 toast.center('添加失败');
             }
@@ -198,68 +200,38 @@ export default class app extends Component {
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
-
-
-
-
-
     }
 
     render() {
-
-
         var list=[];
         var form_field =this.state.form_field;
-
         for (var i in form_field) {
-
-
             if(this.if_isset(form_field[i].sing)==false){
-
                 list.push(
                     <View style={[styles.module_name,styles.module_]} key={i} style={{display:'none'}}>
-
                         <TouchableHighlight onPress={this.del_field.bind(this,form_field[i].sing)} underlayColor={'#F3F3F3'}>
                             <Image  style={styles.back_icon} source={require('../../imgs/shenpi/shanchu .png')}/>
                         </TouchableHighlight>
                         <Text style={{marginLeft:25,width:80,}}>{form_field[i].field_name}</Text>
-
-
                         <Image  style={{marginLeft:70,width:14, height:14}} source={require('../../imgs/shenpi/chilun.png')}/>
-
                         <Text style={{marginLeft:10,width:80,}}>{form_field[i].field_type}</Text>
-
                         <Text style={{marginLeft:10}}>{form_field[i].bitian}</Text>
-
                     </View>
-
                 )
             }else{
                 list.push(
                     <View style={[styles.module_name,styles.module_]} key={i} >
-
                         <TouchableHighlight onPress={this.del_field.bind(this,form_field[i].sing)} underlayColor={'#F3F3F3'}>
                             <Image  style={styles.back_icon} source={require('../../imgs/shenpi/shanchu .png')}/>
                         </TouchableHighlight>
                         <Text style={{marginLeft:25,width:80,}}>{form_field[i].field_name}</Text>
-
-
                         <Image  style={{marginLeft:70,width:14, height:14}} source={require('../../imgs/shenpi/chilun.png')}/>
-
                         <Text style={{marginLeft:10,width:80,}}>{form_field[i].field_type}</Text>
-
                         <Text style={{marginLeft:10}}>{form_field[i].bitian}</Text>
-
                     </View>
-
                 )
-
             }
-
-
-
         }
-
 
         //添加拦位
         let modalBackgroundStyle = {
@@ -270,7 +242,6 @@ export default class app extends Component {
             : null
         //添加拦位
         return (
-
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
@@ -286,7 +257,6 @@ export default class app extends Component {
 
 
                 <ScrollView style={{height:screenH*0.7}} key={'ScrollView'}>
-
                     <View style={[styles.module_name,styles.module_]}>
                         <Text style={{marginRight:15}}>模板名称</Text>
                         <TextInput
@@ -298,13 +268,10 @@ export default class app extends Component {
                         />
                     </View>
 
-
-
                     <TouchableHighlight
                         onPress={()=>this.formiconlist()}
                         underlayColor="#d5d5d5"
                     >
-
                         <View style={[styles.module_name,styles.module_]}>
                             <Text style={{marginRight:15}}>模板图标</Text>
                             <TextInput
@@ -313,16 +280,11 @@ export default class app extends Component {
                                 underlineColorAndroid="transparent"
                                 editable={false}
                             />
-
                             <View>
                                 <Image style={{width:30,height:30}}  source={{uri:this.state.form_icon}}/>
                             </View>
                         </View>
-
-
-
                     </TouchableHighlight>
-
 
                     <View style={[styles.module_name,styles.module_]}>
                         <Text style={{marginRight:15}}>描述</Text>
@@ -334,18 +296,24 @@ export default class app extends Component {
                             underlineColorAndroid="transparent"
                         />
                     </View>
+
+                    <TouchableHighlight
+                        onPress={()=>this.select_dp()}
+                        underlayColor="#d5d5d5"
+                    >
                     <View style={[styles.module_name,styles.module_]}>
                         <Text style={{marginRight:15}}>使用范围</Text>
                         <TextInput
                             style={styles.input_text}
-                            onChangeText={(form_fanwei) => this.setState({form_fanwei})}
-                            placeholder ={this.state.form_fanwei}
+                            placeholder ={this.state.form_fanwei_name}
                             placeholderTextColor={"#aaaaaa"}
                             underlineColorAndroid="transparent"
+                            editable={false}
                         />
-
-
+                        <Image style={styles.imgStyle} style={{width:12,height:12}} source={require('../../imgs/customer/arrow_r.png')}/>
                     </View>
+                    </TouchableHighlight>
+
                     <View style={[styles.module_handle,styles.module_]}>
                         <Text style={{marginRight:10}}>删除</Text>
                         <View style={{flexDirection :'row',alignItems:'center',backgroundColor: '#fff',}}>
@@ -358,12 +326,9 @@ export default class app extends Component {
                         <Text>是否必填</Text>
                     </View>
 
-
-
                     <View>
                         {list}
                     </View>
-
                 </ScrollView>
 
 
@@ -394,10 +359,7 @@ export default class app extends Component {
 
                         </TouchableOpacity >
                         <View style={{backgroundColor:'#fff',width:screenW*0.7,height:screenH*0.8,position:'absolute',top:screenH*0.1,left:screenW*0.15}}>
-
                             <Text style={{fontSize:16,marginTop:20,marginLeft:10}}>请选择</Text>
-
-
                             <TouchableHighlight onPress={() => {this.formfieldedit('单行文本');this.setModalVisible(!this.state.modalVisible)}}>
                                 <View    style={[styles.field]}>
                                     <Text style={{marginLeft:25}}>单行文本</Text>
@@ -452,21 +414,17 @@ export default class app extends Component {
 
                             <Text onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={{fontSize:16,marginLeft:200,marginTop:20,color:'#387FFF'}}>取消</Text>
 
-
                         </View>
                     </Modal>
                     {/*模态框*/}
                 </View>
-
             </View>
         );
     }
-
     _setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
     }
 }
-
 const styles = StyleSheet.create({
     ancestorCon:{
         flex: 1,
@@ -480,7 +438,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor:'#bbb',
         justifyContent:'center',
-
     },
     go:{
         position:'absolute',
@@ -598,20 +555,15 @@ const styles = StyleSheet.create({
         paddingLeft:15,
         flexDirection:'row',
         alignItems:'center'
-
     },
 
-
-
     //模态框
-
     innerContainer: {
         borderRadius: 10,
         alignItems: 'center',
     },
     row: {
         alignItems: 'center',
-
         flex: 1,
         flexDirection: 'row',
         marginBottom: 20,
@@ -633,7 +585,6 @@ const styles = StyleSheet.create({
         margin: 5,
         textAlign: 'center',
     },
-
     page: {
         flex: 1,
         position: 'absolute',
@@ -645,7 +596,6 @@ const styles = StyleSheet.create({
     zhifu: {
         height: 150,
     },
-
     flex: {
         flex: 1,
     },
@@ -657,7 +607,6 @@ const styles = StyleSheet.create({
         borderColor: '#18B7FF',
         height: 1,
         marginTop: 10
-
     },
     date: {
         textAlign: 'center',
@@ -682,8 +631,4 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     //模态框
-
-
-
-
 });

@@ -17,6 +17,7 @@ import {
     DeviceEventEmitter,
     } from 'react-native';
 
+import Header from '../common/header';
 const screenW = Dimensions.get('window').width;
 import config from '../common/config';
 import request from '../common/request';
@@ -103,23 +104,9 @@ export default class ResolveAimDetail extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.navCon}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                        >
-                        <View style={styles.navltys}>
-                            <Image source={require('../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>分解目标详情</Text>
-                    <View>
-
-                    </View>
-                </View>
+                <Header title="分解目标详情"
+                        navigation={this.props.navigation}
+                        />
                 <ScrollView>
                     <View style={{height:60,backgroundColor:'#fff',flexDirection: 'column',justifyContent:'center',marginBottom:10}}>
                         <View style={{flexDirection: 'row',alignItems: 'center',marginLeft:screenW*0.05,marginBottom:6}}>

@@ -23,7 +23,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
-
+import Header from '../../common/header';
 export default class approve_filtrate_approvetype extends Component {
 
     constructor(props) {
@@ -102,7 +102,9 @@ export default class approve_filtrate_approvetype extends Component {
         var list =[];
         for(var i in productType) {
             list.push(
-            <RadioButton value={productType[i].id} key={i}>
+            <RadioButton
+                value={productType[i].id}
+                key={i}>
                 <Text>{productType[i].name}</Text>
             </RadioButton>
             )
@@ -116,29 +118,10 @@ export default class approve_filtrate_approvetype extends Component {
             return (
 
                 <View style={styles.body}>
-                    {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                    {/*导航栏*/}
-                    <View style={styles.nav}>
-                        <TouchableHighlight
-                            onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image source={require('../../imgs/navxy.png')}/>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                            </View>
+                    <Header title="审批类型"
+                            navigation={this.props.navigation}
+                           />
 
-                        </TouchableHighlight>
-                        <Text style={styles.fSelf}>审批类型</Text>
-                        <TouchableHighlight
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Text> </Text>
-                            </View>
-
-                        </TouchableHighlight>
-                    </View>
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
@@ -155,7 +138,10 @@ export default class approve_filtrate_approvetype extends Component {
 
                                     <View style={[styles.comRight]}>
 
-                                       <RadioGroup onSelect = {(index, value) => this.onSelect(index, value)}>
+                                       <RadioGroup
+                                           color='#aaa'
+                                           activeColor='#e15151'
+                                           onSelect = {(index, value) => this.onSelect(index, value)}>
                                            {list}
                                       </RadioGroup>
 
@@ -177,10 +163,10 @@ export default class approve_filtrate_approvetype extends Component {
                         <View  style={[styles.submit]}>
                             <Text>选择一个审批类型</Text>
                             <TouchableHighlight style={{
-                            width:50,
-                            height:30,
+                            width:60,
+                            height:24,
                             backgroundColor:'#e15151',
-                            borderRadius:4,
+                            borderRadius:3,
                             justifyContent:'center',
                             alignItems:'center',
                             }}
@@ -201,34 +187,16 @@ export default class approve_filtrate_approvetype extends Component {
 
                 <View style={styles.body}>
                     {/*导航栏*/}
-                    <View style={styles.nav}>
-                        <TouchableHighlight
-                            onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image source={require('../../imgs/navxy.png')}/>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                            </View>
-
-                        </TouchableHighlight>
-                        <Text style={styles.fSelf}>选择分类</Text>
-                        <TouchableHighlight
-                            onPress={()=>this.typeadd()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image style={[styles.navltysImg]} source={require('../../imgs/navtx.png')}/>
-                            </View>
-
-                        </TouchableHighlight>
-                    </View>
+                    <Header title="选择分类"
+                            navigation={this.props.navigation}
+                            source={require('../../imgs/navtx.png')}
+                            onPress={()=>this.typeadd()}/>
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
 
 
-                            <View style={[styles.divCom]}>
+                            <View style={{alignItems:'center',justifyContent:'center',marginTop:50}}>
 
                                 <Text>暂无数据</Text>
                             </View>

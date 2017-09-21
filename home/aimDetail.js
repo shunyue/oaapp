@@ -302,7 +302,7 @@ export default class AimDetail extends Component {
                      style={role ?{}:{display:'none'}}
                      >
                     <View style={[styles.border_top,styles.border_colorBottom,{flexDirection:'row'}]}>
-                        <Image style={{width:16,height:16,marginRight:10}} tintColor={'#e15151'}
+                        <Image style={{width:16,height:16,marginRight:10,tintColor:'#e15151'}}
                                source={require('../imgs/two.png')}/>
                         <Text style={{color:'#e15151'}}>分解目标</Text>
                     </View>

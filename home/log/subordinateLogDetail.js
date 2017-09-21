@@ -22,6 +22,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
 import moment from 'moment';
+import Header from '../../common/header';
 export default class SubordinateLogDetail extends Component {
     back() {
         this.props.navigation.goBack(null);
@@ -221,30 +222,10 @@ export default class SubordinateLogDetail extends Component {
         }
         return (
             <View style={[com.flex,com.bgcf3]}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*NAV*/}
-                <View style={[com.row,com.jcsb,com.pdlr5,com.bgcfff,com.bbwcc,com.aic,com.h35,]}>
-                    <TouchableHighlight
-                        style={[com.w90]}
-                        onPress={()=>this.back()}
-                        underlayColor="#f5f5f5"
-                        >
-                        <View style={[com.row,]}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[com.mgr15,com.cr]}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{left:-20}}>{params.userInfo.name}的{logname}</Text>
-                    <TouchableHighlight
-                        style={[]}
-                        onPress={()=>this.employeeInfo()}
-                        underlayColor="#f3f3f3"
-                        >
-                        <View style={[com.jcfe,]}>
-                            <Image style={[com.wh20,com.tcr]} source={require('../../imgs/personal.png')}/>
-                        </View>
-                    </TouchableHighlight>
-                </View>
+                <Header title={params.userInfo.name+'的'+logname}
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/personal.png')}
+                        onPress={()=>this.employeeInfo()}/>
 
 
                 <ScrollView

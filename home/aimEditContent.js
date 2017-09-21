@@ -1161,7 +1161,7 @@ export default class AimEditContent extends Component {
                             <Text style={styles.back_text}>返回</Text>
                         </View>
                     </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:17}}>编辑企业目标</Text>
+                    <Text style={{color:'#333',fontSize:16}}>编辑企业目标</Text>
                     <TouchableHighlight underlayColor={'transparent'} style={[styles.goRight,styles.go]} onPress={()=>this.confirm()}>
                         <Text style={styles.back_text}>确定</Text>
                     </TouchableHighlight>

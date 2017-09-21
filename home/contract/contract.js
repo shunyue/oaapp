@@ -21,7 +21,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
-
+import Header from '../../common/header';
 const screenW = Dimensions.get('window').width;
 export default class Contract  extends Component {
 
@@ -136,39 +136,40 @@ export default class Contract  extends Component {
             list.push(
 
                 <View key={i}>
+                    <View style={{marginTop:8,marginBottom:5}}>
+                        <TouchableHighlight
+                            underlayColor={'#fefefe'}
+                            onPress={this.contract_detail.bind(this,contractlist[i].id)}>
+                            <View style={[styles.place,styles.borderTop,styles.borderBottom,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>{contractlist[i].contract_name}</Text>
+                                <Text>{contract_status}</Text>
+                            </View>
+                        </TouchableHighlight>
 
-                    <TouchableHighlight onPress={this.contract_detail.bind(this,contractlist[i].id)}>
-
-                    <View>
-
-                    <View style={[styles.place,styles.borderTop,styles.borderBottom,{height:40,marginTop:10,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                        <Text style={{fontSize:14,color:'#333'}}>{contractlist[i].contract_name}</Text>
-                        <Text>{contract_status}</Text>
                     </View>
 
-                    <View style={[styles.borderTop,styles.borderBottom,{marginTop:3,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                        <View style={[styles.place,styles.borderBottom,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                            <Text style={{fontSize:14,color:'#333'}}>合同金额</Text>
-                            <Text style={{color:'#333'}}>{contractlist[i].contract_jine}</Text>
-                        </View>
+                    <TouchableHighlight
+                        underlayColor={'#fefefe'}
+                        onPress={this.contract_detail.bind(this,contractlist[i].id)}>
+                        <View style={[styles.borderTop,styles.borderBottom,{backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                            <View style={[styles.place,styles.borderBottom,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>合同金额</Text>
+                                <Text style={{color:'#333'}}>{contractlist[i].contract_jine}</Text>
+                            </View>
 
-                        <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                            <Text style={{fontSize:14,color:'#333'}}>客户名称</Text>
-                            <Text style={{color:'#333'}}>{contractlist[i].cus_name}</Text>
+                            <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>客户名称</Text>
+                                <Text style={{color:'#333'}}>{contractlist[i].cus_name}</Text>
+                            </View>
+                            <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>签单业务员</Text>
+                                <Text style={{color:'#333'}}>{contractlist[i].name}</Text>
+                            </View>
+                            <View style={[styles.place,styles.borderTop,{height:36,backgroundColor:'#fff',paddingLeft:15,paddingRight:15,justifyContent:'flex-start'}]}>
+                                <Text style={{marginRight:15}}>{contractlist[i].name}</Text>
+                                <Text>{contractlist[i].time}</Text>
+                            </View>
                         </View>
-                        <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                            <Text style={{fontSize:14,color:'#333'}}>签单业务员</Text>
-                            <Text style={{color:'#333'}}>{contractlist[i].name}</Text>
-                        </View>
-                        <View style={[styles.place,styles.borderTop,{height:36,backgroundColor:'#fff',paddingLeft:15,paddingRight:15,justifyContent:'flex-start'}]}>
-                            <Text style={{marginRight:15}}>{contractlist[i].name}</Text>
-                            <Text>{contractlist[i].time}</Text>
-                        </View>
-                    </View>
-
-
-                        </View>
-
                       </TouchableHighlight>
                    </View>
 
@@ -181,17 +182,10 @@ export default class Contract  extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>合同</Text>
-                    <TouchableOpacity style={[styles.goRight,styles.go]} onPress={()=>this.newBulidContract()}>
-                        <Image  style={styles.add} source={require('../../imgs/customer/add.png')}/>
-                    </TouchableOpacity>
-                </View>
+                <Header title="合同"
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/navtx.png')}
+                        onPress={()=>this.newBulidContract()}/>
 
                 {list}
            </View>

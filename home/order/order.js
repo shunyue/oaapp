@@ -324,7 +324,7 @@ export default class order extends Component {
             }
         }else{
             var list=[];
-            list.push(<Text>没有数据</Text>);
+            list.push(<View style={{alignItems:'center',justifyContent:'center',marginTop:50}}><Text>没有数据</Text></View>);
         }
 
         //合同

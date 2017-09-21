@@ -29,7 +29,7 @@ import toast from '../../common/toast';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import ImagePicker from 'react-native-image-picker';
-
+import Header from '../../common/header';
 export default class newBulidContract extends Component {
 
     constructor(props) {
@@ -271,32 +271,11 @@ export default class newBulidContract extends Component {
 
         return (
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
 
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>申报回款</Text>
-                    <TouchableHighlight
-
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  onPress={this.submmit.bind(this)} style={styles.navFont}>确定</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
-
-
+                <Header title="申报回款"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={this.submmit.bind(this)} />
 
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
@@ -325,7 +304,7 @@ export default class newBulidContract extends Component {
                                     value={this.state.return_time}
                                 />
                                 <TouchableOpacity  onPress= { () => {this.setState({ [isPickerVisible]:true });}}>
-                                    <Image style={{marginLeft:10,width:20,height:20}} source={require('../../imgs/icon_shenpi/rili.png')}/>
+                                    <Image style={{marginLeft:10,width:20,height:20,tintColor:'#666'}} source={require('../../imgs/icon_shenpi/rili.png')}/>
                                 </TouchableOpacity>
 
                                 <DateTimePicker
@@ -342,10 +321,10 @@ export default class newBulidContract extends Component {
                             </View>
 
 
-                            <View style={[styles.divRowCom]}>
+                            <View style={[styles.divRowCom,{justifyContent:'space-between'}]}>
                                 <Text style={[styles.divFontCom]}>回款凭证</Text>
                                 <TouchableOpacity onPress={()=>this.pic()} >
-                                    <Image style={{marginLeft:255,width:20,height:20}} source={require('../../imgs/icon_shenpi/xiangji.png')}/>
+                                    <Image style={{width:20,height:20,tintColor:'#666'}} source={require('../../imgs/icon_shenpi/xiangji.png')}/>
                                 </TouchableOpacity>
                             </View>
 

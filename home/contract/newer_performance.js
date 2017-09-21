@@ -23,7 +23,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
-
+import Header from '../../common/header';
 
 const screenW = Dimensions.get('window').width;
 export default class HomePlan extends Component {
@@ -205,19 +205,10 @@ export default class HomePlan extends Component {
         const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={[styles.container,{justifyContent:'space-between',paddingLeft:15,paddingRight:15}]}>
-                    <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this.OpBack();this._hide()}}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:17}}>销售区域排行</Text>
-                    <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this._showYearPicker()}}>
-                        <Text style={[styles.back_text,{textAlign:'right'}]}>筛选</Text>
-                    </TouchableHighlight>
-                </View>
+                <Header title="销售区域排行"
+                        navigation={this.props.navigation}
+                        rightText="筛选"
+                        onPress={()=>{this._showYearPicker()}}/>
                 <View  style={{height:60,paddingTop:15,backgroundColor: '#fff',}}>
                     <View style={[{height:30,flexDirection:"row",justifyContent:'space-between'},styles.padding]}>
                         <Text style={{width:80,fontSize:11,}}>单位：万元</Text>
@@ -314,7 +305,7 @@ const styles = StyleSheet.create({
     back_text:{
         color:'#e15151',
         fontSize: 16,
-        marginLeft:6
+        marginLeft:1
     },
     add:{
         width:22,

@@ -1,9 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * 客户
- */
-
+/*
+* 客户主页面
+*
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -250,9 +248,9 @@ export default class app extends Component {
             <View style={styles.container}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={{width:screenW,height:40,flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingRight:15}}>
-                    <TouchableOpacity onPress={() => this.goPage()}>
+                    {/* <TouchableOpacity onPress={() => this.goPage()}>
                         <Image style={styles.icon} source={require('../imgs/customer/baobiao.png')}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                     <Text style={styles.custom}>客 户</Text>
                     <TouchableOpacity onPress={() => { this.setState({modalVisible: !this.state.modalVisible})}}>
                         <Image style={styles.icon} source={require('../imgs/customer/add.png')}/>
@@ -386,7 +384,8 @@ const styles = StyleSheet.create({
     },
     custom: {
         color: '#333333',
-        fontSize: 18
+        fontSize: 18,
+        paddingLeft:150
     },
     Nav: {
         height:90,

@@ -1,10 +1,6 @@
-
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
+/*
+* 我的主页面
+* */
 import React, { Component } from 'react';
 import {
     StackNavigator,
@@ -110,7 +106,7 @@ export default class My extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={{height:40,backgroundColor:'#fff',borderBottomWidth:1,borderColor:"#ccc",flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingRight:15}}>
                     <View style={{width:26,height:26}}>
-                        <Image style={{width:25,height:25.5,tintColor:'#e15151'}} source={require('../imgs/bb.png')}/>
+                        { /* <Image style={{width:25,height:25.5,tintColor:'#e15151'}} source={require('../imgs/bb.png')}/>*/}
                     </View>
                     <View>
                         <Text style={{color:'#333',fontSize:16}}>我的</Text>
@@ -142,7 +138,7 @@ export default class My extends Component {
                                 underlayColor="transparent"
                             >
                                 <View style={styles.flexRow_width}>
-                                    <Image  source={require('../imgs/cp32.png')}/>
+                                    <Image style={styles.flexRow_Img} source={require('../imgs/cp32.png')}/>
                                     <Text>产品</Text>
                                 </View>
                             </TouchableHighlight>
@@ -351,9 +347,9 @@ const styles = StyleSheet.create({
         justifyContent:'space-around'
     },
     flexRow_Img:{
-        width:30,
-        height:30,
-        marginBottom:2
+        width:34,
+        height:34,
+        marginBottom:5
     },
     flexRow_width:{
         width:screenW*0.25,

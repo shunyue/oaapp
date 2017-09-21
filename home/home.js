@@ -11,6 +11,7 @@ import { AppRegistry,
     ScrollView,
     Image,
     TouchableHighlight,
+    TouchableOpacity,
     AsyncStorage,
     Dimensions,
     Platform,
@@ -386,6 +387,7 @@ export default class Home extends Component {
 
 
     render() {
+
         const chart_wh = 130
         var reach =Number(this.state.result)
         const series = [reach, 1-reach]
@@ -488,12 +490,11 @@ export default class Home extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
                 {/*头部导航*/}
                 <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.op()}
-                        underlayColor="#A0A0A0"
+                    <TouchableOpacity
+                        onPress={()=>{navigate('Page')}}
                     >
                         <Image style={styles.sz} source={require('../imgs/bb.png')}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.fSelf}>首页</Text>
                     <TouchableHighlight
                         onPress={()=>this.set()}
@@ -723,7 +724,7 @@ export default class Home extends Component {
                                      underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
-                                        <Image  source={require('../imgs/cp32.png')}/>
+                                        <Image style={styles.flexRow_Img} source={require('../imgs/cp32.png')}/>
                                         <Text>产品</Text>
                                     </View>
                                 </TouchableHighlight>
@@ -799,7 +800,7 @@ export default class Home extends Component {
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight
-                                    onPress={()=>this.op()}
+                                    onPress={()=>{navigate('Page')}}
                                      underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
@@ -875,7 +876,7 @@ const styles = StyleSheet.create({
     },
     fSelf: {//导航字体相关
         color: '#fff',
-        fontSize: 16
+        fontSize: 17
     },
     childContent: {//子容器页面级
         height:Height-145,
@@ -1052,9 +1053,9 @@ const styles = StyleSheet.create({
         justifyContent:'space-around'
     },
     flexRow_Img:{
-        width:30,
-        height:30,
-        marginBottom:2
+        width:34,
+        height:34,
+        marginBottom:5
     },
     flexRow_width:{
         width:sliderWidth*0.25,

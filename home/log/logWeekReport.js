@@ -24,7 +24,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import moment from 'moment';
-
+import Header from '../../common/header';
 export default class LogWeekReport extends Component {
   back() {
     this.props.navigation.goBack(null);
@@ -200,34 +200,11 @@ export default class LogWeekReport extends Component {
     }
     return (
       <View style={[styles.ancestorCon,{backgroundColor:'#f8f8f8'}]}>
-        {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-        {/*导航栏*/}
-        <View style={[styles.navCon,com.aic]}>
-          <TouchableHighlight
-            style={styles.navltys}
-            onPress={()=>this.back()}
-            underlayColor="#d5d5d5"
-          >
-            <View style={styles.navltys}>
-              <Image source={require('../../imgs/navxy.png')}/>
-              <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-            </View>
+          <Header title="周报"
+                  navigation={this.props.navigation}
+                  rightText="提交"
+                  onPress={()=>this.submit()}/>
 
-          </TouchableHighlight>
-
-
-          <Text style={styles.fSelf}>周报</Text>
-          <TouchableHighlight
-            style={styles.navltys}
-            onPress={()=>this.submit()}
-            underlayColor="#f5f5f5"
-          >
-            <View style={[com.jcc,styles.navltys]}>
-              <Text style={[styles.fSelf,styles.navltyszt]}>提交</Text>
-            </View>
-          </TouchableHighlight>
-
-        </View>
         {/*内容主题*/}
         <ScrollView style={[]}>
           <View style={[com.row,com.jcsb,com.bckf5,com.pdt5l15,com.bbwc]}>

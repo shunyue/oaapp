@@ -1,3 +1,7 @@
+/*
+* 沟通主页面
+*
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -531,9 +535,9 @@ export default class Chat extends Component {
 
                 </ScrollableTabView>
                 <View style={[Platform.OS === 'ios'?{top:27}:{top: 7},{position:'absolute',left:15}]}>
-                    <TouchableHighlight underlayColor={'transparent'} onPress={() => this.goPage()}>
+                    { /* <TouchableHighlight underlayColor={'transparent'} onPress={() => this.goPage()}>
                         <Image style={{width:26,height:26}} source={require('../imgs/customer/baobiao.png')}/>
-                    </TouchableHighlight>
+                    </TouchableHighlight>*/}
                 </View>
                 <View style={[Platform.OS === 'ios'?{top:27}:{top: 7},this.state.scroll[1]?{position:'absolute',right:15}:{display:'none'}]}>
                     <TouchableHighlight underlayColor={'transparent'} onPress={() => { this.setState({modalVisible: !this.state.modalVisible})}}>

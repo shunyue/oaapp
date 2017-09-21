@@ -1,4 +1,6 @@
-//审批首页
+/*
+* 审批首页
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -22,7 +24,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Modal from 'react-native-modal'  //下拉
-
+import Header from '../../common/header';
 export default class Approval extends Component {
 
     constructor(props) {
@@ -58,9 +60,6 @@ export default class Approval extends Component {
 
     //自己发起 待审批 和 待我审批
     getNet(){
-
-
-
         var url = config.api.base + config.api.select_approve;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
@@ -73,7 +72,6 @@ export default class Approval extends Component {
                     listview:responseText.data,
                 })
             }
-
 
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
@@ -222,30 +220,10 @@ export default class Approval extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableOpacity
-                        onPress={()=>this.back()}
-                    >
-                        {/**/}
-                        <View style={[styles.navltys,{marginLeft:5}]}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableOpacity>
-                    <Text style={styles.fSelf}>审批</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.newBulidApproval()}
-                        underlayColor={"transparent"}
-                    >
-                        <View style={[styles.navltys,{marginRight:5}]}>
-                            <Image style={{width:20,height:20}} source={require('../../imgs/navld16.png')}/>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="审批"
+                    navigation={this.props.navigation}
+                    source={require('../../imgs/navld16.png')}
+                    onPress={()=>this.newBulidApproval()}/>
                 {/*内容主题*/}
                 <ScrollView style={[styles.childContent,{marginBottom:30}]}>
 
@@ -464,3 +442,4 @@ const styles = StyleSheet.create({
     },
 
 });
+

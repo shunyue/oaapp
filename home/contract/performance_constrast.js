@@ -22,7 +22,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
-
+import Header from '../../common/header';
 const screenW = Dimensions.get('window').width;
 export default class HomePlan extends Component {
     OpBack() {
@@ -143,7 +143,7 @@ export default class HomePlan extends Component {
 
             avarage_current.push(
                 <View key={i}>
-                    <View style={[styles.mean]}>
+                    <View style={[styles.mean,{width:screenW*0.35}]}>
                         <Text>{this.state.listview[i][1].return_money_current==null?0:this.state.listview[i][1].return_money_current}</Text>
                     </View>
                 </View>
@@ -151,7 +151,7 @@ export default class HomePlan extends Component {
 
             avarage_last.push(
                 <View key={i}>
-                    <View style={[styles.mean]}>
+                    <View style={[styles.mean,{width:screenW*0.35}]}>
                         <Text>{this.state.listview[i][2].return_money_last==null?0:this.state.listview[i][1].return_money_last}</Text>
                     </View>
                 </View>
@@ -162,19 +162,10 @@ export default class HomePlan extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={[styles.container,{justifyContent:'space-between',paddingLeft:15,paddingRight:15}]}>
-                    <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this.OpBack();this._hide()}}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:17}}>销售业绩对比</Text>
-                    <TouchableHighlight underlayColor={'transparent'} style={{width:50}} onPress={()=>{this._showYearPicker()}}>
-                        <Text style={[styles.back_text,{textAlign:'right'}]}>筛选</Text>
-                    </TouchableHighlight>
-                </View>
+                <Header title="销售业绩对比"
+                        navigation={this.props.navigation}
+                        rightText="筛选"
+                        onPress={()=>{this._showYearPicker()}}/>
                 <View  style={{height:60,paddingTop:15,backgroundColor: '#fff',}}>
                     <View style={[{height:30,flexDirection:"row",justifyContent:'space-between'},styles.padding]}>
                         <Text style={{width:80,fontSize:11,}}>单位：万元</Text>
@@ -183,7 +174,7 @@ export default class HomePlan extends Component {
                     </View>
                 </View>
                 <View style={{backgroundColor:'#fff', flexDirection :'row',}}>
-                    <View style={[styles.bordeTop,{width:100,backgroundColor:'#e1e1e1',}]}>
+                    <View style={[styles.bordeTop,{backgroundColor:'#e1e1e1',}]}>
                         <View style={[styles.mean,{backgroundColor:'#fff',}]}>
                             <Text>部门/人员</Text>
                         </View>
@@ -196,20 +187,20 @@ export default class HomePlan extends Component {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         >
-                        <View style={[styles.bordeTop,{width:100}]}>
-                            <View style={[styles.mean]}>
+                        <View style={[styles.bordeTop]}>
+                            <View style={[styles.mean,{width:screenW*0.35}]}>
                                 <Text>本月累计回款</Text>
                             </View>
-                            <View style={[styles.mean]}>
+                            <View style={[styles.mean,{width:screenW*0.35}]}>
                                 <Text>{this.state.avarage_current}</Text>
                             </View>
                             {avarage_current}
                         </View>
-                        <View style={[styles.bordeTop,{width:120}]}>
-                            <View style={[styles.mean,{width:120}]}>
+                        <View style={[styles.bordeTop]}>
+                            <View style={[styles.mean,{width:screenW*0.35}]}>
                                 <Text>上月同期累计回款</Text>
                             </View>
-                            <View style={[styles.mean,{width:120}]}>
+                            <View style={[styles.mean,{width:screenW*0.35}]}>
                                 <Text>{this.state.avarage_last}</Text>
                             </View>
                             {avarage_last}
@@ -324,7 +315,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:1
     },
     mean:{
-        width:100,
+        width:screenW*0.3,
         height:35,
         alignItems:'center',
         justifyContent:'center',

@@ -24,7 +24,7 @@ import {
 import config from '../common/config';
 import request from '../common/request';
 import toast from '../common/toast';
-
+import Header from '../common/header';
 const screenH = Dimensions.get('window').height;
 const screenW = Dimensions.get('window').width;
 export default class AimResolve extends Component {
@@ -351,7 +351,7 @@ export default class AimResolve extends Component {
                                 <Text style={{color:'#333'}}>总金额</Text>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{height:50,borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>目标值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -372,7 +372,7 @@ export default class AimResolve extends Component {
                                 </View>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:50,width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>考核值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -398,7 +398,7 @@ export default class AimResolve extends Component {
                                 <Text style={{color:'#333'}}>总销量</Text>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:50,width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>目标值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -419,7 +419,7 @@ export default class AimResolve extends Component {
                                 </View>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:50,width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>考核值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -447,21 +447,10 @@ export default class AimResolve extends Component {
         const {navigate} = this.props.navigation
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableHighlight underlayColor={'transparent'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:17}}>分解目标</Text>
-                    <TouchableHighlight underlayColor={'transparent'}
-                                        style={[styles.goRight,styles.go]}
-                                        onPress={()=>this.confirm()}>
-                        <Text style={styles.back_text}>确定</Text>
-                    </TouchableHighlight>
-                </View>
+                <Header title="分解目标"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={()=>this.confirm()}/>
                 <ScrollView  keyboardShouldPersistTaps={'always'}>
                     <View >
                         <View style={[{backgroundColor:'#fff'}]}>
@@ -482,7 +471,7 @@ export default class AimResolve extends Component {
                                 <Text style={{color:'#333'}}>总金额</Text>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{height:50,borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>目标值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -503,7 +492,7 @@ export default class AimResolve extends Component {
                                 </View>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:50,width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>考核值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -529,7 +518,7 @@ export default class AimResolve extends Component {
                                 <Text style={{color:'#333'}}>总销量</Text>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:50,width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>目标值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -550,7 +539,7 @@ export default class AimResolve extends Component {
                                 </View>
                             </View>
                             <View style={[{height:50,paddingLeft:15},styles.place,styles.borderBottom]}>
-                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:60,width:60}}>
+                                <View style={{borderColor:'#ccc',borderRightWidth:1,justifyContent:'center',height:50,width:60}}>
                                     <Text style={{color:'#333',fontSize:13}}>考核值</Text>
                                 </View>
                                 <View style={{height:50,width:screenW-60}}>
@@ -588,50 +577,6 @@ const styles = StyleSheet.create({
     ancestorCon:{
         flex: 1,
         backgroundColor: '#F0F1F2',
-    },
-    container: {
-        height: 40,
-        flexDirection :'row',
-        alignItems:'center',
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor:'#bbb',
-        justifyContent:'center',
-
-    },
-    go:{
-        position:'absolute',
-        top:8
-    },
-    goback:{
-        left:15,
-        flexDirection :'row',
-    },
-    borderBottom:{
-        borderBottomWidth:1,
-        borderColor:'#ccc'
-    },
-    goRight:{
-        right:15
-    },
-    tabar_scroll:{
-        height:44,
-        justifyContent:'flex-start',
-        paddingRight:40
-    },
-    back_icon:{
-        width:10,
-        height:17,
-        marginTop: 3
-    },
-    back_text:{
-        color:'#e15151',
-        fontSize: 16,
-        marginLeft:3
-    },
-    add:{
-        width:22,
-        height:22,
     },
     place:{
         flexDirection:'row',
