@@ -12,6 +12,7 @@ import {
   TextInput,
   Alert,
   DeviceEventEmitter,
+    TouchableOpacity,
   Button
 } from 'react-native';
 import config from '../../common/config';
@@ -20,6 +21,7 @@ import toast from '../../common/toast';
 import com from '../../public/css/css-com';
 /*引用图库选择插件*/
 import ImagePicker from 'react-native-image-picker';
+import Header from '../../common/header';
 export default class SendNotice extends Component {
   back() {
     this.props.navigation.goBack(null);
@@ -208,33 +210,10 @@ export default class SendNotice extends Component {
     }
     return (
       <View style={styles.ancestorCon}>
-          {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-        {/*导航栏*/}
-        <View style={styles.nav}>
-          <TouchableHighlight
-            onPress={()=>this.back()}
-            underlayColor="#d5d5d5"
-          >
-            {/**/}
-            <View style={styles.navltys}>
-              <Image source={require('../../imgs/navxy.png')}/>
-              <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-            </View>
-
-          </TouchableHighlight>
-          <Text style={styles.fSelf}>
-            发公告
-          </Text>
-          <TouchableHighlight
-            onPress={()=>this.sendNoticeNextStep()}
-            underlayColor="#d5d5d5"
-          >
-            <View style={styles.navltys}>
-              <Text style={[styles.fSelf,styles.navltyszt]}>下一步</Text>
-            </View>
-
-          </TouchableHighlight>
-        </View>
+          <Header title="发公告"
+                  navigation={this.props.navigation}
+                  rightText="下一步"
+                  onPress={()=>this.sendNoticeNextStep()}/>
         {/*内容主题*/}
         <ScrollView style={[com.FLEX,com.BCKF5]}>
           {/*详情*/}
@@ -254,22 +233,21 @@ export default class SendNotice extends Component {
             </View>
           </View>
           {/*图片+附件*/}
-          <View style={[com.BCKFFF,com.PDT5,com.PDB15,com.PDL10,com.PDR10,com.MGT10,com.BTW,com.BBW,com.BCE6]}>
-            <View style={[com.BCE6,com.PDB10]}>
+          <View style={[com.BCKFFF,com.MGT10,com.BTW,com.BBW,com.BCE6]}>
+            <View style={{paddingLeft:15,paddingRight:15,minHeight:40,justifyContent:'center'}}>
               {/*TITLE*/}
-              <TouchableHighlight
+              <TouchableOpacity
                   onPress={()=>this.openAffix()}
-                  underlayColor="#d5d5d5"
                   >
-                <View style={[com.ROW,com.JCSB,com.PDB10]}>
+                <View style={[com.ROW,com.JCSB]}>
                   <View style={[com.ROW]}>
                     <Text>图片</Text>
                   </View>
                   <Image style={[com.wh16]} source={require('../../imgs/navxy2.png')}/>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
               {/*放置图片*/}
-              <View style={[com.bgcff,com.aic,com.row,com.pdt10l15,com.flww,{}]}>
+              <View style={[com.bgcff,com.aic,com.row,com.flww,{}]}>
                 {list}
                 {list.length==0?(null):(
                 <TouchableHighlight
@@ -285,7 +263,7 @@ export default class SendNotice extends Component {
             </View>
           </View>
           {/*请输入公告内容*/}
-          <View style={[{height:150},com.BCKFFF,com.MGT10,com.BTW,com.BCE6,com.PDT5,com.PDL10,com.PDR10,com.PDB10]}>
+          <View style={[{height:150},com.BCKFFF,com.MGT10,com.BTW,com.BBW,com.BCE6,com.PDL15,com.PDR15,com.PDB10]}>
             <TextInput
               style={{height: 80,}}
               underlineColorAndroid={'transparent'}

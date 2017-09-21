@@ -10,6 +10,7 @@ import {
   ScrollView,
   ListView,
   AsyncStorage,
+  TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native';
 import config from '../../common/config';
@@ -17,7 +18,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import com from '../../public/css/css-com';
 import Loading from '../../common/loading';
-
+import Header from '../../common/header';
 export default class Notice extends Component {
   // 构造
     constructor(props) {
@@ -142,29 +143,10 @@ export default class Notice extends Component {
 
       return (
       <View style={styles.ancestorCon}>
-          {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-        {/*导航栏*/}
-        <View style={styles.nav}>
-          <TouchableHighlight
-            onPress={()=>this.back()}
-            underlayColor="#d5d5d5"
-          >
-            {/**/}
-            <View style={styles.navltys}>
-              <Image source={require('../../imgs/navxy.png')}/>
-              <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-            </View>
-          </TouchableHighlight>
-          <Text style={styles.fSelf}>公告</Text>
-          <TouchableHighlight
-            onPress={()=>this.sendNotice()}
-            underlayColor="#d5d5d5"
-          >
-            <View style={styles.navltys}>
-              <Text style={[styles.fSelf,styles.navltyszt]}>发公告</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
+          <Header title="公告"
+                  navigation={this.props.navigation}
+                  rightText="发公告"
+                  onPress={()=>this.sendNotice()}/>
         {/*内容主题*/}
         <ScrollView style={styles.childContent}>
           <View>

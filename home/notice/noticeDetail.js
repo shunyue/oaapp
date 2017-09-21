@@ -24,6 +24,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
 import config from '../../common/config';
+import Header from '../../common/header';
 export default class NoticeDetail extends Component {
   back() {
     this.props.navigation.goBack(null);
@@ -116,27 +117,12 @@ noticeDetail(){
     }
     return (
       <View style={styles.ancestorCon}>
-          {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-        {/*导航栏*/}
-        <View style={styles.nav}>
-          <TouchableHighlight
-            onPress={()=>this.back()}
-            underlayColor="#d5d5d5"
-          >
-            <View style={styles.navltys}>
-              <Image source={require('../../imgs/navxy.png')}/>
-              <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-            </View>
-          </TouchableHighlight>
-          <Text style={styles.fSelf}>公告详情</Text>
-          <TouchableOpacity style={wds.icon_touch2} onPress={() => {{this.setState({show: !this.state.show})}}}>
-            <View style={styles.navltys}>
-              <Image style={[styles.navltysImg]} source={require('../../imgs/product/slh32.png')}/>
-            </View>
-          </TouchableOpacity>
-        </View>
+          <Header title="公告详情"
+                  navigation={this.props.navigation}
+                  source={require('../../imgs/product/slh32.png')}
+                  onPress={() => {{this.setState({show: !this.state.show})}}}/>
         {/*内容主题*/}
-        <ScrollView style={[com.PD10,com.FLEX,com.BCKF5]}>
+        <ScrollView style={[com.PD10,com.FLEX,{paddingLeft:15,paddingRight:15}]}>
           <View style={[com.PDT10,com.PDB10,com.BBW,com.BCE6]}>
             <Text style={[com.pdb5]}>{this.state.notice.title}</Text>
             <Text style={[com.PDB10,com.CBE,com.FS12,com.pdb10]}>
@@ -188,26 +174,24 @@ noticeDetail(){
   this.setVisibleModal(!this.state.show)
 }}></TouchableOpacity>
             </View>
-            <View style={[wds.addCustomer,com.ROW,com.JCC,com.aic]}>
-              <View style={[wds.addCustomer_card]}>
-                  <View style={[{width:screenW},com.pdt8,com.pdb8,com.bbwc,com.aic]}>
+            <View style={[wds.addCustomer,com.ROW,com.JCC,com.aic,{paddingLeft:15,paddingRight:15}]}>
+                <View style={[com.pdt10,com.pdb20,com.bbwc,com.aic]}>
                     <Text style={[com.fs10]}>撤回将会从所有接收人的公告列表中删除此公告</Text>
-                  </View>
+                </View>
 
                 <TouchableOpacity style={[com.jcc,com.aic,com.bbwc,com.pdt10,com.pdb10]}
-               onPress={() =>{this.setVisibleModal(!this.state.show);this.noticeCancel(this.state.notice.id
-                      )}}>
-                  <Text style={{color:'#333'}}>撤回</Text>
+                                  onPress={() =>{this.setVisibleModal(!this.state.show);this.noticeCancel(this.state.notice.id
+                                  )}}>
+                    <Text style={{color:'#333'}}>撤回</Text>
                 </TouchableOpacity>
                 {/*  <TouchableOpacity style={[com.jcc,com.aic,com.bbwc,com.pdt10,com.pdb10]}
                                   onPress={() => { this.setVisibleModal(!this.state.show);this.goPage_share()}}>
                   <Text style={{color:'#333'}}>分享</Text>
                 </TouchableOpacity>*/}
-                <TouchableOpacity style={[com.jcc,com.aic,com.pdt5,com.pdb5]}
+                <TouchableOpacity style={[com.jcc,com.aic,com.pdt15,com.pdb5]}
                                   onPress={() => { this.setVisibleModal(!this.state.show)}}>
-                  <Text style={{color:'#555'}}>取消</Text>
+                    <Text style={{color:'#555'}}>取消</Text>
                 </TouchableOpacity>
-              </View>
             </View>
           </Modal>
         </View>
@@ -230,14 +214,9 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     color: '#e4393c',
   },
-
-  container: {
-    flex: 1,
-    backgroundColor: '#F8F8F8'
-  },
   ancestorCon: {//祖先级容器
     flex: 1,
-    backgroundColor: '#EEEFF4'
+    backgroundColor: '#fff'
   },
   nav: {//头部导航
     height: 40,
