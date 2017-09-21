@@ -434,7 +434,7 @@ export default class Home extends Component {
             dailylist = [];
             dailylist.push(
                 <View style={[styles.threeTwoCenter]} key={0}>
-                <View style={[styles.row]} >
+                <View style={[styles.row,{justifyContent:'center',paddingTop:10}]} >
                     <Image source={require('../imgs/rc16.png')}/>
                     <Text style={[styles.threeText]}>
                         您今天还没有日程
@@ -450,7 +450,7 @@ export default class Home extends Component {
                 if(this.state.process_list.length==0){
                     process_info.push(
                         <View style={[styles.threeTwoCenter]}>
-                            <View style={[styles.row]}>
+                            <View style={[styles.row,{justifyContent:'center',paddingTop:10}]}>
                                 <Image source={require('../imgs/gcon16.png')}/>
                                 <Text style={[styles.threeText]}>
                                     您没有待审批的内容
@@ -812,9 +812,9 @@ export default class Home extends Component {
                         </View>
                         {/*今日日程*/}
                         <View style={[styles.threeDIVCON]}>
-                            <View style={[styles.threeSpaceBetween,styles.row]}>
+                            <View style={[{marginLeft:20},styles.borderLeft,styles.threeSpaceBetween,styles.row]}>
                                 <Text
-                                    style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
+                                    style={[styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>今日日程</Text>
 
                             </View>
                             <View style={{ borderTopWidth:1,borderColor:'#F1F2F3',}}>
@@ -824,9 +824,9 @@ export default class Home extends Component {
                         </View>
                         {/*待审批*/}
                         <View style={[styles.threeDIVCON]}>
-                            <View style={[styles.row]}>
+                            <View style={[{marginLeft:20},styles.borderLeft,styles.row]}>
                                 <Text
-                                    style={[styles.borderLeft,styles.paddingLeft,styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
+                                    style={[styles.threeDIVCONTITHei,styles.threeDIVCONTITSiz]}>待审批</Text>
                             </View>
                             <View style={{ borderTopWidth:1,borderColor:'#F1F2F3',}}>
                                 {process_info}

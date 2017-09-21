@@ -236,12 +236,13 @@ const styles = StyleSheet.create({
     back_icon:{
         width:10,
         height:17,
-        marginTop: 1
+        marginTop: 1,
+        tintColor:'#fff'
     },
     back_text:{
         color:'#fff',
         fontSize: 16,
-        marginLeft:6
+        marginLeft:1
     },
     place:{
         justifyContent:'center',
