@@ -136,39 +136,40 @@ export default class Contract  extends Component {
             list.push(
 
                 <View key={i}>
+                    <View style={{marginTop:8,marginBottom:5}}>
+                        <TouchableHighlight
+                            underlayColor={'#fefefe'}
+                            onPress={this.contract_detail.bind(this,contractlist[i].id)}>
+                            <View style={[styles.place,styles.borderTop,styles.borderBottom,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>{contractlist[i].contract_name}</Text>
+                                <Text>{contract_status}</Text>
+                            </View>
+                        </TouchableHighlight>
 
-                    <TouchableHighlight onPress={this.contract_detail.bind(this,contractlist[i].id)}>
-
-                    <View>
-
-                    <View style={[styles.place,styles.borderTop,styles.borderBottom,{height:40,marginTop:10,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                        <Text style={{fontSize:14,color:'#333'}}>{contractlist[i].contract_name}</Text>
-                        <Text>{contract_status}</Text>
                     </View>
 
-                    <View style={[styles.borderTop,styles.borderBottom,{marginTop:3,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                        <View style={[styles.place,styles.borderBottom,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                            <Text style={{fontSize:14,color:'#333'}}>合同金额</Text>
-                            <Text style={{color:'#333'}}>{contractlist[i].contract_jine}</Text>
-                        </View>
+                    <TouchableHighlight
+                        underlayColor={'#fefefe'}
+                        onPress={this.contract_detail.bind(this,contractlist[i].id)}>
+                        <View style={[styles.borderTop,styles.borderBottom,{backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                            <View style={[styles.place,styles.borderBottom,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>合同金额</Text>
+                                <Text style={{color:'#333'}}>{contractlist[i].contract_jine}</Text>
+                            </View>
 
-                        <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                            <Text style={{fontSize:14,color:'#333'}}>客户名称</Text>
-                            <Text style={{color:'#333'}}>{contractlist[i].cus_name}</Text>
+                            <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>客户名称</Text>
+                                <Text style={{color:'#333'}}>{contractlist[i].cus_name}</Text>
+                            </View>
+                            <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
+                                <Text style={{fontSize:14,color:'#333'}}>签单业务员</Text>
+                                <Text style={{color:'#333'}}>{contractlist[i].name}</Text>
+                            </View>
+                            <View style={[styles.place,styles.borderTop,{height:36,backgroundColor:'#fff',paddingLeft:15,paddingRight:15,justifyContent:'flex-start'}]}>
+                                <Text style={{marginRight:15}}>{contractlist[i].name}</Text>
+                                <Text>{contractlist[i].time}</Text>
+                            </View>
                         </View>
-                        <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
-                            <Text style={{fontSize:14,color:'#333'}}>签单业务员</Text>
-                            <Text style={{color:'#333'}}>{contractlist[i].name}</Text>
-                        </View>
-                        <View style={[styles.place,styles.borderTop,{height:36,backgroundColor:'#fff',paddingLeft:15,paddingRight:15,justifyContent:'flex-start'}]}>
-                            <Text style={{marginRight:15}}>{contractlist[i].name}</Text>
-                            <Text>{contractlist[i].time}</Text>
-                        </View>
-                    </View>
-
-
-                        </View>
-
                       </TouchableHighlight>
                    </View>
 

@@ -25,7 +25,7 @@ import toast from '../../common/toast';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-
+import Header from '../../common/header';
 export default class newBulidContract extends Component {
 
     constructor(props) {
@@ -182,32 +182,10 @@ export default class newBulidContract extends Component {
 
         return (
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>合同详情</Text>
-                    <TouchableHighlight
-
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  onPress={this.submmit.bind(this)} style={styles.navFont}>更多</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
-
-
+                <Header title="合同详情"
+                        navigation={this.props.navigation}
+                        rightText="更多"
+                        onPress={this.submmit.bind(this)} />
 
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
@@ -219,9 +197,9 @@ export default class newBulidContract extends Component {
 
                                 <Text style={{marginRight:10}}>{contract_status}</Text>
                                 <View>
-                                    <TouchableHighlight  onPress={()=>this.approve_detail()}>
-                                    <Text style={{marginRight:53,color:'red'}}>审批详情</Text>
-                                    </TouchableHighlight>
+                                    <TouchableOpacity  onPress={()=>this.approve_detail()}>
+                                    <Text style={{marginRight:20,color:'red'}}>审批详情</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
 
@@ -231,9 +209,9 @@ export default class newBulidContract extends Component {
                                 <Text style={[styles.divFontCom]}>回款金额</Text>
                                 <Text style={{marginRight:10}}>{this.state.return_money}/{this.state.contract_jine}</Text>
                                 <View>
-                                    <TouchableHighlight  onPress={()=>this.return_money_detail()}>
-                                    <Text style={{marginRight:50,color:'red'}}>回款详情</Text>
-                                    </TouchableHighlight>
+                                    <TouchableOpacity  onPress={()=>this.return_money_detail()}>
+                                    <Text style={{marginRight:20,color:'red'}}>回款详情</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
 

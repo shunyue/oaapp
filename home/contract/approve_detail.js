@@ -17,7 +17,7 @@ import {
     TouchableHighlight,
     Platform,
     } from 'react-native';
-
+import Header from '../../common/header';
 const screenH = Dimensions.get('window').height;
 const screenW = Dimensions.get('window').width;
 import config from '../../common/config';
@@ -113,7 +113,7 @@ export default class approve_detail extends Component {
                                     style={{position:'absolute',top:0,width:1,height:15,left:50,backgroundColor:'#bbb'}}></View>
                                 <View
                                     style={[{flexDirection:'row',alignItems:'center',paddingLeft:15},styles.padding,]}>
-                                    <Image style={{width:40,height:40,marginRight:10,borderRadius:25}}
+                                    <Image style={{width:30,height:30,marginRight:10,borderRadius:15,tintColor:'green'}}
                                            source={{uri:this.state.approve_people[i]['avatar']}}/>
                                     <View
                                         style={{backgroundColor:'#fff',width:screenW-100,height:45,paddingLeft:15,paddingRight:15,paddingTop:5,borderRadius:5,justifyContent:'space-between',flexDirection:'row',}}>
@@ -138,33 +138,24 @@ export default class approve_detail extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableHighlight underlayColor={'#fff'} style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                            <Text style={styles.back_text}>返回</Text>
-                        </View>
-                    </TouchableHighlight>
-                    <Text style={{color:'#333',fontSize:16}}>{this.props.navigation.state.params.signman_name}的合同</Text>
-                </View>
-
-
-                        <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
-                            <Image  style={{width:40,height:40,marginRight:5,borderRadius:25}}  source={{uri:this.state.avatar}}/>
-                            <View>
-                                <Text style={{color:'#333'}}>{this.props.navigation.state.params.signman_name}</Text>
-                                <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
-                            </View>
-                        </View>
-                        <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
-
-
-                            <Image source={{uri:this.state.approve_img}}  style={{width: 100, height: 100}} tintColor={'#37915f'}/>
-                        </View>
+                <Header title={this.props.navigation.state.params.signman_name+'的合同'}
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={()=>{this._complete()}}/>
 
                 <ScrollView>
+                    <View style={[{flexDirection:'row',alignItems:'center',backgroundColor:'#fff',paddingLeft:15,marginTop:10},styles.padding,styles.borderBottom,styles.borderTop]}>
+                        <Image  style={{width:30,height:30,marginRight:5,borderRadius:15,tintColor:'green'}}  source={{uri:this.state.avatar}}/>
+                        <View>
+                            <Text style={{color:'#333'}}>{this.props.navigation.state.params.signman_name}</Text>
+                            <Text style={{marginTop:2,fontSize:12,}}>{this.state.launch_time}</Text>
+                        </View>
+                    </View>
+                    <View style={{position:'absolute',right:20,top:10,zIndex:1000}}>
 
+
+                        <Image source={{uri:this.state.approve_img}}  style={{width: 100, height: 100}} tintColor={'#37915f'}/>
+                    </View>
                         <View  style={[styles.padding,styles.borderBottom,styles.borderTop,{backgroundColor:'#fff',paddingLeft:15,marginTop:10}]}>
                             <Text style={{fontSize:13}}>合同名称</Text>
                             <Text style={{color:'#333'}}>{this.props.navigation.state.params.contract_name}</Text>

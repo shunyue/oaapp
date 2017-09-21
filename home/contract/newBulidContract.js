@@ -25,7 +25,7 @@ import toast from '../../common/toast';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-
+import Header from '../../common/header';
 export default class newBulidContract extends Component {
 
 
@@ -427,8 +427,7 @@ export default class newBulidContract extends Component {
                                         value={this.state[productnamesing]}
                                         placeholder="请选择(必填)"
                                     />
-                                    <Text>  > </Text>
-
+                                    <Image  style={{width:12,height:12,tintColor:'#666'}} source={require('../../imgs/customer/arrow_r.png')}/>
                                 </View>
                             </TouchableOpacity>
 
@@ -495,33 +494,10 @@ export default class newBulidContract extends Component {
 
         return (
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>新增合同</Text>
-                    <TouchableHighlight
-
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  onPress={this.submmit.bind(this)} style={styles.navFont}>确定</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
-
-
-
+                <Header title="新增合同"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={this.submmit.bind(this)}/>
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
                         <View style={[styles.divCom]}>
@@ -537,7 +513,7 @@ export default class newBulidContract extends Component {
                                         editable={false}
                                         placeholder="请选择(必填)"
                                     />
-                                    <Text>  > </Text>
+                                    <Image  style={{width:12,height:12,tintColor:'#666'}} source={require('../../imgs/customer/arrow_r.png')}/>
                                 </View>
                             </TouchableOpacity>
 
@@ -553,7 +529,7 @@ export default class newBulidContract extends Component {
                                         editable={false}
                                         placeholder="请选择(必填)"
                                     />
-                                    <Text>  > </Text>
+                                    <Image  style={{width:12,height:12,tintColor:'#666'}} source={require('../../imgs/customer/arrow_r.png')}/>
                                 </View>
                             </TouchableOpacity>
 
@@ -589,7 +565,7 @@ export default class newBulidContract extends Component {
                                 />
 
                                 <TouchableOpacity  onPress= { () => {this.setState({ [isPickerVisible]:true });}}>
-                                    <Image style={{marginLeft:10,width:20,height:20}} source={require('../../imgs/icon_shenpi/rili.png')}/>
+                                    <Image style={{width:20,height:20}} source={require('../../imgs/icon_shenpi/rili.png')}/>
                                 </TouchableOpacity>
 
                                 <DateTimePicker
@@ -660,7 +636,7 @@ export default class newBulidContract extends Component {
                                         value={this.state.product_name_0}
                                         placeholder="请选择(必填)"
                                     />
-                                    <Text>  > </Text>
+                                    <Image  style={{width:12,height:12,tintColor:'#666'}} source={require('../../imgs/customer/arrow_r.png')}/>
                                 </View>
                             </TouchableOpacity>
 
@@ -717,7 +693,7 @@ export default class newBulidContract extends Component {
 
 
 
-                            <View style={[styles.divRowCom]}>
+                            <View style={[styles.divRowCom,{ justifyContent:'space-between',paddingRight:20}]}>
                                 <Text style={[styles.divFontCom]}>审批人</Text>
                                 <TouchableOpacity   onPress={()=>this.select_approve_peopel()}>
                                     <Image style={{marginLeft:30,width:20,height:20}} source={require('../../imgs/icon_shenpi/jiahao.png')}/>
@@ -889,9 +865,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'#F3F3F3',
         height: 40,
-        flex:1,
         flexDirection:'row',
-        justifyContent:'space-between',
         alignItems: 'center'
     },
 
@@ -909,6 +883,7 @@ const styles = StyleSheet.create({
     },
     divFontCom:{//子级-E
         color:'#939393',
+        width:screenW*0.25
     },
     divFontCom1:{//子级-E
         color:'red',
@@ -931,8 +906,9 @@ const styles = StyleSheet.create({
     },
     inputStyle: {
         height: 40,
-        width:245,
+        width:screenW*0.6,
         fontSize: 12,
-        color: '#333'
+        color: '#333',
+        padding:0
     }
 });
