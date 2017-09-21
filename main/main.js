@@ -118,7 +118,7 @@ import LogSearch from '../home/log/logSearch';
 import PersonalLog from '../home/log/personalLog';
 import SubordinateLog  from '../home/log/subordinateLog';
 import SubordinateLogDetail from '../home/log/subordinateLogDetail';
-
+import Page from '../home/page'
 //日程
 //日程新建拜访,任务,会议,培训
 import AddWork from '../daily/newWork/addWork';//日程-新建任务

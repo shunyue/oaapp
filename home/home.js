@@ -800,7 +800,7 @@ export default class Home extends Component {
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight
-                                    onPress={()=>this.op()}
+                                    onPress={()=>{navigate('Page')}}
                                      underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
@@ -876,7 +876,7 @@ const styles = StyleSheet.create({
     },
     fSelf: {//导航字体相关
         color: '#fff',
-        fontSize: 16
+        fontSize: 17
     },
     childContent: {//子容器页面级
         height:Height-145,
