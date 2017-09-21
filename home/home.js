@@ -11,6 +11,7 @@ import { AppRegistry,
     ScrollView,
     Image,
     TouchableHighlight,
+    TouchableOpacity,
     AsyncStorage,
     Dimensions,
     Platform,
@@ -489,12 +490,11 @@ export default class Home extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
                 {/*头部导航*/}
                 <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.op()}
-                        underlayColor="#A0A0A0"
+                    <TouchableOpacity
+                        onPress={()=>{navigate('Page')}}
                     >
                         <Image style={styles.sz} source={require('../imgs/bb.png')}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.fSelf}>首页</Text>
                     <TouchableHighlight
                         onPress={()=>this.set()}
