@@ -405,6 +405,7 @@ const app = StackNavigator({
     KaoQin:{screen: KaoQin,navigationOptions: {header: null}},
     KaoQinHistory:{screen: KaoQinHistory,navigationOptions: {header: null}},
     History:{screen: History,navigationOptions: {header: null}},
+    Page:{screen: Page,navigationOptions: {header: null}},
     //zhoufeifei    my页面
     WebViewExample:{screen: WebViewExample,navigationOptions: {header: null}},
     CompanySetting:{screen: CompanySetting,navigationOptions: {header: null}},
