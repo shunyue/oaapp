@@ -240,7 +240,7 @@ export default class SendNotice extends Component {
                   onPress={()=>this.openAffix()}
                   >
                 <View style={[com.ROW,com.JCSB]}>
-                  <View style={[com.ROW]}>
+                  <View style={[com.ROW,{height:40}]}>
                     <Text>图片</Text>
                   </View>
                   <Image style={[com.wh16]} source={require('../../imgs/navxy2.png')}/>
