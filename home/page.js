@@ -26,7 +26,7 @@ export default class Page extends Component {
                 <Header title="报表"
                         navigation={this.props.navigation}
                         />
-                <View>
+                <View style={{flex:1,marginTop:0.1}}>
                     <View style={[{width:screenW,height:50,backgroundColor:'#fff'},styles.flex_row,styles.border_Bottom]}>
                         <TouchableHighlight underlayColor={'#ccc'} onPress={()=>{}}>
                             <View style={[{width:screenW,height:50,backgroundColor:'#fff',flexDirection:'row',alignItems:'center'}]}>

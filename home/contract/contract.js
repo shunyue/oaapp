@@ -21,7 +21,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
-
+import Header from '../../common/header';
 const screenW = Dimensions.get('window').width;
 export default class Contract  extends Component {
 
@@ -181,17 +181,10 @@ export default class Contract  extends Component {
 
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>合同</Text>
-                    <TouchableOpacity style={[styles.goRight,styles.go]} onPress={()=>this.newBulidContract()}>
-                        <Image  style={styles.add} source={require('../../imgs/customer/add.png')}/>
-                    </TouchableOpacity>
-                </View>
+                <Header title="合同"
+                        navigation={this.props.navigation}
+                        source={require('../../imgs/navtx.png')}
+                        onPress={()=>this.newBulidContract()}/>
 
                 {list}
            </View>
