@@ -54,11 +54,13 @@ export default class UserSearch extends Component {
             toast.bottom('网络连接失败,请检查网络后重试')
         });
     }
-    goPage_PersonalInfo(user){
-        alert(user.id)
-        //this.props.navigation.navigate('个人资料',{
-        //    user_id:user.id,
-        //    company_id:user.company_id})
+    goPage_PersonalInfo(id){
+        let {params} = this.props.navigation.state;
+        this.props.navigation.navigate('UserMsg',{
+            accept_id:id,
+            company_id:params.company_id,
+            user_id:params.user_id
+        })
     }
     render() {
         //如果查到数据
@@ -69,7 +71,7 @@ export default class UserSearch extends Component {
                 userArr.push(
                     <TouchableHighlight
                         underlayColor={'#F3F3F3'}
-                        onPress={this.goPage_PersonalInfo.bind(this,user[i])}
+                        onPress={this.goPage_PersonalInfo.bind(this,user[i].id)}
                         key={i}>
                         <View style={[com.bgcfff,com.row,com.mg5,com.pdb5,com.bbweb]}>
                             {(user[i].avatar == "" || user[i].avatar == null) ? (

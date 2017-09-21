@@ -91,8 +91,7 @@ import ChatSetting from '../chat/chatSetting';
 import ChatGroup from '../chat/chatGroup';
 import ApplyNotice from '../chat/applyNotice';
 import RequestPeople from '../chat/requestPeople';
-
-import ChatMessage from '../chat/chatMessage'
+import ChatMessage from '../chat/chatMessage';
 
 
 
@@ -153,8 +152,8 @@ import DailyCustomer from '../daily/DetailCommon/dailyCustomer';//日程-日程�
 import DailyExecutor from '../daily/DetailCommon/dailyExecutor';//日程-日程执行人详情页面
 import DailyReport from '../daily/dailyReport/dailyReport';//日程-日程报告页面
 import VisitPosition from '../daily/dailyReport/visitPosition';//日程-日程客户详情页面
-import MyDailyClassify from '../daily/dailyContent/mydailyclassify';//日程-筛选日程
-
+import DailyClassify from '../daily/dailyContent/dailyclassify';//日程-筛选日程
+import DailySearch from '../daily/dailyContent/dailySearch';//搜索
 
 //彭黎明
 //首页-审批
@@ -516,8 +515,8 @@ const app = StackNavigator({
     DailyCustomer:{screen:DailyCustomer,navigationOptions: {header: null}},
     DailyExecutor:{screen:DailyExecutor,navigationOptions: {header: null}},
     DailyReport:{screen:DailyReport,navigationOptions: {header: null}},
-    MyDailyClassify:{screen:MyDailyClassify,navigationOptions: {header: null}},
-
+    DailyClassify:{screen:DailyClassify,navigationOptions: {header: null}},
+    DailySearch:{screen:DailySearch,navigationOptions:{header:null}},
 
 
 

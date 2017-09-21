@@ -99,7 +99,7 @@ module.exports = {
         searchSubordinate:'oa/index.php?c=DailyInterface&a=searchSubordinate',//查找用户的下属
         searchSubordinateDaily:'oa/index.php?c=DailyInterface&a=searchSubordinateDaily',//查找下属日程
         editDailyInfo:'oa/index.php?c=DailyInterface&a=editDailyInfo',//修改日程
-
+        searchDailyByName:'oa/index.php?c=DailyInterface&a=searchDailyByName',//通过日程名称查询日程
 
         //彭黎明
         //产品列表

@@ -16,23 +16,31 @@ import Header from '../../common/header';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 const screenW = Dimensions.get('window').width;
-export default class MyDailyClassify extends Component {
+import com from '../../public/css/css-com';
+
+export default class DailyClassify extends Component {
     constructor(props) {
         super(props);
         const {params} = this.props.navigation.state;
         this.state = {
             classify: params.classify?params.classify:[false,false,false,false],
             status_order: params.status_order?params.status_order:1,//默认为全部状态
-            selected: params.selected?params.selected: false
+            selected: params.selected?params.selected: false,
+            subordinate:params.subordinate?params.subordinate:[],
+            daily_title:params.daily_title?params.daily_title:1
         }
     }
     componentWillUnmount() {
-        this._listenter1.remove();
+        this.subordinateListener.remove();
     }
 
     componentDidMount() {
-        this._listenter1 = DeviceEventEmitter.addListener('choseAddress', (e) => {
-            this.setState({selected: true,place: e.join(",")})
+        //选择下属
+        this.subordinateListener= DeviceEventEmitter.addListener('Subordinate', (c)=> {
+            this.setState({
+                subordinate: c,
+                selected:true
+            })
         });
     }
     //选择日程类型
@@ -63,6 +71,21 @@ export default class MyDailyClassify extends Component {
             })
         }
     }
+    //筛选任务人
+    goPage_chooseEmployee(){
+        const {params} = this.props.navigation.state;
+        var  subordinate=this.state.subordinate;
+        var  subordinateIds=[];
+        for (var i = 0; i < subordinate.length; i++) {
+            subordinateIds[i]=subordinate[i].id;
+        }
+        this.props.navigation.navigate('ChooseSubordinate',{
+            user_id:params.user_id,
+            company_id:params.company_id,
+            subordinate:this.state.subordinate,
+            subordinateIds:subordinateIds
+        });
+    }
     //重置
     _resetPress() {
         this.setState({
@@ -74,14 +97,29 @@ export default class MyDailyClassify extends Component {
     //完成
     _completePress() {
         const {params} = this.props.navigation.state;
-        DeviceEventEmitter.emit('MyDailyClassify',{
+        DeviceEventEmitter.emit('DailyClassify',{
             classify: this.state.classify,
             status_order: this.state.status_order,
-            selected: this.state.selected
+            selected: true,
+            subordinate:this.state.subordinate
         })
         this.props.navigation.goBack(null)
     }
     render() {
+        //选择的下属
+        var subordinateArr=[];
+        var  subordinate=this.state.subordinate;
+        if(subordinate!=null && subordinate.length>0){
+            for (var i = 0; i <subordinate.length; i++) {
+                subordinateArr.push(
+                    <View style={[com.bwr,com.mg5,com.aic,com.br,com.pdt5l10]}  key={i}>
+                        <Text style={[com.cr,com.fs10]}>{subordinate[i].name}</Text>
+                        <Text style={[com.cr,com.fs10]}>人员</Text>
+                    </View>
+                );
+            }
+        }
+        const {params} = this.props.navigation.state;
         return (
             <View style={styles.container}>
                 <Header navigation={this.props.navigation}
@@ -140,6 +178,24 @@ export default class MyDailyClassify extends Component {
                             </View>
                         </View>
                     </View>
+                    {this.state.daily_title==2?
+                    <View>
+                        <TouchableHighlight underlayColor={'#F3F3F3'}
+                                            onPress={()=>{this.goPage_chooseEmployee()}}>
+                            <View style={styles.textIput}>
+                                <Text style={styles.input_title}>选择下属</Text>
+                                <View style={styles.touch_a}>
+                                    <Text numberOfLines={1} style={styles.input_content}>{this.state.place}</Text>
+                                    <Image style={styles.textINput_arrow}
+                                           source={require('../../imgs/customer/arrow_r.png')}/>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                        {subordinateArr.length==0?(null):(<View style={[com.flww,com.row,com.pdtb5,com.btbweb]}>
+                            {subordinateArr}
+                        </View>)}
+                    </View>:null}
+
                 </ScrollView>
                 <View style={{height:40,backgroundColor:'#f9d2d2',flexDirection:'row',alignItems:'center'}}>
                     <TouchableOpacity activeOpacity={1} style={styles.resetBtn} onPress={()=>this._resetPress()}>
