@@ -46,7 +46,9 @@ export default class MyDailySearch extends Component {
             checkBoxData:[],
             checkedData: [],
             title:1,
-            status_order:1
+            status_order:1,
+            selected:false,
+            classify:[false,false,false,false]
         };
     }
     componentDidMount() {
@@ -59,7 +61,7 @@ export default class MyDailySearch extends Component {
             this.searchDaily(1,this.state.status_order,null);
         });
         //筛选
-        this.classifyListener=DeviceEventEmitter.addListener('MyDailyClassify',(c)=>{
+        this.classifyListener=DeviceEventEmitter.addListener('DailyClassify',(c)=>{
             this.setState({
                 load: true,
                 status_order:c.status_order,
@@ -116,6 +118,7 @@ export default class MyDailySearch extends Component {
         if(title==1){//按照日程状态查询
             this.setState({
                 isModalVisible: false,
+                selected:false,
                 load:true
             });
             var condition={
@@ -143,9 +146,9 @@ export default class MyDailySearch extends Component {
                 load:false
             })
         })
-            .catch((error)=>{
+        .catch((error)=>{
                 toast.bottom('网络连接失败,请检查网络后重试')
-            });
+        });
     }
     setVisibleModal(visible) {
         this.setState({show: visible});
@@ -205,13 +208,23 @@ export default class MyDailySearch extends Component {
             )
         }
     }
+    //筛选
     goPageClassify(){
-        this.props.navigation.navigate('MyDailyClassify', {
+        this.props.navigation.navigate('DailyClassify', {
             classify: this.state.classify,
             status_order:this.state.status_order,
-            selected:this.state.selected
+            selected:this.state.selected,
+            daily_title:1//区分我的日程和下属日程
         });
 
+    }
+    //查找日程
+    goPageSearch(){
+        this.props.navigation.navigate('DailySearch', {
+            user_id:this.props.user_id,
+            company_id:this.props.company_id,
+            daily_title:1//区分我的日程和下属日程
+        });
     }
     render() {
         if(this.state.load){
@@ -273,17 +286,27 @@ export default class MyDailySearch extends Component {
                                       onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}>
                         {this.show_StatusName()}
                     </TouchableOpacity>
-                    {/*                    <TouchableOpacity style={[com.pos]}
-                                      onPress={() => { this.setState({isModalVisibleTwo: !this.state.isModalVisibleTwo})}}>*/}
+                    <TouchableOpacity style={[com.pos]}
+                                      onPress={() => {this.goPageSearch()}}>
+                        <View style={[com.row,com.pdlr15,com.aic]} >
+                            <Image
+                                style={[com.wh16,com.tcbe,com.mgl5]}
+                                source={require('../../imgs/customer/search.png')}/>
+                            <Text>搜索</Text>
+
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity style={[com.pos]}
                                       onPress={() => {this.goPageClassify()}}>
-                        <View style={[com.row,com.pdlr15,com.aic]}>
-                            <Text>筛选</Text>
-                            <Image style={[com.wh16,com.tcbe,com.mgl5]} source={require('../../imgs/jtxx.png')}/>
+                        <View style={[com.row,com.pdlr15,com.aic]} >
+                            <Image
+                                style={[com.wh16,com.tcbe,com.mgl5,com.br,this.state.selected?com.tcr:null]}
+                                   source={require('../../imgs/customer/shaixuan.png')}/>
+                            <Text style={[this.state.selected?com.cr:null]}>筛选</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <ScrollView style={[{height:screenH*0.70}]}>
+                <ScrollView style={[{height:screenH*0.80}]}>
                     <View style={[com.bckf5,com.btwc]}>
                         {dailylist}
                         {/*页面级-下拉框*/}
@@ -311,7 +334,7 @@ export default class MyDailySearch extends Component {
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[com.cr]}>全部状态</Text>
+                                                                <Text style={this.state.status_order==1?[com.cr]:null}>全部状态</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
@@ -320,7 +343,7 @@ export default class MyDailySearch extends Component {
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>无进展</Text>
+                                                                <Text style={this.state.status_order==2?[com.cr]:null}>无进展</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
@@ -329,7 +352,7 @@ export default class MyDailySearch extends Component {
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>有进展</Text>
+                                                                <Text style={this.state.status_order==3?[com.cr]:null}>有进展</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
@@ -338,7 +361,7 @@ export default class MyDailySearch extends Component {
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>未结束</Text>
+                                                                <Text style={this.state.status_order==4?[com.cr]:null}>未结束</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
@@ -347,7 +370,7 @@ export default class MyDailySearch extends Component {
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>已结束</Text>
+                                                                <Text style={this.state.status_order==5?[com.cr]:null}>已结束</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
@@ -356,7 +379,7 @@ export default class MyDailySearch extends Component {
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>已撤销</Text>
+                                                                <Text style={this.state.status_order==6?[com.br]:null}>已撤销</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                     </View>
@@ -366,7 +389,7 @@ export default class MyDailySearch extends Component {
                                     </View>
                                 </TouchableWithoutFeedback>
                             </Modal>
-                            <Modal
+                            { /*  <Modal
                                 backdropOpacity={0}
                                 animationIn={'slideInDown'}
                                 animationOut={'slideOutUp'}
@@ -379,7 +402,7 @@ export default class MyDailySearch extends Component {
                                             style={[com.posr,{left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
                                         <View style={[com.posr,{top:0}]}>
                                             <View style={[com.bckfff,com.mgt70]}>
-                                                {/*页面级-下拉框内容*/}
+                                                {/!*页面级-下拉框内容*!/}
                                                 <View style={[com.bgcfff,com.ww,com.row,com.hh3]}>
                                                     <View>
                                                         <TouchableHighlight
@@ -529,12 +552,33 @@ export default class MyDailySearch extends Component {
                                         </View>
                                     </View>
                                 </TouchableWithoutFeedback>
-                            </Modal>
+                            </Modal>*/}
                         </View>
                     </View>
                 </ScrollView>
             </View>
+
         );
     }
 }
+const styles = StyleSheet.create({
+    subNav_sub_border:{
+        borderLeftWidth: 1,
+        borderColor:'#ccc',
+    },
+    subNav_sub:{
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center',
+        height:36,
+        width:screenW/3,
+    },
+    subNav_img:{
+        marginTop:3,
+        marginLeft:4,
+        width:15,
+        height:15,
+        tintColor: '#aaa'
+    }
+})
 

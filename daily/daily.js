@@ -101,7 +101,7 @@ export default class Daily extends Component {
         this.newDailyListener.remove();
         this.subordinateListener.remove();
     }
-
+    //搜索下属
     getSubordinate(data,subordinate=""){
         //搜索人员
         let {params} = this.props.navigation.state;
@@ -122,6 +122,10 @@ export default class Daily extends Component {
     }
     setVisibleModal(visible) {
         this.setState({show: visible});
+    }
+    //报表页面
+    goPage_report(){
+        this.props.navigation.navigate('Form',{});
     }
     //新建拜访页面
     go_newVisit(){
@@ -181,6 +185,7 @@ export default class Daily extends Component {
             return <SubordinateDailySearch {...params}/>
         }
     }
+    //查询我的日程
     searchMyDaily(time){
         var url=config.api.base+config.api.searchMyDaily;
         request.post(url,{
@@ -199,6 +204,7 @@ export default class Daily extends Component {
            toast.bottom('网络连接失败,请检查网络后重试')
         });
     }
+    //查询下属日程
     searchSubDaily(time,subordinate=[]){
         if(subordinate.length!=0){
             var subordinateIds=[];
@@ -231,6 +237,7 @@ export default class Daily extends Component {
                 toast.bottom('网络连接失败,请检查网络后重试')
             });
     }
+    //选择时间,查询我的日程
     onMyDateSelect(date){
         var time=moment(date).format('YYYY-MM-DD');
         this.searchMyDaily(time);
@@ -239,6 +246,7 @@ export default class Daily extends Component {
             mydaily_time:time
         })
     }
+    //选择时间,查询下属日程
     onSubDateSelect(date){
         var time=moment(date).format('YYYY-MM-DD');
         this.searchSubDaily(time);
@@ -269,6 +277,7 @@ export default class Daily extends Component {
             return '已结束';
         }
     }
+    //显示我的日程内容
     _getMyDailyList(){
         if (this.state.load) {
             return (
@@ -402,6 +411,7 @@ export default class Daily extends Component {
             </ScrollView>
         );
     }
+    //显示下属日程
     _getSubDailyList(){
         var subordinateArr=[];
         var  subordinate=this.state.subordinate;
@@ -660,24 +670,10 @@ export default class Daily extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 {/*自定义导航*/}
                 {/*自定义导航栏-中间*/}
-                {/* <View style={[com.row]}>
-                 <TouchableHighlight
-                 style={[com.jcc,com.pd10]}
-                 onPress={()=>{this.setState({tab:1})}}
-                 underlayColor="#fff"
-                 >
-                 <View style={[{}]}>
-                 <Text style={[com.mgb5]}>我的日程</Text>
-                 {this.state.tab==1 && this.state.subordinateInfo.length!=0?(<Image style={[{height:1,width:55},com.tcr]} source={require('../imgs/daily/straightLine.png')}/>
-                 ):(null)}
-                 </View>
-                 </TouchableHighlight>
-                 {this.getTitle()}
-                 </View>*/}
                 {this.getTitle()}
 
                 {/*自定义导航栏-定位左边*/}
-                { /*  <TouchableHighlight
+                <TouchableHighlight
                     style={[com.posr,{top:8,left:10}]}
                     onPress={()=>{this.repose()}}
                     underlayColor="#f5f5f5"
@@ -685,7 +681,7 @@ export default class Daily extends Component {
                     <View style={[]}>
                         <Image style={[com.wh24,com.tcr]} source={require('../imgs/bbr32.png')}/>
                     </View>
-                </TouchableHighlight>*/}
+                </TouchableHighlight>
                 {/*自定义导航栏-定位右边*/}
                 <View style={[com.row,com.posr,{ height:40,alignItems:'center',top:Platform.OS==='ios'?20:null,right:15}]}>
                     <TouchableHighlight

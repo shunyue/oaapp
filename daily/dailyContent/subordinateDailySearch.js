@@ -51,47 +51,35 @@ export default class SubordinateDailySearch extends Component {
             subordinate:[],
             showName:[],
             id:1,
-            status_order:1
+            status_order:1,
+            selected:false,
+            classify:[false,false,false,false]
         };
     }
     componentDidMount() {
-        this.searchDaily(1,[1,2,3]);//查询全部状态的下属日程
+        this.searchDaily(1,this.state.status_order,null,null);//查询全部状态的下属日程
         this.dailyListener= DeviceEventEmitter.addListener('dailyInfo', (a)=> {
             this.setState({
                 load: true,
             })
-            this.searchDaily(1,[1,2,3]);
+            this.searchDaily(1,this.state.status_order,null,null);
         });
-        //选择下属
-        this.subordinateListener= DeviceEventEmitter.addListener('Subordinate', (c)=> {
+        //筛选
+        this.classifyListener=DeviceEventEmitter.addListener('DailyClassify',(c)=>{
             this.setState({
-                isModalVisibleTwo: true,
-                subordinate: c
+                load: true,
+                status_order:c.status_order,
+                classify:c.classify,
+                selected:c.selected,
+                subordinate:c.subordinate
             })
-        });
+            this.searchDaily(2,c.status_order,c.classify,c.subordinate);
+        })
     }
     componentWillUnmount() {
         // 移除监听
         this.dailyListener.remove();
-        this.subordinateListener.remove();
-    }
-    //筛选任务人
-    goPage_chooseEmployee(){
-        this.setState({
-            isModalVisibleTwo:false
-        });
-
-        var  subordinate=this.state.subordinate;
-        var  subordinateIds=[];
-        for (var i = 0; i < subordinate.length; i++) {
-            subordinateIds[i]=subordinate[i].id;
-        }
-        this.props.navigation.navigate('ChooseSubordinate',{
-            user_id:this.props.user_id,
-            company_id:this.props.company_id,
-            subordinate:this.state.subordinate,
-            subordinateIds:subordinateIds
-        });
+        this.classifyListener.remove();
     }
     //不限日程类型
     _selectAll() {
@@ -110,8 +98,25 @@ export default class SubordinateDailySearch extends Component {
         }
     }
     //根据日程状态查询日程
-    searchDaily(title,status=[]){
+    searchDaily(title,status_order,classify,subordinate=[]){
         var url=config.api.base+config.api.searchSubordinateDaily;
+        var status=[];
+        if(status_order==1){//全部状态
+            var status=[1,2,3,4];
+        }else if(status_order==2){//无进展
+            var status=[1];
+        }else if(status_order==3){//有进展
+            var status=[2];
+        }else if(status_order==4){//未结束
+            var status=[1,2];
+        }else if(status_order==5){//已结束
+            var status=[3];
+        }else if(status_order==6){//已撤回
+            var status=[4];
+        }else{
+            var status=[1,2,3,4];
+        }
+
         if(title==1){//按照状态查询
             this.setState({
                 isModalVisible: false,
@@ -123,63 +128,27 @@ export default class SubordinateDailySearch extends Component {
             }
         }else if(title==2){
             this.setState({
-                isModalVisibleTwo: false,
                 load:true
-            }) ;
-            //综合第一个查询条件
-            var status=[];
-            if(this.state.status_order==1){//全部状态
-                var status=[1,2,3];
-            }else if(this.state.status_order==2){//无进展
-                var status=[1];
-            }else if(this.state.status_order==3){//有进展
-                var status=[2];
-            }else if(this.state.status_order==4){//未结束
-                var status=[1,2];
-            }else if(this.state.status_order==5){//已结束
-                var status=[3];
-            }else if(this.state.status_order==6){//易撤回
-                var status=[4];
-            }else{
-                var status=[1,2,3];
-            }
-
+            });
             var daily_type=[];
-            if(this.refs['item1'].state.isChecked==true) {
-                daily_type.push(1) ;
-            }
-            if(this.refs['item2'].state.isChecked==true) {
-                daily_type.push(2) ;
-            }
-            if(this.refs['item3'].state.isChecked==true) {
-                daily_type.push(3) ;
-            }
-            if(this.refs['item4'].state.isChecked==true) {
-                daily_type.push(4) ;
-            }
-            if(daily_type==null){
-                daily_type=[1,2,3,4];
+            for(var i in classify) {
+                if(classify[i]) {
+                    daily_type.push(i-(-1))
+                }
             }
             //按照下属人员查询
-            var subordinate=this.state.subordinate;
+            var subordinateIds=[];
             if(subordinate.length!=0){
-                var subordinateIds=[];
                 for (var i = 0; i < subordinate.length; i++) {
                     subordinateIds[i]=subordinate[i].id;
                 }
-                //添加执行人
-                var condition={
-                    user_id:this.props.user_id,
-                    subordinate:subordinateIds,
-                    daily_type:daily_type,
-                    status:status
-                }
-            }else{
-                var condition={
-                    user_id:this.props.user_id,
-                    daily_type:daily_type,
-                    status:status
-                }
+            }
+            //添加执行人
+            var condition={
+                user_id:this.props.user_id,
+                subordinate:subordinateIds,
+                daily_type:daily_type,
+                status:status
             }
         }
         request.post(url,condition).then((res)=>{
@@ -192,9 +161,6 @@ export default class SubordinateDailySearch extends Component {
             .catch((error)=>{
                 toast.bottom('网络连接失败,请检查网络后重试')
             });
-    }
-    setVisibleModal(visible) {
-        this.setState({show: visible});
     }
     //日程详情页面
     dailyDetail(id){
@@ -253,178 +219,26 @@ export default class SubordinateDailySearch extends Component {
             )
         }
     }
-    //重置按钮
-    _reset(){
-        if(this.refs['item0'].state.isChecked==true){
-            this.refs['item0'].onClick();
-        }
-        if(this.refs['item1'].state.isChecked==true){
-            this.refs['item1'].onClick();
-        }
-        if(this.refs['item2'].state.isChecked==true){
-            this.refs['item2'].onClick();
-        }
-        if(this.refs['item3'].state.isChecked==true){
-            this.refs['item3'].onClick();
-        }
-        if(this.refs['item4'].state.isChecked==true){
-            this.refs['item4'].onClick();
-        }
-        this.setState({
-            subordinate:[]
-        })
+    //筛选
+    goPageClassify(){
+        this.props.navigation.navigate('DailyClassify', {
+            classify: this.state.classify,
+            status_order:this.state.status_order,
+            selected:this.state.selected,
+            user_id:this.props.user_id,
+            company_id:this.props.company_id,
+            subordinate:this.state.subordinate,
+            daily_title:2//区分1.我的日程2.下属日程
+        });
+
     }
-    get_condition(chooseStaff){
-        if(chooseStaff==1){//选择员工
-            return(
-                <View style={[com.bgcfff]}>
-                    <TouchableOpacity style={[com.bgcfff,com.mgl15,com.bbwc,com.mgb1,com.pdb5]}
-                                      onPress={() => { this.setState({isModalVisibleTwo: false});this.goPage_chooseEmployee();}}>
-                        <View style={[com.row,com.pdlr15,com.aic]}>
-                            <Image style={[com.wh16,com.tcbe,com.mgr10]} source={require('../../imgs/search.png')}/>
-                            <Text>查找下属</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableHighlight
-                        onPress={()=>{this.refs['item_all'].onClick();}}
-                        underlayColor="#000000"
-                        >
-                        <View style={[com.bckfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                            <View>
-                                <CheckBox
-                                    ref="item_all"
-                                    style={[com.flex,com.pdt15l20,com.pdl30,]}
-                                    onClick={()=>{}}
-                                    isChecked={true}
-                                    value={'所有下属'}
-                                    checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                    unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                    />
-                            </View>
-                            <View
-                                style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                <Text>所有下属</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                </View>
-            )
-        }else if(chooseStaff==2){//选择工作类型
-            return(
-                <ScrollView>
-                    <TouchableHighlight
-                        onPress={()=>{this._selectAll();}}
-                        underlayColor="#000000"
-                        >
-                        <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                            <View>
-                                <CheckBox
-                                    ref="item0"
-                                    value='不限'
-                                    style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                    onClick={()=>{}}
-                                    isChecked={false}
-                                    checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                    unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                    />
-                            </View>
-
-                            <View
-                                style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                <Text>不限</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={()=>{this.refs['item1'].onClick();}}
-                        underlayColor="#000000"
-                        >
-                        <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                            <View>
-                                <CheckBox
-                                    ref="item1"
-                                    value="拜访"
-                                    style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                    onClick={()=>{}}
-                                    isChecked={false}
-                                    checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                    unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                    />
-                            </View>
-
-                            <View
-                                style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                <Text>拜访</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={()=>{this.refs['item2'].onClick();}}
-                        underlayColor="#000000"
-                        >
-                        <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                            <View>
-                                <CheckBox
-                                    ref="item2"
-                                    value="任务"
-                                    style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                    onClick={()=>{}}
-                                    isChecked={false}
-                                    checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                    unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                    />
-                            </View>
-                            <View
-                                style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                <Text>任务</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={()=>{this.refs['item3'].onClick();}}
-                        underlayColor="#000000">
-                        <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                            <View>
-                                <CheckBox
-                                    ref="item3"
-                                    value="会议"
-                                    style={[com.flex,com.pdt5l20,com.pdl30]}
-                                    onClick={()=>{}}
-                                    isChecked={false}
-                                    checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                    unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                    />
-                            </View>
-                            <View
-                                style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                <Text>会议</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={()=>{this.refs['item4'].onClick();}}
-                        underlayColor="#000000">
-                        <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                            <View>
-                                <CheckBox
-                                    ref="item4"
-                                    value="培训"
-                                    style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                    onClick={()=>{}}
-                                    isChecked={false}
-                                    checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                    unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                    />
-                            </View>
-                            <View
-                                style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                <Text>培训</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                </ScrollView>
-            )
-        }
+    //查找日程
+    goPageSearch(){
+        this.props.navigation.navigate('DailySearch', {
+            user_id:this.props.user_id,
+            company_id:this.props.company_id,
+            daily_title:2//区分1.我的日程2.下属日程
+        });
     }
     render() {
         if(this.state.load){
@@ -433,19 +247,6 @@ export default class SubordinateDailySearch extends Component {
                     <Loading/>
                 </View>
             )
-        }
-        //选择的下属
-        var subordinateArr=[];
-        var  subordinate=this.state.subordinate;
-        if(subordinate!=null && subordinate.length>0){
-            for (var i = 0; i <subordinate.length; i++) {
-                subordinateArr.push(
-                    <View style={[com.bwr,com.mg5,com.aic,com.br,com.pdt5l10]}  key={i}>
-                        <Text style={[com.cr,com.fs10]}>{subordinate[i].name}</Text>
-                        <Text style={[com.cr,com.fs10]}>人员</Text>
-                    </View>
-                );
-            }
         }
         //日程详情
         var daily=this.state.daily;
@@ -501,14 +302,26 @@ export default class SubordinateDailySearch extends Component {
                         {this.show_StatusName()}
                     </TouchableOpacity>
                     <TouchableOpacity style={[com.pos]}
-                                      onPress={() => {this.setState({isModalVisibleTwo: !this.state.isModalVisibleTwo})}}>
-                        <View style={[com.row,com.pdlr15,com.aic]}>
-                            <Text>筛选</Text>
-                            <Image style={[com.wh16,com.tcbe,com.mgl5]} source={require('../../imgs/jtxx.png')}/>
+                                      onPress={() => {this.goPageSearch()}}>
+                        <View style={[com.row,com.pdlr15,com.aic]} >
+                            <Image
+                                style={[com.wh16,com.tcbe,com.mgl5]}
+                                source={require('../../imgs/customer/search.png')}/>
+                            <Text>搜索</Text>
+
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[com.pos]}
+                                      onPress={() => {this.goPageClassify()}}>
+                        <View style={[com.row,com.pdlr15,com.aic]} >
+                            <Image
+                                style={[com.wh16,com.tcbe,com.mgl5,com.br,this.state.selected?com.tcr:null]}
+                                source={require('../../imgs/customer/shaixuan.png')}/>
+                            <Text style={[this.state.selected?com.cr:null]}>筛选</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <ScrollView style={[{height:screenH*0.70}]}>
+                <ScrollView style={[{height:screenH*0.80}]}>
                     <View style={[com.bckf5,com.btwc,com.btwc]}>
                         {dailylist}
                         {/*页面级-下拉框*/}
@@ -532,239 +345,60 @@ export default class SubordinateDailySearch extends Component {
                                                     <View style={[{width:screenW}]}>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,[1,2,3]);this.setState({status_order:1})}}
+                                                            onPress={() => {this.searchDaily(1,1);this.setState({status_order:1})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text>全部状态</Text>
+                                                                <Text style={this.state.status_order==1?[com.cr]:null}>全部状态</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,[1]);this.setState({status_order:2})}}
+                                                            onPress={() => {this.searchDaily(1,2);this.setState({status_order:2})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>无进展</Text>
+                                                                <Text style={this.state.status_order==2?[com.cr]:null}>无进展</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,[2]);this.setState({status_order:3})}}
+                                                            onPress={() => {this.searchDaily(1,3);this.setState({status_order:3})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>有进展</Text>
+                                                                <Text style={this.state.status_order==3?[com.cr]:null}>有进展</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,[1,2]);this.setState({status_order:4})}}
+                                                            onPress={() => {this.searchDaily(1,4);this.setState({status_order:4})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>未结束</Text>
+                                                                <Text style={this.state.status_order==4?[com.cr]:null}>未结束</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,[3]);this.setState({status_order:5})}}
+                                                            onPress={() => {this.searchDaily(1,5);this.setState({status_order:5})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>已结束</Text>
+                                                                <Text style={this.state.status_order==5?[com.cr]:null}>已结束</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                         <TouchableHighlight
                                                             style={[com.pdt5l15,com.bbwc]}
-                                                            onPress={() => {this.searchDaily(1,[4]);this.setState({status_order:6})}}
+                                                            onPress={() => {this.searchDaily(1,6);this.setState({status_order:6})}}
                                                             underlayColor="#f0f0f0"
                                                             >
                                                             <View>
-                                                                <Text style={[]}>已撤销</Text>
+                                                                <Text style={this.state.status_order==6?[com.cr]:null}>已撤销</Text>
                                                             </View>
                                                         </TouchableHighlight>
                                                     </View>
                                                 </View>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            </Modal>
-                            <Modal
-                                backdropOpacity={0}
-                                animationIn={'slideInDown'}
-                                animationOut={'slideOutUp'}
-                                isVisible={this.state.isModalVisibleTwo}
-                                >
-                                <TouchableWithoutFeedback
-                                    onPress={() => this.setState({isModalVisibleTwo:!this.state.isModalVisibleTwo})}>
-                                    <View style={{flex:1}}>
-                                        <View
-                                            style={[com.posr,com.h200,{top:75,left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
-                                        <View style={[com.posr,{top:0}]}>
-                                            <View style={[com.bckfff,com.mgt70]}>
-                                                {subordinateArr.length==0?(null):(<View style={[com.flww,com.row,com.pdtb5,com.btbweb]}>
-                                                    {subordinateArr}
-                                                </View>)}
-                                                {/*页面级-下拉框内容*/}
-                                                <View style={[com.bgcf5,com.ww,com.row,com.hh3]}>
-                                                    <View>
-                                                        <TouchableHighlight
-                                                            style={[com.bbwc,com.ww204]}
-                                                            onPress={()=>{this.goPage_chooseEmployee()}}
-                                                            underlayColor="#f0f0f0"
-                                                            >
-                                                            <View
-                                                                style={[com.pdt5l15,com.bgcf5]}>
-                                                                <Text style={[]}>选择员工</Text>
-                                                            </View>
-                                                        </TouchableHighlight>
-                                                        <TouchableHighlight
-                                                            style={[com.jcc,]}
-                                                            onPress={()=>{this.setState({myChat: !this.state.myChat})}}
-                                                            underlayColor="#f0f0f0"
-                                                            >
-                                                            <View style={[com.pdt5l15,com.bgcfff]}>
-                                                                <Text style={[]}>工作类型</Text>
-                                                            </View>
-                                                        </TouchableHighlight>
-                                                    </View>
-                                                    <View style={[com.flex,com.bgcfff]}>
-                                                        <View style={[com.bckf5,com.btwc,com.btwc]}>
-                                                            {/*  {this.get_condition(this.state.chooseStaff)}*/}
-                                                            <ScrollView>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>{this._selectAll();}}
-                                                                    underlayColor="#000000"
-                                                                    >
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item0"
-                                                                                value='不限'
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>不限</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>{this.refs['item1'].onClick();}}
-                                                                    underlayColor="#000000"
-                                                                    >
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item1"
-                                                                                value="拜访"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>拜访</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>{this.refs['item2'].onClick();}}
-                                                                    underlayColor="#000000"
-                                                                    >
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item2"
-                                                                                value="任务"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>任务</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>{this.refs['item3'].onClick();}}
-                                                                    underlayColor="#000000">
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item3"
-                                                                                value="会议"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>会议</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>{this.refs['item4'].onClick();}}
-                                                                    underlayColor="#000000">
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item4"
-                                                                                value="培训"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>培训</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                            </ScrollView>
-                                                        </View>
-                                                    </View>
-                                                </View>
-                                                <View style={[com.btwc,com.pd5,com.rsc]}>
-                                                    <TouchableHighlight
-                                                        style={[com.pdt5l15,com.bbwc]}
-                                                        onPress={() => {this._reset()}}
-                                                        underlayColor="#f0f0f0"
-                                                        >
-                                                        <View><Text style={[com.cr]}>重置</Text></View>
-                                                    </TouchableHighlight>
-                                                    <TouchableHighlight
-                                                        style={[com.pdt5l15,com.bbwc]}
-                                                        onPress={() =>{this.searchDaily(2)}}
-                                                        underlayColor="#f0f0f0"
-                                                        >
-                                                        <View><Text style={[com.cr]}>确认</Text></View>
-                                                    </TouchableHighlight>
-                                                </View>
-
                                             </View>
                                         </View>
                                     </View>
