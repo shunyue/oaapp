@@ -17,7 +17,7 @@ import request from '../../common/request';
 import toast from '../../common/toast';
 import com from '../../public/css/css-com';
 import Loading from '../../common/loading';
-
+import Header from '../../common/header';
 export default class NoticePreview extends Component {
      back() {
         this.props.navigation.goBack(null);
@@ -76,36 +76,14 @@ export default class NoticePreview extends Component {
     }
     return (
       <View style={styles.ancestorCon}>
-          {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-        {/*导航栏*/}
-        <View style={styles.nav}>
-          <TouchableHighlight
-            onPress={()=>this.back()}
-            underlayColor="#d5d5d5"
-          >
-            {/**/}
-            <View style={styles.navltys}>
-              <Image source={require('../../imgs/navxy.png')}/>
-              <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-            </View>
-
-          </TouchableHighlight>
-          <Text style={styles.fSelf}>
-            预览公告
-          </Text>
-          <TouchableHighlight
-            onPress={()=>this.newNotice()}
-            underlayColor="#d5d5d5"
-          >
-            <View style={styles.navltys}>
-              <Text style={[styles.fSelf,styles.navltyszt]}>发布</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
+          <Header title="预览公告"
+                  navigation={this.props.navigation}
+                  rightText="发布"
+                  onPress={()=>this.newNotice()}/>
         {/*内容主题*/}
         <ScrollView style={[com.FLEX,com.BCKFFF,com.pdt5l10]}>
           {/*基本信息*/}
-          <View style={[com.PDT10,com.PDB10,com.BBW,com.BCE6]}>
+          <View style={[com.PDT10,com.PDB10,com.BBW,com.BCE6,{paddingLeft:15,paddingRight:15}]}>
             <Text style={[]}>{params.notice.title}</Text>
             <Text style={[com.PDB10,com.CBE,com.FS12]}>
               <Text>{params.userName} &nbsp;&nbsp;</Text>

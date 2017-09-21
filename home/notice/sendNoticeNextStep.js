@@ -14,6 +14,7 @@ import {
 import com from '../../public/css/css-com';
 import moment from 'moment';
 import toast from '../../common/toast';
+import Header from '../../common/header';
 export default class SendNoticeNextStep extends Component {
   back() {
       DeviceEventEmitter.emit('accepter',{
@@ -91,32 +92,10 @@ export default class SendNoticeNextStep extends Component {
   render() {
     return (
         <View style={styles.ancestorCon}>
-            {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-          {/*导航栏*/}
-          <View style={styles.nav}>
-            <TouchableHighlight
-                onPress={()=>this.back()}
-                underlayColor="#d5d5d5"
-                >
-              {/**/}
-              <View style={styles.navltys}>
-                <Image source={require('../../imgs/navxy.png')}/>
-                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-              </View>
-
-            </TouchableHighlight>
-            <Text style={styles.fSelf}>
-              发公告
-            </Text>
-            <TouchableHighlight
-                onPress={()=>this.noticePreview()}
-                underlayColor="#d5d5d5"
-                >
-              <View style={styles.navltys}>
-                <Text style={[styles.fSelf,styles.navltyszt]}>下一步</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
+            <Header title="发公告"
+                    navigation={this.props.navigation}
+                    rightText="下一步"
+                    onPress={()=>this.noticePreview()}/>
           {/*内容主题*/}
           <ScrollView style={[com.FLEX,com.BCKF5]}>
             <TouchableHighlight

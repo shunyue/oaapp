@@ -27,6 +27,7 @@ import toast from '../../common/toast';
 import moment from 'moment';
 import com from '../../public/css/css-com'
 const screenW = Dimensions.get('window').width;
+import Header from '../../common/header';
 export default class ChooseExecutor extends Component {
     constructor(props) {
         super(props);
@@ -176,15 +177,9 @@ export default class ChooseExecutor extends Component {
         }
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack(this.state.selectInfo)}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>选择人员</Text>
-
-                </View>
+                <Header title="选择人员"
+                        navigation={this.props.navigation}
+                        />
                 <View style={styles.search_bj}>
                     <View style={styles.search_border}>
                         <Image style={styles.subNav_img} source={require('../../imgs/customer/search.png')}/>
