@@ -701,14 +701,14 @@ export default class DailyDetail extends Component {
                             onPress={this.changeDailyStatus.bind(this)}
                             underlayColor="#fff"
                             >
-                            <View style={[com.aic,com.jcc]}>
-                                {(this.state.status ==3 )?(<Image
-                                        style={[com.tcr,com.wh24,]}
-                                        source={require('../imgs/daily/sc2res.png')}/>
-                                ):(<View><Image
-                                    style={[com.tcbe,com.wh24,]} source={require('../imgs/sc2.png')}/>
-                                    <Text style={[com.cbe,com.fs10]}>标记结束</Text>
-                                </View>)}
+                            <View style={[com.aic,com.h80]}>
+
+                                <Image
+                                        style={[com.tcr,com.wh48]}
+                                        source={(this.state.status ==3) ?require('../imgs/daily/sc2res.png'):require('../imgs/sc2.png')}/>
+
+                                {(this.state.status ==3) ?(<Text style={[com.cbe,]}></Text>):(<Text style={[com.cbe,com.fs10]}>标记结束</Text>)}
+
 
                                 {/* <Text style={[com.cbe,com.fs10]}>标记结束</Text>*/}
                             </View>

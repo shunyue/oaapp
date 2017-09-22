@@ -674,7 +674,7 @@ export default class Daily extends Component {
 
                 {/*自定义导航栏-定位左边*/}
                 <TouchableHighlight
-                    style={[com.posr,{top:8,left:10}]}
+                    style={[com.posr,{top:Platform.OS === 'ios'? 28:8,left:10}]}
                     onPress={()=>{this.repose()}}
                     underlayColor="#f5f5f5"
                     >
@@ -710,12 +710,12 @@ export default class Daily extends Component {
                  {this._getContent(this.state.user_id,this.state.company_id)}
                  </ScrollView>*/}
                 {/*事件触发-加号图标*/}
-                <TouchableOpacity style={[com.posr,{top:screenH*0.75,right:30,zIndex:99999}]}
+                <TouchableOpacity style={[com.posr,{top:screenH*0.75,right:30}]}
                                   onPress={() => {{this.setState({show: !this.state.show})}}}>
-                    <View>
+
                         <Image
-                            style={[com.tcr,com.wh32,]} source={require('../imgs/addr.png')}/>
-                    </View>
+                            style={[com.tcr,com.wh32]} source={require('../imgs/addr.png')}/>
+
                 </TouchableOpacity>
                 {/* 添加模型-加号图标 */}
                 <View>
@@ -736,7 +736,7 @@ export default class Daily extends Component {
                                 </View>
                                 <Text>心有多大,舞台就有多大!</Text>
                             </View>
-                            <View style={[com.posr,{top:345,left:0}]}>
+                            <View style={[com.posr,{top:Platform.OS === 'ios'? 445:345,left:0}]}>
                                 <View style={[com.hh3,com.ww,]}>
                                     <View style={[com.row,com.pdt5l15]}>
 
@@ -796,7 +796,9 @@ export default class Daily extends Component {
                                     onPress={()=>{this.setVisibleModal(!this.state.show)}}
                                     underlayColor="#f5f5f5"
                                     >
-                                    <Text style={[com.fwb,com.fs24,com.aic]}>X</Text>
+                                    <Image
+                                        style={[com.wh48,com.mgb5,]}
+                                        source={require('../imgs/del162.png')}/>
                                 </TouchableHighlight>
                             </View>
                         </View>

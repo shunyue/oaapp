@@ -79,8 +79,9 @@ export default class DailyCustomer extends Component {
                 cusArr.push(
                     <View  key={i}>
                     <TouchableOpacity onPress={this.goPageCusDetail.bind(this,customer[i].id,customer[i].company_id)}>
-                    <View style={[styles.linerow,styles.topbottom]} >
-                            <View style={styles.name}>
+                    {/*<View style={[styles.linerow,styles.topbottom,com.bgcr]} >*/}
+                    <View style={[com.bgcfff]}>
+                            <View style={[styles.name,com.bgcfff,com.pd15,com.bbwc]}>
                                 <Text>{customer[i].cus_name}</Text>
                             </View>
                     </View>
@@ -106,7 +107,7 @@ export default class DailyCustomer extends Component {
                 <View style={styles.container}>
                     <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
+                        <Text style={styles.back_text,{marginTop:Platform.OS === 'ios'? 5:2,marginLeft:5}}>返回</Text>
                     </TouchableOpacity>
                     <Text style={styles.formHeader}>关联客户</Text>
 
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F1F2',
     },
     container: {
+
         height: 40,
         flexDirection :'row',
         alignItems:'center',
@@ -215,10 +217,9 @@ const styles = StyleSheet.create({
         padding:0,
     },
     linerow: {
-        height: 40,
+
         flexDirection :'row',
         alignItems:'center',
-        backgroundColor: '#fff',
         borderBottomWidth: 0.5,
         borderBottomColor:'#bbb',
         justifyContent:'space-between',

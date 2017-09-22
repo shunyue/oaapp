@@ -88,13 +88,13 @@ export default class DailyExecutor extends Component {
             //alert(JSON.stringify(this.state.selectInfo))
             for (var i = 0; i <executor.length; i++) {
                 executorArr.push(
-                    <View  key={i}>
+                    <View  key={i} style={[com.bgcfff]}>
                     <TouchableOpacity onPress={this.goPagUserDetail.bind(this,executor[i].id,executor[i].company_id)}>
-                    <View style={[styles.linerow]} >
-                            <View style={[styles.name,styles.flexRow]}>
+                    <View style={[com.row,com.jcsb,com.aic,com.pdtb5,com.bbwc,com.pdr15,com.mgl15,com.bgcfff]} >
+                            <View style={[com.row,com.aic,com.bgcfff]}>
                                 {(executor[i].avatar==""||executor[i].avatar==null)?(
-                                    <Image style={[{tintColor: 'purple',width: 32, height: 32},com.br20,com.mgr5]} source={require('../../imgs/tx.png')}/>
-                                ):(<Image style={[{width: 32, height: 32},com.br20,com.mgr5]} source={{uri:executor[i].avatar}}/>)}
+                                    <Image style={[{tintColor: 'purple',width: 32, height: 32},com.br20,com.mglr5]} source={require('../../imgs/tx.png')}/>
+                                ):(<Image style={[{width: 32, height: 32},com.br20,com.mglr5]} source={{uri:executor[i].avatar}}/>)}
                                 <Text>{executor[i].name}</Text>
                             </View>
                             <View style={styles.name}>
@@ -122,9 +122,9 @@ export default class DailyExecutor extends Component {
             <View style={styles.ancestorCon}>
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
                 <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
+                    <TouchableOpacity style={[styles.goback,styles.go,com.aic]} onPress={()=>this.OpBack()}>
                         <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
+                        <Text style={[styles.back_text,com.mgl3,{top:Platform.OS === 'ios'? 2:1}]}>返回</Text>
                     </TouchableOpacity>
                     <Text style={styles.formHeader}>人员</Text>
                 </View>
@@ -150,10 +150,10 @@ export default class DailyExecutor extends Component {
                 </View>*/}
                 <ScrollView>
                  <View>
-                    <View style={[styles.linerow]}><Text>创建人</Text></View>
+                    <View style={[styles.linerow,com.aic]}><Text>创建人</Text></View>
                     <TouchableOpacity onPress={this.goPagUserDetail.bind(this,this.state.createrInfo.id)}>
                         <View style={[styles.linerow]} >
-                            <View style={[styles.name,styles.flexRow]}>
+                            <View style={[styles.name,styles.flexRow,com.aic]}>
                                 {(this.state.createrInfo.avatar==""||this.state.createrInfo.avatar==null)?(
                                     <Image style={[{tintColor: 'purple',width: 32, height: 32},com.br200,com.mgr5]} source={require('../../imgs/tx.png')}/>
                                 ):(<Image style={[{width: 32, height: 32},com.br200,com.mgr5]} source={{uri:this.state.createrInfo.avatar}}/>)}

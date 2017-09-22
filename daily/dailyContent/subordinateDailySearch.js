@@ -269,7 +269,8 @@ export default class SubordinateDailySearch extends Component {
                                         {(daily[i].daily_type==1)?(
                                             <Text> {daily[i].customerName}</Text>):(<Text>{daily[i].title}</Text>)}
                                         <View style={[com.row,com.aic,com.mgt5]}>
-                                            <Text style={[com.mgr5,com.cfff,com.fs10,com.bgcr,com.pdt1l10,com.br10]}>{daily[i].typeName}</Text>
+                                            {Platform.OS === 'ios'? <View style={[com.pdt1l10,com.mgr5,com.bgcr,com.br200]}><Text style={[com.cfff,com.fs10,]}>{daily[i].typeName}</Text></View>:<Text style={[com.mgr5,com.cfff,com.fs10,com.bgcr,com.pdt1l10,com.br10]}>{daily[i].typeName}</Text>}
+
                                             <Text style={[com.cb4,com.fs10]}>{daily[i].executorName}</Text>
                                         </View>
                                     </View>
@@ -337,9 +338,9 @@ export default class SubordinateDailySearch extends Component {
                                     onPress={() => this.setState({isModalVisible: !this.state.isModalVisible})}>
                                     <View style={{flex:1}}>
                                         <View
-                                            style={[com.posr,com.h200,{top:80,left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
+                                            style={[com.posr,com.h200,{top:Platform.OS === 'ios'? 91:80,left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
                                         <View style={[com.posr,{top:0}]}>
-                                            <View style={[com.bckfff,com.mgt70]}>
+                                            <View style={[com.bckfff,{marginTop:Platform.OS === 'ios'? 91:70}]}>
                                                 {/*页面级-下拉框内容*/}
                                                 <View style={[com.pdt5,com.pdb5,com.row,]}>
                                                     <View style={[{width:screenW}]}>
