@@ -51,9 +51,13 @@ export default class DailyReport extends Component {
         this.listener = DeviceEventEmitter.addListener(
             'EvecntReminder',
             (reminder)=> {
-                this.setState({
-                 location:reminder.name
-                })
+
+                if(reminder.name != '位置加载中...') {
+
+                    this.setState({
+                        location: reminder.name
+                    })
+                }
             }
         );
         //选择员工

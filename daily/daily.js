@@ -70,7 +70,7 @@ export default class Daily extends Component {
                     company_id: data.company_id,
                 })
                 this.searchMyDaily(moment(new Date()).format('YYYY-MM-DD'));
-                this.searchSubDaily(moment(new Date()).format('YYYY-MM-DD'));
+            //    this.searchSubDaily(moment(new Date()).format('YYYY-MM-DD'));
             })
         this.dailyListener= DeviceEventEmitter.addListener('DailyInfo', (a)=> {
             this.setState({
@@ -91,6 +91,7 @@ export default class Daily extends Component {
         this.subordinateListener= DeviceEventEmitter.addListener('Subordinate', (c)=> {
             this.setState({
                 load: true,
+                subordinate: c
             })
             this.searchSubDaily(this.state.time,c);
         });
@@ -161,6 +162,7 @@ export default class Daily extends Component {
             subordinateIds:subordinateIds
         });
     }
+
 
     state = {
         isModalVisible: false
