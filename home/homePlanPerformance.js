@@ -361,7 +361,7 @@ export default class HomePlanPerformance extends Component {
             <View style={styles.ancestorCon}>
                 <TouchableWithoutFeedback onPress={()=>this._hide()}>
                     <View style={styles.ancestorCon}>
-                        <Header title="销售业绩排行"
+                        <Header title="销售目标达成"
                                 navigation={this.props.navigation}
                                 rightText="筛选"
                                 onPress={()=>{this._showYearPicker()}}/>
