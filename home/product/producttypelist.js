@@ -1,4 +1,5 @@
 /*
+* 产品类型列表
 * */
 import React, { Component } from 'react';
 import {
@@ -14,59 +15,49 @@ import {
     ListView,
     Alert,
     DeviceEventEmitter,
-
 } from 'react-native';
 const screenW = Dimensions.get('window').width;
-
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
+import Loading from '../../common/loading';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import Header from '../../common/header';
 
 export default class Producttypelist extends Component {
-
-
     //查询产品类型列表
     constructor(props) {
         super(props);
         this.state = { select_value: '' };
         this.state = {
             load:false,
+            load1:false,
         };
     }
-
     //耗时操作放在这里面
     componentDidMount(){
         this.subscription = DeviceEventEmitter.addListener('company_id',(value) => {
-
-
                 var url = config.api.base + config.api.producttypelist;
                 request.post(url,{
                     company_id: value,//公司id
                 }).then((responseText) => {
-
                     if(responseText.sing==1){
                         this.setState({
                             load: true,
+                            load1: true,
                             productType: responseText.list,
                         })
+                    }else{
+                        this.setState({
+                            load1: true,
+                        })
                     }
-
                 }).catch((error)=>{
                     toast.bottom('网络连接失败，请检查网络后重试');
                 })
-
-
-
-
         })
-
         this.getNet();
-
     }
-
     getNet(){
         var url = config.api.base + config.api.producttypelist;
         request.post(url,{
@@ -75,7 +66,12 @@ export default class Producttypelist extends Component {
             if(responseText.sing==1){
                 this.setState({
                     load: true,
+                    load1: true,
                     productType: responseText.list,
+                })
+            }else{
+                this.setState({
+                    load1: true,
                 })
             }
         }).catch((error)=>{
@@ -88,27 +84,23 @@ export default class Producttypelist extends Component {
     back() {
         this.props.navigation.goBack(null);
     }
-
     //选中时设置属性
     onSelect(index, value){
        this.setState({
            select_value:`${value}`
        });
     }
-
     //点击确认 将类型传递上一页面
     back1() {
         DeviceEventEmitter.emit('producttype', this.state.select_value);
         this.props.navigation.goBack(null);
     }
-
     //新增类型
     typeadd() {
         this.props.navigation.navigate('NewBulidProducttype',{company_id:this.props.navigation.state.params.company_id});
     }
 
     render() {
-
         //for 遍历
         var productType = this.state.productType;
         var list =[];
@@ -121,12 +113,13 @@ export default class Producttypelist extends Component {
         }
         //for 遍历
 
-
+        if(!this.state.load1){
+            return (<Loading/>);
+        }
+        
         //有数据
         if(this.state.load){
-
             return (
-
                 <View style={styles.body}>
                     <Header title="选择分类"
                             navigation={this.props.navigation}
@@ -135,13 +128,8 @@ export default class Producttypelist extends Component {
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
-
-                            {/*内容主题*/}
                             <View style={[styles.divCom]}>
-
-
                             <View>
-
                              <TouchableHighlight >
                             <View  style={[styles.rowCom]}>
                                 <View style={[styles.eleTopCom]}>
@@ -151,17 +139,11 @@ export default class Producttypelist extends Component {
                                        <RadioGroup color={'#aaa'} activeColor={'#e15151'} onSelect = {(index, value) => this.onSelect(index, value)}>
                                            {list}
                                       </RadioGroup>
-
                                     </View>
                                 </View>
                             </View>
                            </TouchableHighlight>
-
-
                             </View>
-
-
-
                             </View>
                         </View>
                     </ScrollView>
@@ -180,10 +162,8 @@ export default class Producttypelist extends Component {
                             onPress={() =>this.back1()}>
                                 <Text style={{color:"#fff"}}>确定</Text>
                             </TouchableHighlight>
-
                         </View>
                     </View>
-
                 </View>
             )
 
@@ -191,7 +171,6 @@ export default class Producttypelist extends Component {
             //没有数据
         } else{
             return(
-
                 <View style={styles.body}>
                     {/*导航栏*/}
                     <Header title="选择分类"
@@ -201,10 +180,8 @@ export default class Producttypelist extends Component {
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
-
-
                             <View style={[styles.divCom1]}>
-
+                                <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../../imgs/customer/empty-content.png')}/>
                                 <Text>暂无数据</Text>
                             </View>
                         </View>
@@ -212,7 +189,6 @@ export default class Producttypelist extends Component {
                 </View>
             );
         }
-
     }
 }
 
