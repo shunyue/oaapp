@@ -249,7 +249,7 @@ export default class app extends Component {
                         rightText="保存"
                         onPress={()=>this.save()}/>
 
-                <ScrollView style={{height:screenH*0.7}} key={'ScrollView'}>
+                <ScrollView style={{height:screenH-106}} key={'ScrollView'}>
                     <View style={[styles.module_name,styles.module_]}>
                         <Text style={{marginRight:15}}>模板名称</Text>
                         <TextInput
@@ -422,6 +422,10 @@ const styles = StyleSheet.create({
     ancestorCon:{
         flex: 1,
         backgroundColor: '#eee',
+    },
+    back_icon:{
+        width:14,
+        height:14,
     },
     module_name:{
         height:40,

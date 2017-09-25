@@ -80,8 +80,6 @@ export default class Approvalfaqi extends Component {
         this.props.navigation.navigate('NewBulidForm',{company_id:this.props.navigation.state.params.company_id})
     }
 
-
-
     render() {
 
         const { navigate } = this.props.navigation;
