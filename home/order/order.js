@@ -1,4 +1,6 @@
-//订单首页  对合同表数据进行 筛选
+/*
+* 订单首页  对合同表数据进行 筛选
+* */
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -12,7 +14,6 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Dimensions,
-
     DeviceEventEmitter,
 } from 'react-native';
 
@@ -21,7 +22,7 @@ import Header from '../../common/header';
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
-
+import Loading from '../../common/loading';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 export default class order extends Component {
@@ -34,10 +35,9 @@ export default class order extends Component {
             colorChange:[true,false,false,false],
             scroll:[false,true,false],
             load:false,//判断数据是否存在
+            load1:false,//判断数据是否存在
             role_id:'',//角色id
             contractdata:[],//合同数据
-
-
             custome_id:[],//客户的id
             approve_status:[],//审批状态
             returnmoney_status:[],//回款状态
@@ -45,9 +45,6 @@ export default class order extends Component {
             approve_ks_time:'',//自定义的开始时间
             approve_js_time:'',//自定义的结束时间
             faqi_people:[],//发起人员id
-
-
-
         };
     }
     _showModal(visible) {
@@ -110,37 +107,29 @@ export default class order extends Component {
         }else if(contmy==2){
             this.state.message="订单金额"
         }
-
     }
-
-
-
     //返回
     back(){
         this.props.navigation.goBack(null);
     }
-
-
-
     //订单筛选
     order_filtrate(){
         this.props.navigation.navigate('order_filtrate',{user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id})
     }
-
     //合同详情
     contract_detail(e){
         this.props.navigation.navigate('contract_detail',{contract_id:e,company_id:this.props.navigation.state.params.company_id,user_id:this.props.navigation.state.params.user_id})
     }
 
-
     //创建时间排序
     create_timeby_contract(){
+        this.setState({
+            load1: false,
+        })
         var url1 = config.api.base + config.api.order_select_contract_bytime;
         request.post(url1,{
             user_id: this.props.navigation.state.params.user_id,//人员id
             company_id: this.props.navigation.state.params.company_id,//公司id
-
-
             custome_id:this.state.custome_id,//客户的id
             approve_status:this.state.approve_status,//审批状态
             returnmoney_status:this.state.returnmoney_status,//回款状态
@@ -148,34 +137,31 @@ export default class order extends Component {
             approve_ks_time:this.state.approve_ks_time,//自定义的开始时间
             approve_js_time:this.state.approve_js_time,//自定义的结束时间
             faqi_people:this.state.faqi_people,//发起人员id
-
-
-
-
         }).then((responseText) => {
-
-            //alert(JSON.stringify(responseText));
             if(responseText.sing==1){
                 this.setState({
                     load: true,
+                    load1: true,
                     contractdata:responseText.data,
                 })
             }else{
-                toast.bottom('没有数据');
+                this.setState({
+                    load1: true,
+                })
             }
-        }).catch((error)=>{
-            toast.bottom('没有数据');
         })
-
     }
 
     //合同金额
     orderjine_contract(){
+        this.setState({
+            load1: false,
+        })
+
         var url1 = config.api.base + config.api.order_select_contract_byjine;
         request.post(url1,{
             user_id: this.props.navigation.state.params.user_id,//人员id
             company_id: this.props.navigation.state.params.company_id,//公司id
-
             custome_id:this.state.custome_id,//客户的id
             approve_status:this.state.approve_status,//审批状态
             returnmoney_status:this.state.returnmoney_status,//回款状态
@@ -185,19 +171,18 @@ export default class order extends Component {
             faqi_people:this.state.faqi_people,//发起人员id
 
         }).then((responseText) => {
-           // alert(JSON.stringify(responseText));
             if(responseText.sing==1){
                 this.setState({
                     load: true,
+                    load1: true,
                     contractdata:responseText.data,
                 })
             }else{
-                toast.bottom('没有数据');
+                this.setState({
+                    load1: true,
+                })
             }
-        }).catch((error)=>{
-            toast.bottom('没有数据');
         })
-
     }
 
     componentDidMount(){
@@ -205,8 +190,8 @@ export default class order extends Component {
         this.subscription = DeviceEventEmitter.addListener('order_data',(value) => {
             this.setState({
                 load: true,
+                load1: true,
                 contractdata:value['data'],
-
                 custome_id:value['custome_id'],//客户的id
                 approve_status:value['approve_status'],//审批状态
                 returnmoney_status:value['returnmoney_status'],//回款状态
@@ -214,10 +199,8 @@ export default class order extends Component {
                 approve_ks_time:value['approve_ks_time'],//自定义的开始时间
                 approve_js_time:value['approve_js_time'],//自定义的结束时间
                 faqi_people:value['faqi_people'],//发起人员id
-
             })
         })
-
         this.getNet();
     }
 
@@ -244,28 +227,27 @@ export default class order extends Component {
                 user_id: this.props.navigation.state.params.user_id,//人员id
                 company_id: this.props.navigation.state.params.company_id,//公司id
             }).then((responseText) => {
-               // alert(JSON.stringify(responseText));
                 if(responseText.sing==1){
                     this.setState({
                         load: true,
+                        load1: true,
                         contractdata:responseText.data,
                     })
                 }else{
-                    toast.bottom('没有数据');
+                    this.setState({
+                        load1: true,
+                    })
                 }
-            }).catch((error)=>{
-                toast.bottom('没有数据');
             })
-
     }
 
-
-
-
-
     render() {
-
         //合同
+
+        if(!this.state.load1){
+            return (<Loading/>);
+        }
+
         if(this.state.load){
             var contractlist=this.state.contractdata;
             var list=[];
@@ -285,22 +267,17 @@ export default class order extends Component {
 
                 list.push(
                     <View key={i}>
-
                         <TouchableHighlight onPress={this.contract_detail.bind(this,contractlist[i].id)}>
-
                             <View>
-
                                 <View style={[styles.place,styles.borderTop1,{height:40,marginTop:10,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
                                     <Text style={{fontSize:14,color:'#333'}}>{contractlist[i].contract_name}</Text>
                                     <Text>{contract_status}</Text>
                                 </View>
-
                                 <View style={[styles.borderTop1,styles.borderBottom1,{backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
                                     <View style={[styles.place,styles.borderBottom1,{height:40,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
                                         <Text style={{fontSize:14,color:'#333'}}>合同金额</Text>
                                         <Text style={{color:'#333'}}>{contractlist[i].contract_jine}</Text>
                                     </View>
-
                                     <View style={[styles.place,{height:30,backgroundColor:'#fff',paddingLeft:15,paddingRight:15}]}>
                                         <Text style={{fontSize:14,color:'#333'}}>客户名称</Text>
                                         <Text style={{color:'#333'}}>{contractlist[i].cus_name}</Text>
@@ -314,22 +291,18 @@ export default class order extends Component {
                                         <Text>{contractlist[i].time}</Text>
                                     </View>
                                 </View>
-
-
                             </View>
-
                         </TouchableHighlight>
                     </View>
                 )
             }
         }else{
             var list=[];
-            list.push(<View style={{alignItems:'center',justifyContent:'center',marginTop:50}}><Text>没有数据</Text></View>);
+            list.push(<View style={{alignItems:'center',justifyContent:'center',marginTop:50}}>
+                <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../../imgs/customer/empty-content.png')}/>
+                          <Text>没有数据</Text>
+                     </View>);
         }
-
-        //合同
-
-
 
 
         return (
@@ -352,16 +325,11 @@ export default class order extends Component {
                         </View>
                     </TouchableHighlight>
 
-
-
                 </View>
                 {/*内容主题*/}
                 <ScrollView>
                     <View style={[styles.common]}>
-
-
                         {list}
-
                     </View>
                 </ScrollView>
                 {/*  下拉*/}

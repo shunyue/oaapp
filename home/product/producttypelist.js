@@ -116,7 +116,7 @@ export default class Producttypelist extends Component {
         if(!this.state.load1){
             return (<Loading/>);
         }
-        
+
         //有数据
         if(this.state.load){
             return (
