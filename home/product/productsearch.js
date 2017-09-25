@@ -18,15 +18,13 @@ import {
     Platform,
 } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
-
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 import Loading from '../../common/loading';
-
-
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
+
 export default class app extends Component {
     OpBack() {
         this.props.navigation.goBack(null)
@@ -38,35 +36,33 @@ export default class app extends Component {
                         dataSource: ds,
                         load:false,
                         load1:true,
-
         };
     }
 
-
     //查询产品列表
-
     //耗时操作放在这里面
     submmit(){
-
+        if(this.state.text=='搜索产品'){
+            return toast.center('请输入搜索内容');
+        }
         this.setState({
-            load1:false
-        });
+            load1: false,
+        })
 
         var url = config.api.base + config.api.product_search;
         request.post(url,{
             search:this.state.text,
         }).then((responseText)=>{
-
                  if(responseText.sing==1){
-
                      this.setState({
                          load: true,
                          load1: true,
                          dataSource: this.state.dataSource.cloneWithRows(responseText.list),
                      })
-
-
                  }else{
+                     this.setState({
+                         load1: true,
+                     })
                      toast.center('没有搜到产品');
                  }
             }).catch((error)=>{
@@ -304,8 +300,4 @@ const styles = StyleSheet.create({
         color:'#969696',
         marginTop:10,
     },
-
-
-
-
 });

@@ -34,17 +34,13 @@ export default class Product extends Component {
         this.state = {
             dataSource: ds,
             load:false,
-
+            load1:false,
         };
     }
 
-
-
     //耗时操作放在这里面
     componentDidMount(){
-
         this.subscription = DeviceEventEmitter.addListener('company_id',(value) => {
-
                 var url = config.api.base + config.api.productlist;
                 request.post(url,{
                     company_id: value,//公司id
@@ -52,41 +48,42 @@ export default class Product extends Component {
                     if(responseText.sing==1){
                         this.setState({
                             load: true,
+                            load1: true,
                             dataSource: this.state.dataSource.cloneWithRows(responseText.list),
+                        })
+                    }else{
+                        this.setState({
+                        load1: true
                         })
                     }
                 }).catch((error)=>{
                     toast.bottom('网络连接失败，请检查网络后重试');
                 })
         })
-
         this.getNet();
-
     }
 
     getNet(){
-
         var url = config.api.base + config.api.productlist;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
         }).then((responseText) => {
-
             if(responseText.sing==1){
                 this.setState({
                     load: true,
+                    load1: true,
                     dataSource: this.state.dataSource.cloneWithRows(responseText.list),
                 })
+            }else{
+                this.setState({
+                    load1: true
+                })
             }
-
-
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
-
     }
     //查询产品列表
-
-
 
     back() {
         this.props.navigation.goBack(null);
@@ -101,21 +98,15 @@ export default class Product extends Component {
         this.props.navigation.navigate('Productsearch')
     }
 
-
     render() {
         const { navigate } = this.props.navigation;
-
-
         //有数据
-        if(!this.state.load){
+        if(!this.state.load1){
             return (<Loading/>);
         }
 
-
         if(this.state.load){
-
         return (
-
             <View style={styles.body}>
                 <Header title="产品列表"
                         navigation={this.props.navigation}
@@ -142,9 +133,6 @@ export default class Product extends Component {
                         {/*内容主题*/}
                         <View style={[styles.divCom]}>
 
-
-
-
                             <ListView
                                 dataSource={this.state.dataSource}
                                 renderRow={(rowData)=>
@@ -160,21 +148,14 @@ export default class Product extends Component {
                                         <Text style={[styles.elefontCom]}>{rowData.type_name}</Text>
                                         <Text style={[styles.elefontCom1]}>{rowData.product_status==1?'已启用':'未启用'}</Text>
                                     </View>
-
-
                                 </View>
                             </View>
                            </TouchableHighlight>
-
-
                             </View>}
                             />
-
                         </View>
                     </View>
                 </ScrollView>
-
-
             </View>
         )
 
@@ -182,7 +163,6 @@ export default class Product extends Component {
          //没有数据
         } else{
             return(
-
                 <View style={styles.body}>
                     {/*导航栏*/}
                     <Header title="产品列表"
@@ -192,34 +172,9 @@ export default class Product extends Component {
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
-                            {/*页签区域*/}
-                            <View style={[styles.divTit,styles.divCon]}>
-                                <TouchableHighlight
-                                    onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
-                                    underlayColor="#d5d5d5"
-                                >
-                                    <View style={[styles.eleCon,styles.eleSelf]}>
-                                        <View style={[styles.eleCon]}>
-                                            <Image style={[styles.eleImgCon]} source={require('../../imgs/product/fl16.png')}/>
-                                            <Text style={[styles.eleFontCon]}>分类</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={()=>this.leftSliderDown()}
-                                    underlayColor="#d5d5d5"
-                                >
-                                    <View style={[styles.eleCon]}>
-                                        <View style={[styles.eleCon]}>
-                                            <Image style={[styles.eleImgCon]} source={require('../../imgs/product/ss16.png')}/>
-                                            <Text style={[styles.eleFontCon]}>搜索</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            </View>
-                            {/*内容主题*/}
-                            <View style={[styles.divCom]}>
 
+                            <View style={{marginLeft:150,marginTop:100}}>
+                                <Image  style={{width:48,height:48,marginLeft:10,marginRight:20}}  source={require('../../imgs/customer/empty-content.png')}/>
                                 <Text>暂无数据</Text>
                             </View>
                         </View>
