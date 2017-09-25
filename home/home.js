@@ -331,7 +331,7 @@ export default class Home extends Component {
 
     //报表
     op() {
-        this.props.navigation.navigate('Report',{user_id:this.state.user_id,company_id:this.state.company_id})
+        this.props.navigation.navigate('Page',{user_id:this.state.user_id,company_id:this.state.company_id})
     }
     //设置
     set() {
@@ -800,7 +800,7 @@ export default class Home extends Component {
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight
-                                    onPress={()=>{navigate('Page')}}
+                                    onPress={()=>{this.op()}}
                                      underlayColor="transparent"
                                 >
                                     <View style={styles.flexRow_width}>
