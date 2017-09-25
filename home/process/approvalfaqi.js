@@ -25,7 +25,6 @@ import Loading from '../../common/loading';
 const screenW = Dimensions.get('window').width;
 import Header from '../../common/header';
 export default class Approvalfaqi extends Component {
-
     //查询所有表单
     constructor(props) {
         super(props);
@@ -36,11 +35,6 @@ export default class Approvalfaqi extends Component {
             load1:false,
             isModalVisible: false//下拉选择分类
         };
-    }
-
-    //下拉选择分类
-    _showModal(visible) {
-        this.setState({isModalVisible: visible});
     }
 
     //耗时操作放在这里面
@@ -70,7 +64,6 @@ export default class Approvalfaqi extends Component {
         })
     }
 
-
     back() {
         this.props.navigation.goBack(null);
     }
@@ -81,21 +74,14 @@ export default class Approvalfaqi extends Component {
     }
 
     render() {
-
         const { navigate } = this.props.navigation;
-
-
         //没有数据
         if(!this.state.load1){
             return (<Loading/>);
         }
-
-
         //有数据
         if(this.state.load){
-
         return (
-
             <View style={styles.body}>
                 <Header title="选择模板"
                         navigation={this.props.navigation}
@@ -117,36 +103,26 @@ export default class Approvalfaqi extends Component {
                              <TouchableHighlight  onPress={() => navigate('formDetail', { id: rowData.id,formname:rowData.name,company_id: this.props.navigation.state.params.company_id,user_id:this.props.navigation.state.params.user_id})}>
                             <View  style={[styles.rowCom]}>
                                 <View style={[styles.eleTopCom]}>
-
                                    <View>
                                       <Image style={{width:40,height:40}}  source={{uri:rowData.icon}}/>
                                     </View>
-
                                     <View  style={{marginLeft:10}}>
                                         <Text>{rowData.name}</Text>
                                         <Text style={[styles.elefontCom]}>{rowData.describe}</Text>
                                     </View>
-
                                 </View>
                             </View>
                            </TouchableHighlight>
-
-
                             </View>}
                             />
-
                         </View>
                     </View>
                 </ScrollView>
-
             </View>
         )
-
-
          //没有数据
         } else{
             return(
-
                 <View style={styles.body}>
                     {/*导航栏*/}
                     <Header title="选择模板"
@@ -156,21 +132,17 @@ export default class Approvalfaqi extends Component {
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
-                            
                             <View style={[styles.divCom,{ alignItems:'center',justifyContent:'center',paddingTop:50}]}>
                                 <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../../imgs/customer/empty-content.png')}/>
                                 <Text>暂无数据</Text>
                             </View>
                         </View>
                     </ScrollView>
-
                 </View>
             );
         }
-
     }
 }
-
 const styles = StyleSheet.create({
     //nav
     navltys: {
@@ -182,10 +154,8 @@ const styles = StyleSheet.create({
     },
     navltyszt: {
         fontSize: 14,
-
         color: '#e4393c',
     },
-
     container: {
         flex: 1,
         backgroundColor: '#F8F8F8'
@@ -258,7 +228,6 @@ const styles = StyleSheet.create({
     eleImgCon: {//子级-图片
         marginRight: 5,
     },
-
     //内容模块
     divCom: {//祖先级-区域
         flex:1,
@@ -273,7 +242,6 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'#F1F2F3',
     },
-
     eleTopCom: {//父级-块
         flexDirection: 'row',
         marginBottom:5
@@ -289,7 +257,6 @@ const styles = StyleSheet.create({
         color:'#969696',
     },
 
-
     eleBottomCom: {//父级-块
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -299,15 +266,4 @@ const styles = StyleSheet.create({
         width:14,
         height:14,
     },
-
-    //分类模型下拉
-    model_up:{
-        width:screenW,
-        height:130,
-        position: 'absolute',
-        left:0,
-        top:75,
-        backgroundColor:'#fff'
-    },
-
 });
