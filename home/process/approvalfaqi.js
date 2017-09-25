@@ -22,6 +22,7 @@ import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
 const screenW = Dimensions.get('window').width;
+import Header from '../../common/header';
 export default class Approvalfaqi extends Component {
 
     //查询所有表单
@@ -84,30 +85,10 @@ export default class Approvalfaqi extends Component {
         return (
 
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>选择模板</Text>
-                    <TouchableHighlight
-                        onPress={()=>this.newBulidForm()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                           <Text style={[styles.fSelf,styles.navltyszt]}>添加模板</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                </View>
+                <Header title="选择模板"
+                        navigation={this.props.navigation}
+                        rightText="添加模板"
+                        onPress={()=>this.newBulidForm()}/>
                 {/*内容主题*/}
                 <ScrollView style={styles.childContent}>
                     <View style={[styles.ancestorCon]}>
@@ -156,33 +137,15 @@ export default class Approvalfaqi extends Component {
 
                 <View style={styles.body}>
                     {/*导航栏*/}
-                    <View style={styles.nav}>
-                        <TouchableHighlight
-                            onPress={()=>this.back()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Image source={require('../../imgs/navxy.png')}/>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                            </View>
-
-                        </TouchableHighlight>
-                        <Text style={styles.fSelf}>选择模板</Text>
-                        <TouchableHighlight
-                            onPress={()=>this.newBulidForm()}
-                            underlayColor="#d5d5d5"
-                        >
-                            <View style={styles.navltys}>
-                                <Text style={[styles.fSelf,styles.navltyszt]}>添加模板</Text>
-                            </View>
-
-                        </TouchableHighlight>
-                    </View>
+                    <Header title="选择模板"
+                            navigation={this.props.navigation}
+                            rightText="添加模板"
+                            onPress={()=>this.newBulidForm()}/>
                     {/*内容主题*/}
                     <ScrollView style={styles.childContent}>
                         <View style={[styles.ancestorCon]}>
                             {/*页签区域*/}
-                            <View style={[styles.divTit,styles.divCon]}>
+                            <View style={[styles.divTit]}>
                                 <TouchableHighlight
                                     onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
                                     underlayColor="#d5d5d5"
@@ -196,7 +159,7 @@ export default class Approvalfaqi extends Component {
                                 </TouchableHighlight>
                                 <TouchableHighlight
                                     onPress={()=>this.leftSliderDown()}
-                                    underlayColor="#d5d5d5"
+                                    underlayColor="transparent"
                                 >
                                     <View style={[styles.eleCon]}>
                                         <View style={[styles.eleCon]}>
@@ -283,15 +246,13 @@ const styles = StyleSheet.create({
     divTit: {//祖级--区域-主题内容title部分
         flexDirection: 'row',
         //justifyContent: 'space-around',
-        height: 30,
-        paddingTop: 5,
+        height: 40,
         marginBottom: 10,
-        paddingBottom: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderColor: '#e3e3e3',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     eleCon: {//父级-块
         width: screenW * 0.5,
@@ -314,6 +275,9 @@ const styles = StyleSheet.create({
     //内容模块
     divCom: {//祖先级-区域
         flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        paddingTop:50
     },
     rowCom: {//祖级-行
         paddingLeft:15,

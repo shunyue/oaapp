@@ -260,10 +260,11 @@ export default class Approval extends Component {
                         backdropOpacity={0}
                         animationIn={'slideInDown'}
                         animationOut={'slideOutUp'}
-                        isVisible={this.state.isModalVisible}
+                        transparent={true}
+                        visible={this.state.isModalVisible}
                     >
                             <View style={{flex:1}}>
-                                <TouchableOpacity style={{width:screenW,height:(screenH-140),opacity:0.4,backgroundColor:'#000',top:75,position:'absolute'}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
+                                <TouchableOpacity style={{width:screenW,height:(screenH-75),opacity:0.4,backgroundColor:'#000',top:75,position:'absolute'}} onPress = {()=>{this.setState({isModalVisible: !this.state.isModalVisible});}}>
                                 </TouchableOpacity>
                                 <View style={styles.model_up}>
                                     {/* 下拉框 内容*/}

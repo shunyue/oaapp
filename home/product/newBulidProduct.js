@@ -406,6 +406,7 @@ const styles = StyleSheet.create({
         color:"#333",
         marginLeft:screenW*0.05,
         height:30,
+        padding:0,
     },
 
     imgStyle: {

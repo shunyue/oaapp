@@ -18,6 +18,7 @@ import {
     DeviceEventEmitter,
     Platform,
 } from 'react-native';
+import Header from '../../common/header';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import config from '../../common/config';
 import request from '../../common/request';
@@ -243,18 +244,10 @@ export default class app extends Component {
         //添加拦位
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>创建审批模板</Text>
-                    <TouchableOpacity style={[styles.goRight,styles.go]}  onPress={()=>this.save()}>
-                        <Text style={[styles.back_text]} >保存</Text>
-                    </TouchableOpacity>
-                </View>
-
+                <Header title="创建审批模板"
+                        navigation={this.props.navigation}
+                        rightText="保存"
+                        onPress={()=>this.save()}/>
 
                 <ScrollView style={{height:screenH*0.7}} key={'ScrollView'}>
                     <View style={[styles.module_name,styles.module_]}>
@@ -429,38 +422,6 @@ const styles = StyleSheet.create({
     ancestorCon:{
         flex: 1,
         backgroundColor: '#eee',
-    },
-    container: {
-        height: 40,
-        flexDirection :'row',
-        alignItems:'center',
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor:'#bbb',
-        justifyContent:'center',
-    },
-    go:{
-        position:'absolute',
-        top:8
-    },
-    goback:{
-        left:15,
-        flexDirection :'row',
-    },
-    goRight:{
-        right:20
-    },
-    back_icon:{
-        width:14,
-        height:14,
-    },
-    back_text:{
-        color:'#e15151',
-        fontSize: 16,
-        marginLeft:6
-    },
-    formHeader:{
-        fontSize:16
     },
     module_name:{
         height:40,
