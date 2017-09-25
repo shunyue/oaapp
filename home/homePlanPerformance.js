@@ -1,7 +1,6 @@
-/**
- * Created by Administrator on 2017/6/7.
- * 负责人：周飞飞 ，界面设计：候占山
- */
+/*
+* 销售目标达成
+* */
 'use strict'
 import React, { Component } from 'react';
 import {

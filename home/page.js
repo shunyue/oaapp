@@ -1,5 +1,5 @@
 /*
-* 报表详情
+* 首页报表列表
 * */
 import React, { Component } from 'react';
 import {
