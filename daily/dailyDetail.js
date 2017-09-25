@@ -663,7 +663,7 @@ export default class DailyDetail extends Component {
                     {this.state.datetime <this.state.dailyInfo.start_time && params.user_id==this.state.dailyInfo.create_id?
                         <TouchableOpacity onPress={() => {this.setState({show: !this.state.show})}}>
                             <Image source={require('../imgs/slh.png')}/>
-                        </TouchableOpacity>:<View></View>
+                        </TouchableOpacity>:<View style={[com.wh32]}></View>
                     }
                 </View>
                 <ScrollView style={[com.flex,com.bgcf5]}>
