@@ -490,18 +490,18 @@ export default class Home extends Component {
                 {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#EA3B49'}}></View>:null}
                 {/*头部导航*/}
                 <View style={styles.nav}>
-                    <TouchableOpacity
+                    { /* <TouchableOpacity
                         onPress={()=>{navigate('Page')}}
                     >
                         <Image style={styles.sz} source={require('../imgs/bb.png')}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                     <Text style={styles.fSelf}>首页</Text>
-                    <TouchableHighlight
+                    {/*<TouchableHighlight
                         onPress={()=>this.set()}
                         underlayColor="#A0A0A0"
                     >
                         <Image style={styles.sz} source={require('../imgs/sz.png')}/>
-                    </TouchableHighlight>
+                    </TouchableHighlight>*/}
                 </View>
                <View style={{width:sliderWidth,height:100,backgroundColor: '#EA3B49',position:'absolute',borderBottomLeftRadius:75, top:Platform.OS==='ios'?55:35,borderBottomRightRadius:75}}></View>
 
@@ -876,7 +876,8 @@ const styles = StyleSheet.create({
     },
     fSelf: {//导航字体相关
         color: '#fff',
-        fontSize: 17
+        fontSize: 17,
+        marginLeft:150
     },
     childContent: {//子容器页面级
         height:Height-145,
