@@ -30,7 +30,7 @@ export default class Page extends Component {
                             <TouchableHighlight underlayColor={'#ccc'} onPress={()=>{}}>
                                 <View style={[{width:screenW,height:50,backgroundColor:'#fff',flexDirection:'row',alignItems:'center'}]}>
                                     <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../imgs/chat/company.png')}/>
-                                    <Text style={{color:'#333',fontSize:16}}>合同报表</Text>
+                                    <Text style={{color:'#333',fontSize:16}}>销售区域排行</Text>
                                 </View>
                             </TouchableHighlight>
                             <View style={{position:'absolute',top:20,right:15}}>
@@ -41,7 +41,7 @@ export default class Page extends Component {
                             <TouchableHighlight underlayColor={'#ccc'} onPress={()=>{}}>
                                 <View style={[{width:screenW,height:50,backgroundColor:'#fff',flexDirection:'row',alignItems:'center'}]}>
                                     <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../imgs/chat/company.png')}/>
-                                    <Text style={{color:'#333',fontSize:16}}>合同报表</Text>
+                                    <Text style={{color:'#333',fontSize:16}}>销售业绩对比</Text>
                                 </View>
                             </TouchableHighlight>
                             <View style={{position:'absolute',top:20,right:15}}>
@@ -52,7 +52,7 @@ export default class Page extends Component {
                             <TouchableHighlight underlayColor={'#ccc'} onPress={()=>{}}>
                                 <View style={[{width:screenW,height:50,backgroundColor:'#fff',flexDirection:'row',alignItems:'center'}]}>
                                     <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../imgs/chat/company.png')}/>
-                                    <Text style={{color:'#333',fontSize:16}}>合同报表</Text>
+                                    <Text style={{color:'#333',fontSize:16}}>销售目标达成</Text>
                                 </View>
                             </TouchableHighlight>
                             <View style={{position:'absolute',top:20,right:15}}>
