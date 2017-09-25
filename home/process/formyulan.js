@@ -21,6 +21,7 @@ import {
     DeviceEventEmitter
     } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
+import Header from '../../common/header';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 import config from '../../common/config';
@@ -438,28 +439,8 @@ export default class formyulan extends Component {
 
         return (
             <View style={styles.body}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                {/*导航栏*/}
-                <View style={styles.nav}>
-                    <TouchableHighlight
-                        onPress={()=>this.back()}
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Image source={require('../../imgs/navxy.png')}/>
-                            <Text style={[styles.fSelf,styles.navltyszt]}>返回</Text>
-                        </View>
-
-                    </TouchableHighlight>
-                    <Text style={styles.fSelf}>表单样式预览</Text>
-                    <TouchableHighlight
-                        underlayColor="#d5d5d5"
-                    >
-                        <View style={styles.navltys}>
-                            <Text  ></Text>
-                        </View>
-                    </TouchableHighlight>
-                </View>
+                <Header navigation = {this.props.navigation}
+                        title = "表单样式预览"/>
 
                 {/*内容主题*/}
                 <ScrollView style={styles.childContent}>
