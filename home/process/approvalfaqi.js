@@ -168,7 +168,7 @@ export default class Approvalfaqi extends Component {
                                 </TouchableHighlight>
                             </View>
                             {/*内容主题*/}
-                            <View style={[styles.divCom]}>
+                            <View style={[styles.divCom,{ alignItems:'center',justifyContent:'center',paddingTop:50}]}>
 
                                 <Text>暂无数据</Text>
                             </View>
@@ -273,9 +273,6 @@ const styles = StyleSheet.create({
     //内容模块
     divCom: {//祖先级-区域
         flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        paddingTop:50
     },
     rowCom: {//祖级-行
         paddingLeft:15,
