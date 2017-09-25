@@ -174,6 +174,18 @@ export default class MyDailySearch extends Component {
             return(<Text style={[com.cbe,com.fs10]}>已结束</Text>)
         }
     }
+    //日程类型颜色不同
+    getTypeColor(type){
+        if(type==1){
+          return(com.bgc24)
+        }else if(type==2){
+            return (com.bgc84)
+        }else if(type==4){
+            return(com.bgcfd)
+        }else if(type==3){
+            return(com.bgcr)
+        }
+    }
     //显示状态名称
     show_StatusName(){
         var  status=this.state.status_order;
@@ -254,7 +266,13 @@ export default class MyDailySearch extends Component {
                                         {(daily[i].daily_type==1)?(
                                             <Text> {daily[i].customerName}</Text>):(<Text>{daily[i].title}</Text>)}
                                         <View style={[com.row,com.aic,com.mgt5]}>
-                                            {Platform.OS === 'ios'? <View style={[com.pdt1l10,com.mgr5,com.bgcr,com.br200]}><Text style={[com.cfff,com.fs10,]}>{daily[i].typeName}</Text></View>:<Text style={[com.mgr5,com.cfff,com.fs10,com.bgcr,com.pdt1l10,com.br10]}>{daily[i].typeName}</Text>}
+                                            {Platform.OS === 'ios'?
+                                                <View style={[com.pdt1l10,com.mgr5,com.br200,this.getTypeColor(daily[i].daily_type)]}>
+                                                    <Text style={[com.cfff,com.fs10]}>{daily[i].typeName}</Text>
+                                                </View>
+                                                : <Text style={[com.mgr5,com.cfff,com.fs10,com.pdt1l10,com.br10,this.getTypeColor(daily[i].daily_type)]}>
+                                                {daily[i].typeName}
+                                                </Text>}
                                             <Text style={[com.cb4,com.fs10]}>{daily[i].executorName}</Text>
                                         </View>
                                     </View>
@@ -389,170 +407,6 @@ export default class MyDailySearch extends Component {
                                     </View>
                                 </TouchableWithoutFeedback>
                             </Modal>
-                            { /*  <Modal
-                                backdropOpacity={0}
-                                animationIn={'slideInDown'}
-                                animationOut={'slideOutUp'}
-                                isVisible={this.state.isModalVisibleTwo}
-                                >
-                                <TouchableWithoutFeedback
-                                    onPress={() => this.setState({isModalVisibleTwo:!this.state.isModalVisibleTwo})}>
-                                    <View style={{flex:1}}>
-                                        <View
-                                            style={[com.posr,{left:0,width:screenW,height:screenH,backgroundColor:'#000',opacity:0.6}]}></View>
-                                        <View style={[com.posr,{top:0}]}>
-                                            <View style={[com.bckfff,com.mgt70]}>
-                                                {/!*页面级-下拉框内容*!/}
-                                                <View style={[com.bgcfff,com.ww,com.row,com.hh3]}>
-                                                    <View>
-                                                        <TouchableHighlight
-                                                            style={[com.jcc,]}
-                                                            onPress={()=>{this.setState({myChat: !this.state.myChat,chooseStaff:2})}}
-                                                            underlayColor="#f0f0f0"
-                                                            >
-                                                            <View style={[com.pdt5l15,(this.state.chooseStaff==2) ?(com.bgcfff):(com.bgcf5)]}>
-                                                                <Text style={[]}>工作类型</Text>
-                                                            </View>
-                                                        </TouchableHighlight>
-                                                    </View>
-                                                    <View style={[com.flex,com.bgcfff]}>
-                                                        <View style={[com.bckf5,com.btwc,com.btwc]}>
-                                                            <ScrollView>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>this._selectAll()}
-                                                                    underlayColor="#000000"
-                                                                    >
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item0"
-                                                                                value='0'
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                              //  checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                              //  unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>不限</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>this.refs['item1'].onClick()}
-                                                                    underlayColor="#000000"
-                                                                    >
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item1"
-                                                                                value="1"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                              // checkedImage={<Image source={require('../../imgs/customer/selectnone.png')}/>}
-                                                                             //  unCheckedImage={<Image source={require('../../imgs/customer/selected.png')}/>}
-                                                                                />
-                                                                        </View>
-
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>拜访</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>this.refs['item2'].onClick()}
-                                                                    underlayColor="#000000"
-                                                                    >
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item2"
-                                                                                value="2"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>任务</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>this.refs['item3'].onClick()}
-                                                                    underlayColor="#000000">
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item3"
-                                                                                value="3"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>会议</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                                <TouchableHighlight
-                                                                    onPress={()=>this.refs['item4'].onClick()}
-                                                                    underlayColor="#000000">
-                                                                    <View style={[com.bgcfff,com.pos,com.pdb3,com.row,com.AIC]}>
-                                                                        <View>
-                                                                            <CheckBox
-                                                                                ref="item4"
-                                                                                value="4"
-                                                                                style={[com.flex,com.pdt5l20,com.pdl30,{}]}
-                                                                                onClick={()=>{}}
-                                                                                isChecked={false}
-                                                                                checkedImage={<Image source={require('../../imgs/selectnone.png')}/>}
-                                                                                unCheckedImage={<Image source={require('../../imgs/select.png')}/>}
-                                                                                />
-                                                                        </View>
-                                                                        <View
-                                                                            style={[com.aic,com.posr,com.row,com.pdt5,com.pdl40,com.mgl20,{width:screenW*0.90,paddingBottom:6},com.bbwc]}>
-                                                                            <Text>培训</Text>
-                                                                        </View>
-                                                                    </View>
-                                                                </TouchableHighlight>
-                                                            </ScrollView>
-                                                        </View>
-                                                    </View>
-                                                </View>
-                                                <View style={[com.btwc,com.pd5,com.rsc]}>
-                                                    <TouchableHighlight
-                                                        style={[com.pdt5l15,com.bbwc]}
-                                                        onPress={() => {this._reset()}}
-                                                        underlayColor="#f0f0f0"
-                                                        >
-                                                        <View><Text style={[com.cr]}>重置</Text></View>
-                                                    </TouchableHighlight>
-                                                    <TouchableHighlight
-                                                        style={[com.pdt5l15,com.bbwc]}
-                                                        onPress={() =>{this.searchDaily(2)}}
-                                                        underlayColor="#f0f0f0"
-                                                        >
-                                                        <View><Text style={[com.cr]}>确认</Text></View>
-                                                    </TouchableHighlight>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            </Modal>*/}
                         </View>
                     </View>
                 </ScrollView>
