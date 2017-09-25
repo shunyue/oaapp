@@ -21,6 +21,7 @@ import {
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
+import Loading from '../../common/loading';
 const screenW = Dimensions.get('window').width;
 import Header from '../../common/header';
 export default class Approvalfaqi extends Component {
@@ -32,6 +33,7 @@ export default class Approvalfaqi extends Component {
         this.state = {
             dataSource: ds,
             load:false,
+            load1:false,
             isModalVisible: false//下拉选择分类
         };
     }
@@ -55,7 +57,12 @@ export default class Approvalfaqi extends Component {
             if(responseText.sing==1){
                 this.setState({
                     load: true,
+                    load1: true,
                     dataSource: this.state.dataSource.cloneWithRows(responseText.data),
+                })
+            }else{
+                this.setState({
+                    load1: true,
                 })
             }
         }).catch((error)=>{
@@ -76,6 +83,13 @@ export default class Approvalfaqi extends Component {
     render() {
 
         const { navigate } = this.props.navigation;
+
+
+        //没有数据
+        if(!this.state.load1){
+            return (<Loading/>);
+        }
+
 
         //有数据
         if(this.state.load){
@@ -169,7 +183,7 @@ export default class Approvalfaqi extends Component {
                             </View>
                             {/*内容主题*/}
                             <View style={[styles.divCom,{ alignItems:'center',justifyContent:'center',paddingTop:50}]}>
-
+                                <Image  style={{width:35,height:35,marginLeft:15,marginRight:20}}  source={require('../../imgs/customer/empty-content.png')}/>
                                 <Text>暂无数据</Text>
                             </View>
                         </View>
