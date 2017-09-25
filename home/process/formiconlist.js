@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { StackNavigator,TabNavigator } from "react-navigation";
 import Swiper from 'react-native-swiper';
-
+import Header from '../../common/header';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 export default class app extends Component {
@@ -230,17 +230,11 @@ export default class app extends Component {
     render() {
         return (
             <View style={styles.ancestorCon}>
-                {Platform.OS === 'ios'? <View style={{height: 20,backgroundColor: '#fff'}}></View>:null}
-                <View style={styles.container}>
-                    <TouchableOpacity style={[styles.goback,styles.go]} onPress={()=>this.OpBack()}>
-                        <Image  style={styles.back_icon} source={require('../../imgs/customer/back.png')}/>
-                        <Text style={styles.back_text}>返回</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.formHeader}>模板图标</Text>
-                    <TouchableOpacity style={[styles.goRight,styles.go]} onPress={()=>this.queding()}>
-                        <Text style={[styles.back_text]} >确定</Text>
-                    </TouchableOpacity>
-                </View>
+                <Header title="模板图标"
+                        navigation={this.props.navigation}
+                        rightText="确定"
+                        onPress={()=>this.queding()}/>
+
                 <ScrollView style={styles.iconScroll}>
 
 

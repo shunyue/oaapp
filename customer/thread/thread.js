@@ -151,7 +151,7 @@ export default class app extends Component {
         <View style={styles.container}>
             <Header navigation={this.props.navigation}
                     title="我的线索"
-                    source={require('../../imgs/customer/add.png')}
+                    source={require('../../imgs/navtx.png')}
                     onPress={()=>{navigate('addThread',{user_id: params.user_id,company_id: params.company_id,thread:[]})}}
                     />
             <View style={styles.subNav}>
