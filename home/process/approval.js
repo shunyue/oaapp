@@ -23,6 +23,7 @@ const screenW = Dimensions.get('window').width;
 import config from '../../common/config';
 import request from '../../common/request';
 import toast from '../../common/toast';
+import Loading from '../../common/loading';
 import Modal from 'react-native-modal'  //下拉
 import Header from '../../common/header';
 export default class Approval extends Component {
@@ -30,16 +31,14 @@ export default class Approval extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            load:false,
+            load1:false,
             listview:[],
             isModalVisible: false  //下拉
         };
     }
-
     componentDidMount(){
-
         this.subscription = DeviceEventEmitter.addListener('com_user_id',(value) => {
-            //console.log(value['user_id']);
-           // console.log(value);
             var url = config.api.base + config.api.select_approve;
             request.post(url,{
                 company_id: value['company_id'],//公司id
@@ -47,7 +46,13 @@ export default class Approval extends Component {
             }).then((responseText) => {
                 if(responseText.sing==1){
                     this.setState({
+                        load:true,
+                        load1:true,
                         listview:responseText.data,
+                    })
+                }else{
+                    this.setState({
+                        load1:true,
                     })
                 }
             }).catch((error)=>{
@@ -65,14 +70,17 @@ export default class Approval extends Component {
             company_id: this.props.navigation.state.params.company_id,//公司id
             user_id:this.props.navigation.state.params.user_id,//登录者id
         }).then((responseText) => {
-
-           // alert(JSON.stringify (responseText.data))
             if(responseText.sing==1){
                 this.setState({
+                    load:true,
+                    load1:true,
                     listview:responseText.data,
                 })
+            }else{
+                this.setState({
+                    load1:true,
+                })
             }
-
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
@@ -99,20 +107,26 @@ export default class Approval extends Component {
 
     //我接收
     my_receive(){
+        this.setState({
+            load1:false,
+        })
+
         var url = config.api.base + config.api.select_approve_already;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
             user_id:this.props.navigation.state.params.user_id,//人员id
         }).then((responseText) => {
-
-            //alert(JSON.stringify(responseText.data));
             if(responseText.sing==1){
                 this.setState({
+                    load:true,
+                    load1:true,
                     listview:responseText.data,
                 })
+            }else{
+                this.setState({
+                    load1:true,
+                })
             }
-
-
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
@@ -120,15 +134,24 @@ export default class Approval extends Component {
 
     //我发起
     my_faqi(){
+        this.setState({
+            load1:false,
+        })
         var url = config.api.base + config.api.select_approve_myfaqi;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
             user_id:this.props.navigation.state.params.user_id,//公司id
         }).then((responseText) => {
-            //  alert(JSON.stringify (responseText.data))
+
             if(responseText.sing==1){
                 this.setState({
+                    load1:true,
+                    load1:true,
                     listview:responseText.data,
+                })
+            }else{
+                this.setState({
+                    load1:true,
                 })
             }
 
@@ -140,21 +163,26 @@ export default class Approval extends Component {
 
     //待我审批
     my_approve(){
+        this.setState({
+            load1:false,
+        })
+
         var url = config.api.base + config.api.select_approve_attime;
         request.post(url,{
             company_id: this.props.navigation.state.params.company_id,//公司id
             user_id:this.props.navigation.state.params.user_id,//公司id
         }).then((responseText) => {
-           // alert(JSON.stringify (responseText.data))
             if(responseText.sing==1){
                 this.setState({
+                    load:true,
+                    load1:true,
                     listview:responseText.data,
                 })
             }else{
-                toast.center('没有数据');
+                this.setState({
+                    load1:true,
+                })
             }
-
-
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
@@ -164,12 +192,10 @@ export default class Approval extends Component {
     //判断是 表单  合同 还是合同回款  g是msg值 当时等于我审批时 页面出现 同意还是拒绝
     approve_detail(e,g){
          // var g='等待我审批';
-
         var url = config.api.base + config.api.judge_approve_type;
         request.post(url,{
            example_id:e,
         }).then((responseText) => {
-
             //表单
             if(responseText==1){
                 this.props.navigation.navigate('form_approve',{example_id:e,user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id,approve_condition:g});
@@ -180,41 +206,48 @@ export default class Approval extends Component {
             }else if(responseText==3){
                 this.props.navigation.navigate('return_money_approve',{example_id:e,user_id:this.props.navigation.state.params.user_id,company_id:this.props.navigation.state.params.company_id,approve_condition:g});
             }
-
         }).catch((error)=>{
             toast.bottom('网络连接失败，请检查网络后重试');
         })
-
     }
     render() {
 
+        if(!this.state.load1){
+            return (<Loading/>);
+        }
+
         var list=[];
-        for(var i in this.state.listview){
-           list.push(
-
-               <View key={i}>
-               <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.listview[i]['example_id'],this.state.listview[i]['msg'])}>
-                   <View style={[styles.rowCom1]}>
-                       <View style={[styles.eleTopCom,{justifyContent:'space-between'}]}>
-
-                           <View style={{flexDirection:'row'}}>
-                               <Image style={{width:40,height:40}} source={{uri:this.state.listview[i]['icon']}}/>
-                               <View style={{marginLeft:10}}>
-                                   <Text>{this.state.listview[i]['whosthing']}</Text>
-                                   <Text
-                                       style={[styles.elefontCom,this.state.listview[i]['msg'] == '等待我审批'?{color: '#e4393c'}: null]}>{this.state.listview[i]['msg']}</Text>
-                               </View>
-                           </View>
-                           <View style={{paddingRight:15}}>
-                               <Text style={{fontSize:10,paddingTop:10}}>{this.state.listview[i]['time']}</Text>
-                           </View>
-                       </View>
-                   </View>
-               </TouchableHighlight>
-                   </View>
-
-           )
-
+        if(this.state.load){
+            for(var i in this.state.listview){
+                list.push(
+                    <View key={i}>
+                        <TouchableHighlight onPress={this.approve_detail.bind(this,this.state.listview[i]['example_id'],this.state.listview[i]['msg'])}>
+                            <View style={[styles.rowCom1]}>
+                                <View style={[styles.eleTopCom,{justifyContent:'space-between'}]}>
+                                    <View style={{flexDirection:'row'}}>
+                                        <Image style={{width:40,height:40}} source={{uri:this.state.listview[i]['icon']}}/>
+                                        <View style={{marginLeft:10}}>
+                                            <Text>{this.state.listview[i]['whosthing']}</Text>
+                                            <Text
+                                                style={[styles.elefontCom,this.state.listview[i]['msg'] == '等待我审批'?{color: '#e4393c'}: null]}>{this.state.listview[i]['msg']}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{paddingRight:15}}>
+                                        <Text style={{fontSize:10,paddingTop:10}}>{this.state.listview[i]['time']}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                )
+            }
+        }else{
+            list.push(
+                <View style={{marginLeft:150,marginTop:50}}>
+                <Image  style={{width:48,height:48,marginLeft:15,marginRight:20}}  source={require('../../imgs/customer/empty-content.png')}/>
+                <Text style={{marginLeft:10}}>暂无数据</Text>
+                </View>
+            )
         }
 
 
@@ -227,32 +260,23 @@ export default class Approval extends Component {
                 {/*内容主题*/}
                 <ScrollView style={[styles.childContent,{marginBottom:30}]}>
 
-
                         <TouchableHighlight
                             onPress={() => { this.setState({isModalVisible: !this.state.isModalVisible})}}
                             underlayColor="#d5d5d5"
                         >
-
                                 <View style={[styles.rowCom,styles.rowCom_]}>
                                     <Text style={[styles.eleFontCon]}>我的审批</Text>
                                     <Image style={{width:15,height:15}} source={require('../../imgs/customer/arrowU.png')}/>
                                 </View>
-
                         </TouchableHighlight>
-
-
                     {/*数据*/}
                                 {list}
                     {/*数据*/}
-
                 </ScrollView>
-
-
                         <View style={[styles.rowCom,styles.rowCom_foot]}>
                             <Image style={{width:15,height:15,marginRight:6}} source={require('../../imgs/shenpi/office_shenpi.png')}/>
                             <Text style={[styles.eleFontCon]}  onPress={() => { this.faqiApproval()}}>发起审批</Text>
                         </View>
-
 
                 {/*分类模型下拉*/}
                 <View>
@@ -310,20 +334,15 @@ export default class Approval extends Component {
                                     </View>
                                     </TouchableHighlight>
 
-
                                 </View>
                             </View>
-
                     </Modal>
                 </View>
                 {/*分类模型下拉*/}
-
             </View>
-        )
-            ;
+        );
     }
 }
-
 const styles = StyleSheet.create({
     navltys: {
         flex: 1,
@@ -337,7 +356,6 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         color: '#e4393c',
     },
-
     container: {
         flex: 1,
         backgroundColor: '#F8F8F8'
@@ -414,12 +432,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         height:40,
-
     },
-
-    //divCom: {//祖先级-区域
-    //    flex:1,
-    //},
     rowCom1: {//祖级-行
         paddingLeft:15,
         paddingRight:15,
@@ -430,17 +443,14 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'#F1F2F3',
     },
-
     eleTopCom: {//父级-块
         flexDirection: 'row',
         marginBottom:5
     },
-
     elefontCom:{//子级-E
         fontSize:10,
         paddingTop:6,
         color:'#969696',
     },
-
 });
 
